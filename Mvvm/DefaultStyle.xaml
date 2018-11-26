@@ -20,4 +20,16 @@
         <Setter Property="IsEditable" Value="False" />
     </Style>
 
+    <Style x:Key="TextBlockL" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="TextBlockS" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+
 </ResourceDictionary>
