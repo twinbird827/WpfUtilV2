@@ -57,6 +57,7 @@
     <Compile Include="Mvvm\Behaviors\UserControlLoadedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowClosedBehavior.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
+    <Compile Include="Mvvm\CustomControls\ChartEx.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\ExclusionAttribute.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
