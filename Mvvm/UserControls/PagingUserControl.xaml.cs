@@ -142,18 +142,6 @@ namespace WpfUtilV2.Mvvm.UserControls
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register("Command", typeof(ICommand), typeof(PagingUserControl), new PropertyMetadata());
 
-        /// <summary>
-        /// データ件数を取得、または設定します。
-        /// </summary>
-        public ListView ListView
-        {
-            get { return (ListView)GetValue(ListViewProperty); }
-            set { SetValue(ListViewProperty, value); }
-        }
-
-        public static readonly DependencyProperty ListViewProperty =
-            DependencyProperty.Register("ListView", typeof(ListView), typeof(PagingUserControl), new PropertyMetadata());
-
         #endregion
 
         /// <summary>
@@ -299,19 +287,6 @@ namespace WpfUtilV2.Mvvm.UserControls
             // TODO PAGE x or x のﾗﾍﾞﾙ変更
             txtPageSize.Text = string.Format("PAGE {0} of {1}", Current, maxPage);
 
-            // ﾘｽﾄﾋﾞｭｰからScrollViewerを取得する
-            DependencyObject item = ListView;
-            while (
-                item != null &&
-                !((item = VisualTreeHelper.GetChild(item, 0)) is ScrollViewer)
-            ) { }
-            // ｽｸﾛｰﾙを先頭に移動する
-            var scroll = item as ScrollViewer;
-            if (scroll != null)
-            {
-                scroll.ScrollToTop();
-                scroll.ScrollToLeftEnd();
-            }
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace WpfUtilV2.Mvvm.Service
 {
     public class ConsoleMessageService : IMessageService
     {
-        public void Error(string message,
+        public virtual void Error(string message,
                 [CallerMemberName] string callerMemberName = "",
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
@@ -17,7 +17,7 @@ namespace WpfUtilV2.Mvvm.Service
             Console.WriteLine(string.Format("[ERROR][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
         }
 
-        public void Info(string message,
+        public virtual void Info(string message,
                 [CallerMemberName] string callerMemberName = "",
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
@@ -25,7 +25,7 @@ namespace WpfUtilV2.Mvvm.Service
             Console.WriteLine(string.Format("[INFO][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
         }
 
-        public void Debug(string message,
+        public virtual void Debug(string message,
                 [CallerMemberName] string callerMemberName = "",
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
@@ -33,7 +33,7 @@ namespace WpfUtilV2.Mvvm.Service
             Console.WriteLine(string.Format("[DEBUG][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
         }
 
-        public void Exception(Exception exception,
+        public virtual void Exception(Exception exception,
                 [CallerMemberName] string callerMemberName = "",
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)

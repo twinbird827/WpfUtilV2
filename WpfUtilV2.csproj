@@ -50,13 +50,17 @@
     <Compile Include="Common\Encrypter.cs" />
     <Compile Include="Common\JsonConverter.cs" />
     <Compile Include="Common\Win32Methods.cs" />
+    <Compile Include="Common\WpfUtil.cs" />
     <Compile Include="Common\WrappingStream.cs" />
+    <Compile Include="Mvvm\Behaviors\ComboBoxSelectionChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDoubleClickBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\PasswordBoxChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\UserControlLoadedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowClosedBehavior.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
+    <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
+    <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
     <Compile Include="Mvvm\CustomControls\ChartEx.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />

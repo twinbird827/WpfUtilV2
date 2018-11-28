@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WpfUtilV2.Common;
 using WpfUtilV2.Mvvm.Service;
 
 namespace WpfUtilV2.Mvvm
@@ -70,15 +71,18 @@ namespace WpfUtilV2.Mvvm
 
         public void Execute(object parameter)
         {
-            try
+            if (!WpfUtil.IsDesignMode())
             {
-                // 別のRelayCommandから呼び出されたｹｰｽを考慮して、
-                // 本ﾒｿｯﾄﾞ内でもCanExecuteにて実行可否を判断する
-                if (CanExecute(parameter)) _execute((T)parameter);
-            }
-            catch (Exception ex)
-            {
-                ServiceFactory.MessageService.Exception(ex);
+                try
+                {
+                    // 別のRelayCommandから呼び出されたｹｰｽを考慮して、
+                    // 本ﾒｿｯﾄﾞ内でもCanExecuteにて実行可否を判断する
+                    if (CanExecute(parameter)) _execute((T)parameter);
+                }
+                catch (Exception ex)
+                {
+                    ServiceFactory.MessageService.Exception(ex);
+                }
             }
         }
 
