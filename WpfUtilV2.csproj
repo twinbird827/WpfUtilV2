@@ -61,7 +61,6 @@
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
-    <Compile Include="Mvvm\CustomControls\ChartEx.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />
     <Compile Include="Mvvm\ExclusionAttribute.cs" />
