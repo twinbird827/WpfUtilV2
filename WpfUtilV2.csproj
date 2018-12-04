@@ -68,22 +68,17 @@
     <Compile Include="Mvvm\Services\ConsoleMessageService.cs" />
     <Compile Include="Mvvm\Services\IMessageService.cs" />
     <Compile Include="Mvvm\Services\ServiceFactory.cs" />
-    <Compile Include="Mvvm\UserControls\PagingUserControl.xaml.cs">
-      <DependentUpon>PagingUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Nuget\DynamicJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Mvvm\UserControls\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Mvvm\DefaultStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Mvvm\UserControls\PagingUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
