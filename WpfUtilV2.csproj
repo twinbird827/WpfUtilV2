@@ -59,6 +59,7 @@
     <Compile Include="Mvvm\Behaviors\UserControlLoadedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowClosedBehavior.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
+    <Compile Include="Mvvm\Converters\Boolean2EnumConverter.cs" />
     <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
