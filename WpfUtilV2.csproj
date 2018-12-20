@@ -52,6 +52,10 @@
     <Compile Include="Common\Win32Methods.cs" />
     <Compile Include="Common\WpfUtil.cs" />
     <Compile Include="Common\WrappingStream.cs" />
+    <Compile Include="Extensions\BytesExtensions.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\StringsExtensions.cs" />
     <Compile Include="Mvvm\Behaviors\ComboBoxSelectionChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDoubleClickBehavior.cs" />

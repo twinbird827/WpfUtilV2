@@ -52,6 +52,18 @@ namespace WpfUtilV2.Common
             set { ThrowIfDisposed(); m_streamBase.Position = value; }
         }
 
+        public override int ReadTimeout
+        {
+            get { ThrowIfDisposed(); return m_streamBase.ReadTimeout; }
+            set { ThrowIfDisposed(); m_streamBase.ReadTimeout = value; }
+        }
+
+        public override int WriteTimeout
+        {
+            get { ThrowIfDisposed(); return m_streamBase.WriteTimeout; }
+            set { ThrowIfDisposed(); m_streamBase.WriteTimeout = value; }
+        }
+
         public override void Flush()
         {
             ThrowIfDisposed();
@@ -109,6 +121,19 @@ namespace WpfUtilV2.Common
             if (m_streamBase == null)
             {
                 throw new ObjectDisposedException(GetType().Name);
+            }
+        }
+
+        public virtual byte[] ToArray()
+        {
+            var ms = m_streamBase as MemoryStream;
+            if (ms != null)
+            {
+                return ms.ToArray();
+            }
+            else
+            {
+                throw new NotSupportedException("Inner stream is not MemoryStream");
             }
         }
     }

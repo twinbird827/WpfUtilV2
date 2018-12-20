@@ -49,7 +49,8 @@ namespace WpfUtilV2.Mvvm
         /// false です。</returns>
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
-            if (object.Equals(storage, value)) return false;
+            if ((storage == null && value == null) ||
+                (storage != null && value != null && storage.Equals(value))) return false;
 
             storage = value;
             this.OnPropertyChanged(propertyName);
