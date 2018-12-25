@@ -53,7 +53,9 @@
     <Compile Include="Common\WpfUtil.cs" />
     <Compile Include="Common\WrappingStream.cs" />
     <Compile Include="Extensions\BytesExtensions.cs" />
+    <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\StringsExtensions.cs" />
     <Compile Include="Mvvm\Behaviors\ComboBoxSelectionChangedBehavior.cs" />
@@ -69,6 +71,10 @@
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />
     <Compile Include="Mvvm\ExclusionAttribute.cs" />
+    <Compile Include="Mvvm\PushBinding\FreezableBinding.cs" />
+    <Compile Include="Mvvm\PushBinding\PushBinding.cs" />
+    <Compile Include="Mvvm\PushBinding\PushBindingCollection.cs" />
+    <Compile Include="Mvvm\PushBinding\PushBindingManager.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Mvvm\Services\ConsoleMessageService.cs" />
     <Compile Include="Mvvm\Services\IMessageService.cs" />
