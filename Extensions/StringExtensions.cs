@@ -114,22 +114,42 @@ namespace WpfUtilV2.Extensions
             }
         }
 
+        /// <summary>
+        /// 16進数文字を2進数文字に変換します。
+        /// </summary>
+        /// <param name="s">16進数文字</param>
+        /// <param name="length">変換後の文字長さ</param>
+        /// <returns></returns>
         public static string Hex2Bin(this string s, int length = 16)
         {
             return Convert.ToString(s.Hex2Long(), 2).PadLeft(length, '0');
         }
 
+        /// <summary>
+        /// 16進数文字から文字列に変換します。
+        /// </summary>
+        /// <param name="s">16進数文字</param>
+        /// <param name="encoding">ｴﾝｺｰﾃﾞｨﾝｸﾞ</param>
+        /// <returns></returns>
         public static string FromHex(this string s, Encoding encoding)
         {
             return encoding.GetString(
                 Enumerable.Range(0, s.Length / 2)
                     .Select(i => Convert.ToByte(s.Mid(i * 2, 2), 16))
                     .ToArray()
-            ).TrimEnd(new char[] { (char)0, ' ' });
-            //For i As Integer = 0 To hex.Length / 2 - 1
-            //    dec(i) = Convert.ToByte(hex.Substring(i * 2, 2), 16)
-            //Next
-            //Return CsvEncoding.GetString(dec)
+            ).TrimEnd(new [] { (char)0, ' ' });
         }
+
+        /// <summary>
+        /// 2進数文字を16進数文字に変換します。
+        /// </summary>
+        /// <param name="s">2進数文字</param>
+        /// <param name="length">16進数文字変換後の文字長さ</param>
+        /// <returns></returns>
+        public static string Bin2Hex(this string s, int length = 4)
+        {
+            return Convert.ToInt32(s, 2).ToHex(length);
+        }
+
     }
 }
