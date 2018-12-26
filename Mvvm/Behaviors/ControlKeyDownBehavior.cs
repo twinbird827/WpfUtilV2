@@ -19,7 +19,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ControlKeyDownBehavior), new UIPropertyMetadata(OnChangeCommand));
+            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ControlKeyDownBehavior), new UIPropertyMetadata(CommandProperty_Changed));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -46,20 +46,14 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnChangeCommand(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void CommandProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             Control control = target as Control;
-            if (control != null)
-            {
-                if (e.OldValue == null && e.NewValue != null)
-                {
-                    control.KeyDown += OnKeyDown;
-                }
-                else if (e.OldValue != null && e.NewValue == null)
-                {
-                    control.KeyDown -= OnKeyDown;
-                }
-            }
+
+            BehaviorUtil.SetEventHandler(control,
+                (fe) => fe.KeyDown += Control_KeyDown,
+                (fe) => fe.KeyDown -= Control_KeyDown
+            );
         }
 
         /// <summary>
@@ -67,7 +61,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnKeyDown(object sender, KeyEventArgs e)
+        private static void Control_KeyDown(object sender, KeyEventArgs e)
         {
             Control control = sender as Control;
             if (control != null)

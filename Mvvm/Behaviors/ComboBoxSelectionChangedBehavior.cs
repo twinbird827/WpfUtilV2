@@ -15,7 +15,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ComboBoxSelectionChangedBehavior), new UIPropertyMetadata(OnChangeCommand));
+            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ComboBoxSelectionChangedBehavior), new UIPropertyMetadata(CommandProperty_Changed));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -42,20 +42,14 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnChangeCommand(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void CommandProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             ComboBox control = target as ComboBox;
-            if (control != null)
-            {
-                if (e.OldValue == null && e.NewValue != null)
-                {
-                    control.SelectionChanged += OnSelectionChanged;
-                }
-                else if (e.OldValue != null && e.NewValue == null)
-                {
-                    control.SelectionChanged -= OnSelectionChanged;
-                }
-            }
+
+            BehaviorUtil.SetEventHandler(control,
+                (fe) => fe.SelectionChanged += ComboBox_SelectionChanged,
+                (fe) => fe.SelectionChanged -= ComboBox_SelectionChanged
+            );
         }
 
         /// <summary>
@@ -63,7 +57,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private static void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox control = sender as ComboBox;
             if (control != null)

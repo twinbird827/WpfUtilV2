@@ -18,7 +18,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// ｺﾏﾝﾄﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(UserControlLoadedBehavior), new UIPropertyMetadata(OnChangeCommand));
+            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(UserControlLoadedBehavior), new UIPropertyMetadata(CommandProperty_Changed));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -71,20 +71,14 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnChangeCommand(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void CommandProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var uc = target as UserControl;
-            if (uc != null)
-            {
-                if (e.OldValue == null && e.NewValue != null)
-                {
-                    uc.Loaded += OnLoaded;
-                }
-                else if (e.OldValue != null && e.NewValue == null)
-                {
-                    uc.Loaded -= OnLoaded;
-                }
-            }
+
+            BehaviorUtil.SetEventHandler(uc,
+                (fe) => fe.Loaded += UserControl_Loaded,
+                (fe) => fe.Loaded -= UserControl_Loaded
+            );
         }
 
         /// <summary>
@@ -92,13 +86,22 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnLoaded(object sender, EventArgs e)
+        private static void UserControl_Loaded(object sender, EventArgs e)
         {
             var uc = sender as UserControl;
-            if (uc == null) return;
+
+            if (uc == null)
+            {
+                return;
+            }
 
             ICommand command = uc.GetValue(CommandProperty) as ICommand;
-            if (command != null) command.Execute(uc.GetValue(CommandParameterProperty));
+            object commandparameter = uc.GetValue(CommandParameterProperty);
+
+            if (command != null && command.CanExecute(commandparameter))
+            {
+                command.Execute(commandparameter);
+            }
         }
     }
 }

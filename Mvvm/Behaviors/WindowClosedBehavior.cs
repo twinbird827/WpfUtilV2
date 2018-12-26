@@ -46,17 +46,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
         private static void OnChangeViewModel(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var win = target as Window;
-            if (win != null)
-            {
-                if (e.OldValue == null && e.NewValue != null)
-                {
-                    win.Closed += OnClosed;
-                }
-                else if (e.OldValue != null && e.NewValue == null)
-                {
-                    win.Closed -= OnClosed;
-                }
-            }
+
+            BehaviorUtil.SetEventHandler(win,
+                (fe) => fe.Closed += Window_Closed,
+                (fe) => fe.Closed -= Window_Closed
+            );
         }
 
         /// <summary>
@@ -64,13 +58,21 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnClosed(object sender, EventArgs e)
+        private static void Window_Closed(object sender, EventArgs e)
         {
             var win = sender as Window;
-            if (win == null) return;
+
+            if (win == null)
+            {
+                return;
+            }
 
             IDisposable vm = win.GetValue(ViewModelProperty) as IDisposable;
-            if (vm != null) vm.Dispose();
+
+            if (vm != null)
+            {
+                vm.Dispose();
+            }
         }
     }
 }
