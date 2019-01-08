@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WpfUtilV2.Common
@@ -77,15 +78,28 @@ namespace WpfUtilV2.Common
         }
 
         //Streamクラスのメソッドをオーバーライドして、内部ストリームの同じメソッドをそのまま呼ぶだけ
-        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken)
+        public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
-            return m_streamBase.ReadAsync(buffer, offset, count, cancellationToken);
+            return await m_streamBase.ReadAsync(buffer, offset, count, cancellationToken);
         }
-        public new Task<int> ReadAsync(byte[] buffer, int offset, int count)
+
+        public override async Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
-            return m_streamBase.ReadAsync(buffer, offset, count);
+            await m_streamBase.WriteAsync(buffer, offset, count, cancellationToken);
+        }
+
+        public new async Task<int> ReadAsync(byte[] buffer, int offset, int count)
+        {
+            var cts = new CancellationTokenSource(); cts.CancelAfter(3000);
+            return await ReadAsync(buffer, offset, count, cts.Token);
+        }
+
+        public new async Task WriteAsync(byte[] buffer, int offset, int count)
+        {
+            var cts = new CancellationTokenSource(); cts.CancelAfter(3000);
+            await WriteAsync(buffer, offset, count, cts.Token);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
