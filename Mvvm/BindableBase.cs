@@ -50,8 +50,12 @@ namespace WpfUtilV2.Mvvm
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
             if ((storage == null && value == null) ||
-                (storage != null && value != null && storage.Equals(value))) return false;
+                (storage != null && storage.Equals(value))) return false;
 
+            // 入替前にDisposeできるものはする。
+            var disposable = storage as IDisposable; if (disposable != null) disposable.Dispose();
+
+            // ﾌﾟﾛﾊﾟﾃｨ値変更
             storage = value;
             this.OnPropertyChanged(propertyName);
             return true;
@@ -63,7 +67,7 @@ namespace WpfUtilV2.Mvvm
         /// <param name="propertyName">リスナーに通知するために使用するプロパティの名前。
         /// この値は省略可能で、
         /// <see cref="CallerMemberNameAttribute"/> をサポートするコンパイラから呼び出す場合に自動的に指定できます。</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var eventHandler = this.PropertyChanged;
             if (eventHandler != null)
@@ -79,7 +83,7 @@ namespace WpfUtilV2.Mvvm
         /// <param name="e"></param>
         protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
+            
         }
 
         public void AddOnPropertyChanged(PropertyChangedEventHandler handler)
