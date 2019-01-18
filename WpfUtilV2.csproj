@@ -58,6 +58,7 @@
     <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\StringsExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Mvvm\Behaviors\BehaviorUtil.cs" />
     <Compile Include="Mvvm\Behaviors\ComboBoxSelectionChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />

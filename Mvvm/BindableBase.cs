@@ -72,10 +72,27 @@ namespace WpfUtilV2.Mvvm
             }
         }
 
+        /// <summary>
+        /// ｺﾝｽﾄﾗｸﾀでｿｰｽを指定した際に、ｿｰｽ内のPropertyChangedｲﾍﾞﾝﾄ発行時に実行されるようになります。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
 
         }
+
+        public void AddOnPropertyChanged(PropertyChangedEventHandler handler)
+        {
+            if (handler != null)
+            {
+                PropertyChanged += handler;
+
+                Handlers.Add(handler);
+            }
+        }
+
+        private List<PropertyChangedEventHandler> Handlers { get; set; } = new List<PropertyChangedEventHandler>();
 
         #region IDisposable Support
         private bool disposedValue = false; // 重複する呼び出しを検出するには
@@ -160,11 +177,18 @@ namespace WpfUtilV2.Mvvm
         /// </summary>
         protected virtual void OnDisposed()
         {
+            // ｿｰｽの後始末
             if (Source != null)
             {
                 Source.PropertyChanged -= OnPropertyChanged;
             }
             Source = null;
+
+            // handlerの後始末
+            foreach (var handler in Handlers)
+            {
+                PropertyChanged -= handler;
+            }
         }
 
         /// <summary>
