@@ -1,33 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace WpfUtilV2.Mvvm
 {
     [DataContract]
     public class BindableBase : INotifyPropertyChanged, IDisposable
     {
-        private BindableBase Source { get; set; }
-
         public BindableBase()
-            : this(null)
         {
 
-        }
-
-        public BindableBase(BindableBase source)
-        {
-            Source = source;
-
-            if (Source != null)
-            {
-                Source.PropertyChanged += OnPropertyChanged;
-            }
         }
 
         /// <summary>
@@ -76,80 +65,39 @@ namespace WpfUtilV2.Mvvm
             }
         }
 
-        /// <summary>
-        /// ｺﾝｽﾄﾗｸﾀでｿｰｽを指定した際に、ｿｰｽ内のPropertyChangedｲﾍﾞﾝﾄ発行時に実行されるようになります。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            
-        }
-
-        public void AddOnPropertyChanged(PropertyChangedEventHandler handler)
+        public void AddOnPropertyChanged(BindableBase bindable, PropertyChangedEventHandler handler)
         {
             if (handler != null)
             {
                 PropertyChanged += handler;
 
-                Handlers.Add(handler);
+                bindable.Disposed += (sender, e) =>
+                {
+                    PropertyChanged -= handler;
+                };
             }
         }
 
-        private List<PropertyChangedEventHandler> Handlers { get; set; } = new List<PropertyChangedEventHandler>();
-
         #region IDisposable Support
         private bool disposedValue = false; // 重複する呼び出しを検出するには
-
-        private static List<string> DisposedArrays = new List<string>();
 
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
+                disposedValue = true;
+
                 if (disposing)
                 {
-                    //var disposables = this.GetType().GetProperties()
-                    //    .Where(p => Attribute.GetCustomAttribute(p, typeof(ExclusionAttribute)) == null)
-                    //    .Select(p => p.GetValue(this, null))
-                    //    .Where(o => o != null && !this.Equals(o))
-                    //    .OfType<BindableBase>()
-                    //    .Where(b => !DisposedArrays.Contains(b.Guid))
-                    //    .ToArray();
-
-                    //DisposedArrays.Add(this.Guid);
-
-                    // Disposeするﾌﾟﾛﾊﾟﾃｨを取得
-                    var disposables = this.GetType().GetProperties()
-                        .Where(p => Attribute.GetCustomAttribute(p, typeof(ExclusionAttribute)) == null)
-                        .Select(p => p.GetValue(this, null))
-                        .OfType<BindableBase>()
-                        .Where(o => o != null && !this.Equals(o));
-
-                    foreach (var d in disposables)
-                    {
-                        try
-                        {
-                            if (!d.disposedValue)
-                            {
-                                d.Dispose();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                        }
-                    }
-
                     // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
-                    OnDisposing();
+                    if (Disposed != null)
+                    {
+                        Disposed(this, new EventArgs());
+                    }
                 }
-
-                disposedValue = true;
 
                 // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
                 // TODO: 大きなフィールドを null に設定します。
-                OnDisposed();
             }
         }
 
@@ -168,32 +116,7 @@ namespace WpfUtilV2.Mvvm
             // GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Disposeによりﾏﾈｰｼﾞ状態を破棄します。
-        /// </summary>
-        protected virtual void OnDisposing()
-        {
-
-        }
-
-        /// <summary>
-        /// Disposeによりｱﾝﾏﾈｰｼﾞﾘｿｰｽを開放します。
-        /// </summary>
-        protected virtual void OnDisposed()
-        {
-            // ｿｰｽの後始末
-            if (Source != null)
-            {
-                Source.PropertyChanged -= OnPropertyChanged;
-            }
-            Source = null;
-
-            // handlerの後始末
-            foreach (var handler in Handlers)
-            {
-                PropertyChanged -= handler;
-            }
-        }
+        public event EventHandler Disposed;
 
         /// <summary>
         /// GUID
