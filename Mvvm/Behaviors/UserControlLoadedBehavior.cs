@@ -76,8 +76,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
             var uc = target as UserControl;
 
             BehaviorUtil.SetEventHandler(uc,
-                (fe) => fe.Loaded += UserControl_Loaded,
-                (fe) => fe.Loaded -= UserControl_Loaded
+                (fe) => UserControl_Loaded(fe, new EventArgs()),
+                (fe) => { }
             );
         }
 

@@ -62,6 +62,7 @@
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Mvvm\Behaviors\BehaviorUtil.cs" />
     <Compile Include="Mvvm\Behaviors\ComboBoxSelectionChangedBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\ControlIsKeyboardFocusWithinChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDoubleClickBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\PasswordBoxChangedBehavior.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Mvvm\Converters\Boolean2VisibilityConverter.cs" />
     <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
+    <Compile Include="Mvvm\CustomControls\IFocusableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />
     <Compile Include="Mvvm\PushBinding\FreezableBinding.cs" />

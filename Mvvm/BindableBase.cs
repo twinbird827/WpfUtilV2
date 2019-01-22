@@ -36,13 +36,15 @@ namespace WpfUtilV2.Mvvm
         /// CallerMemberName をサポートするコンパイラから呼び出す場合に自動的に指定できます。</param>
         /// <returns>値が変更された場合は true、既存の値が目的の値に一致した場合は
         /// false です。</returns>
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        protected bool SetProperty<T>(ref T storage, T value, bool isDiposeOld = false, [CallerMemberName] String propertyName = null)
         {
-            if ((storage == null && value == null) ||
-                (storage != null && storage.Equals(value))) return false;
+            if (object.Equals(storage, value)) return false;
 
-            // 入替前にDisposeできるものはする。
-            var disposable = storage as IDisposable; if (disposable != null) disposable.Dispose();
+            if (isDiposeOld)
+            {
+                // 入替前にDisposeできるものはする。
+                var disposable = storage as IDisposable; if (disposable != null) disposable.Dispose();
+            }
 
             // ﾌﾟﾛﾊﾟﾃｨ値変更
             storage = value;
@@ -58,13 +60,14 @@ namespace WpfUtilV2.Mvvm
         /// <see cref="CallerMemberNameAttribute"/> をサポートするコンパイラから呼び出す場合に自動的に指定できます。</param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var eventHandler = this.PropertyChanged;
-            if (eventHandler != null)
-            {
-                eventHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// ﾌﾟﾛﾊﾟﾃｨ変更時ｲﾍﾞﾝﾄを追加します。
+        /// </summary>
+        /// <param name="bindable">追加元のｲﾝｽﾀﾝｽ</param>
+        /// <param name="handler">追加するｲﾍﾞﾝﾄの中身</param>
         public void AddOnPropertyChanged(BindableBase bindable, PropertyChangedEventHandler handler)
         {
             if (handler != null)
@@ -90,10 +93,7 @@ namespace WpfUtilV2.Mvvm
                 if (disposing)
                 {
                     // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
-                    if (Disposed != null)
-                    {
-                        Disposed(this, new EventArgs());
-                    }
+                    Disposed?.Invoke(this, new EventArgs());
                 }
 
                 // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
@@ -116,12 +116,43 @@ namespace WpfUtilV2.Mvvm
             // GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// ｲﾝｽﾀﾝｽ破棄時のｲﾍﾞﾝﾄ
+        /// </summary>
         public event EventHandler Disposed;
 
         /// <summary>
         /// GUID
         /// </summary>
         private string Guid { get; set; } = System.Guid.NewGuid().ToString();
+
+        /// <summary>
+        /// ｲﾝｽﾀﾝｽと指定した別のBindableBaseの値が同値か比較します。
+        /// </summary>
+        /// <param name="obj">比較対象のｲﾝｽﾀﾝｽ</param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            var bindable = obj as BindableBase;
+
+            if (bindable == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Guid.Equals(bindable.Guid);
+            }
+        }
+
+        /// <summary>
+        /// このｲﾝｽﾀﾝｽのﾊｯｼｭｺｰﾄﾞを返却します。
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return Guid.GetHashCode();
+        }
 
         #endregion
 
