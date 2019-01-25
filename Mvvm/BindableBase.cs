@@ -60,7 +60,7 @@ namespace WpfUtilV2.Mvvm
         /// <see cref="CallerMemberNameAttribute"/> をサポートするコンパイラから呼び出す場合に自動的に指定できます。</param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, GetPropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -78,6 +78,31 @@ namespace WpfUtilV2.Mvvm
                 {
                     PropertyChanged -= handler;
                 };
+            }
+        }
+
+        /// <summary>
+        /// ﾌﾟﾛﾊﾟﾃｨ変更時のｲﾍﾞﾝﾄ引数を使いまわすためのﾘｽﾄ
+        /// </summary>
+        private static Dictionary<string, PropertyChangedEventArgs> CreatePropertyChangedEventArgs { get; set; } = new Dictionary<string, PropertyChangedEventArgs>();
+
+        /// <summary>
+        /// ﾌﾟﾛﾊﾟﾃｨ変更時のｲﾍﾞﾝﾄ引数を取得します。
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private PropertyChangedEventArgs GetPropertyChangedEventArgs(string name)
+        {
+            if (CreatePropertyChangedEventArgs.ContainsKey(name))
+            {
+                // 既に作成済なら使いまわす
+                return CreatePropertyChangedEventArgs[name];
+            }
+            else
+            {
+                // 作成していない場合は作成する
+                CreatePropertyChangedEventArgs.Add(name, new PropertyChangedEventArgs(name));
+                return GetPropertyChangedEventArgs(name);
             }
         }
 

@@ -73,6 +73,7 @@
     <Compile Include="Mvvm\Converters\Boolean2EnumConverter.cs" />
     <Compile Include="Mvvm\Converters\Boolean2VisibilityConverter.cs" />
     <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
+    <Compile Include="Mvvm\Converters\Enum2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
     <Compile Include="Mvvm\CustomControls\IFocusableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />

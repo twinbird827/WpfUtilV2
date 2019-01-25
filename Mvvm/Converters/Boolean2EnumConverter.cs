@@ -10,7 +10,7 @@ namespace WpfUtilV2.Mvvm.Converters
 {
     public class Boolean2EnumConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
             var ParameterString = parameter as string;
@@ -29,7 +29,7 @@ namespace WpfUtilV2.Mvvm.Converters
             return (int)paramvalue == (int)value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var ParameterString = parameter as string;
             return ParameterString == null
