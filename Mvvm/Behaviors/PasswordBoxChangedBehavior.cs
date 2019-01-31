@@ -12,7 +12,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
     /// <summary>
     /// PasswordBoxｺﾝﾄﾛｰﾙのPasswordﾌﾟﾛﾊﾟﾃｨを処理します。
     /// </summary>
-    public class PasswordBoxChangedBehavior : DependencyObject
+    public class PasswordBoxChangedBehavior
     {
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.RegisterAttached(
             "Password",
