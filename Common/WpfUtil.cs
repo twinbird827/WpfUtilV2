@@ -35,6 +35,22 @@ namespace WpfUtilV2.Common
             }
         }
 
+        public static T[] ThinningOut<T>(T[] data, int afterCount)
+        {
+            var lineCount = data.Length;
+            if (afterCount < lineCount)
+            {
+                return Enumerable.Range(0, afterCount)
+                    .Select(i => (int)Math.Ceiling((double)(i * lineCount / afterCount)))
+                    .Select(i => data[i])
+                    .ToArray();
+            }
+            else
+            {
+                return data;
+            }
+        }
+
     }
 
     internal sealed class DCSafeHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid

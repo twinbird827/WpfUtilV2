@@ -55,6 +55,7 @@
     <Compile Include="Common\WrappingStream.cs" />
     <Compile Include="Extensions\BytesExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
