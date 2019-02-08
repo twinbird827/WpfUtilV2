@@ -67,7 +67,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         }
 
         /// <summary>
-        /// Disposableﾌﾟﾛﾊﾟﾃｨが変更された際の処理
+        /// ｺﾏﾝﾄﾞﾌﾟﾛﾊﾟﾃｨが変更された際の処理
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
@@ -75,10 +75,35 @@ namespace WpfUtilV2.Mvvm.Behaviors
         {
             var uc = target as UserControl;
 
-            BehaviorUtil.SetEventHandler(uc,
-                (fe) => UserControl_Loaded(fe, new EventArgs()),
-                (fe) => { }
-            );
+            if (uc.IsLoaded)
+            {
+                UserControl_Loaded(uc, new EventArgs());
+            }
+            else
+            {
+                Action<object, RoutedEventArgs> unloaded = null;
+                // ﾕｰｻﾞｺﾝﾄﾛｰﾙのｱﾝﾛｰﾄﾞ処理を定義(ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄを削除する)
+                unloaded = (sender, ea) =>
+                {
+                    var inner = sender as UserControl;
+
+                    if (unloaded != null)
+                    {
+                        inner.Unloaded -= new RoutedEventHandler(unloaded);
+                        unloaded = null;
+                    }
+
+                    // ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄ削除処理
+                    inner.Loaded -= UserControl_Loaded;
+                };
+
+                uc.Loaded += UserControl_Loaded;
+                uc.Unloaded += new RoutedEventHandler(unloaded);
+            }
+            //BehaviorUtil.SetEventHandler(uc,
+            //    (fe) => UserControl_Loaded(fe, new EventArgs()),
+            //    (fe) => { }
+            //);
         }
 
         /// <summary>
@@ -95,8 +120,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 return;
             }
 
-            ICommand command = uc.GetValue(CommandProperty) as ICommand;
-            object commandparameter = uc.GetValue(CommandParameterProperty);
+            var command = GetCommand(uc);
+            var commandparameter = GetCommandParameter(uc);
 
             if (command != null && command.CanExecute(commandparameter))
             {

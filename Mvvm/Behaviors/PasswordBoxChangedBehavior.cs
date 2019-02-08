@@ -34,6 +34,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
             dp.SetValue(PasswordProperty, value);
         }
 
+        /// <summary>
+        /// Password ﾌﾟﾛﾊﾟﾃｨ変更時ｲﾍﾞﾝﾄ
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void PasswordProperty_Changed(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var passwordbox = sender as PasswordBox;
@@ -59,6 +64,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
         }
 
+        /// <summary>
+        /// PasswordBox ﾊﾟｽﾜｰﾄﾞ変更時ｲﾍﾞﾝﾄ
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             var passwordbox = sender as PasswordBox;

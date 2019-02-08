@@ -10,16 +10,19 @@ using WpfUtilV2.Mvvm.CustomControls;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
+    /// <summary>
+    /// ｺﾝﾄﾛｰﾙのIsKeyboardFocusWithinﾌﾟﾛﾊﾟﾃｨ値をﾋﾞｭｰﾓﾃﾞﾙに伝達するための添付ﾋﾞﾍｲﾋﾞｱ
+    /// </summary>
     public class ControlIsKeyboardFocusWithinChangedBehavior
     {
         /// <summary>
-        /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
+        /// ﾌｫｰｶｽを判別できるﾋﾞｭｰﾓﾃﾞﾙの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty FocusableProperty =
             DependencyProperty.RegisterAttached("Focusable", typeof(IFocusableItem), typeof(ControlIsKeyboardFocusWithinChangedBehavior), new UIPropertyMetadata(FocusableProperty_Changed));
 
         /// <summary>
-        /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
+        /// ﾌｫｰｶｽを判別できるﾋﾞｭｰﾓﾃﾞﾙを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="value">コマンド</param>
@@ -29,7 +32,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         }
 
         /// <summary>
-        /// ｺﾏﾝﾄﾞを取得します（添付ﾋﾞﾍｲﾋﾞｱ）
+        /// ﾌｫｰｶｽを判別できるﾋﾞｭｰﾓﾃﾞﾙを取得します（添付ﾋﾞﾍｲﾋﾞｱ）
         /// </summary>
         /// <param name="target">対象</param>
         /// <returns>ｺﾏﾝﾄﾞ</returns>
@@ -39,7 +42,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         }
 
         /// <summary>
-        /// Commandﾌﾟﾛﾊﾟﾃｨが変更された際の処理
+        /// Focusableﾌﾟﾛﾊﾟﾃｨが変更された際の処理
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
@@ -49,24 +52,22 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
             BehaviorUtil.SetEventHandler(control,
                 (fe) => fe.IsKeyboardFocusWithinChanged += Control_IsKeyboardFocusWithinChanged,
-                (fe) => 
-                fe.IsKeyboardFocusWithinChanged -= Control_IsKeyboardFocusWithinChanged
+                (fe) => fe.IsKeyboardFocusWithinChanged -= Control_IsKeyboardFocusWithinChanged
             );
         }
 
         /// <summary>
-        /// ﾏｳｽﾀﾞﾌﾞﾙｸﾘｯｸ時の処理
+        /// 対象ｺﾝﾄﾛｰﾙ IsKeyboardFocusWithin ﾌﾟﾛﾊﾟﾃｨ変更時ｲﾍﾞﾝﾄ(ﾋﾞｭｰﾓﾃﾞﾙに伝達します)
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void Control_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var control = sender as FrameworkElement;
+
             if (control != null)
             {
-                IFocusableItem command = (IFocusableItem)control.GetValue(FocusableProperty);
-
-                command.IsFocused = control.IsKeyboardFocusWithin;
+                GetFocusable(control).IsFocused = control.IsKeyboardFocusWithin;
             }
         }
 

@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
+    /// <summary>
+    /// ｺﾝﾎﾞﾎﾞｯｸｽの選択行変更時に実行したいｲﾍﾞﾝﾄを定義できる添付ﾋﾞﾍｲﾋﾞｱ
+    /// </summary>
     public class ComboBoxSelectionChangedBehavior
     {
         /// <summary>

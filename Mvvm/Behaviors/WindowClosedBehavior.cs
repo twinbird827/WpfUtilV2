@@ -15,17 +15,17 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// Disposableの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty ViewModelProperty =
-            DependencyProperty.RegisterAttached("ViewModel", typeof(object), typeof(WindowClosedBehavior), new UIPropertyMetadata(OnChangeViewModel));
+        public static DependencyProperty DisposableProperty =
+            DependencyProperty.RegisterAttached("Disposable", typeof(IDisposable), typeof(WindowClosedBehavior), new UIPropertyMetadata(OnChangeViewModel));
 
         /// <summary>
         /// Disposableを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="value">IDisposable</param>
-        public static void SetViewModel(DependencyObject target, object value)
+        public static void SetDisposable(DependencyObject target, object value)
         {
-            target.SetValue(ViewModelProperty, value);
+            target.SetValue(DisposableProperty, value);
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <returns>IDisposable</returns>
-        public static object GetViewModel(DependencyObject target)
+        public static IDisposable GetDisposable(DependencyObject target)
         {
-            return target.GetValue(ViewModelProperty);
+            return (IDisposable)target.GetValue(DisposableProperty);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 return;
             }
 
-            IDisposable vm = win.GetValue(ViewModelProperty) as IDisposable;
+            var vm = GetDisposable(win);
 
             if (vm != null)
             {

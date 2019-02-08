@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
+    /// <summary>
+    /// 対象ｴﾚﾒﾝﾄでEnterｷｰ押下時に指定したDependencyPropertyのUpdateSourceを実行するための添付ﾋﾞﾍｲﾋﾞｱ
+    /// </summary>
     public static class FrameworkElementUpdateSourceWhenEnterBehavior
     {
         public static readonly DependencyProperty TargetProperty = DependencyProperty.RegisterAttached(
@@ -24,28 +27,39 @@ namespace WpfUtilV2.Mvvm.Behaviors
             return (DependencyProperty)dp.GetValue(TargetProperty);
         }
 
+        /// <summary>
+        /// Targetﾌﾟﾛﾊﾟﾃｨ変更時ｲﾍﾞﾝﾄ (ｲﾍﾞﾝﾄを設定します)
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void TargetProperty_Changed(DependencyObject dp, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = dp as FrameworkElement;
-
+            
             BehaviorUtil.SetEventHandler(element,
                 (fe) => fe.PreviewKeyDown += FrameworkElement_PreviewKeyDown,
                 (fe) => fe.PreviewKeyDown -= FrameworkElement_PreviewKeyDown
             );
         }
 
+        /// <summary>
+        /// ｴﾚﾒﾝﾄ PreviewKeyDown ｲﾍﾞﾝﾄ (Binding.UpdateSourceを実行します。)
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void FrameworkElement_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
             {
+                // Enterｷｰ以外は中断
                 return;
             }
 
-            //var element = e.Source as FrameworkElement;
             var element = sender as FrameworkElement;
 
             if (element == null)
             {
+                // 対応するｴﾚﾒﾝﾄが許容する型ではない場合は中断
                 return;
             }
 
@@ -53,6 +67,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
             if (property == null)
             {
+                // 指定したﾌﾟﾛﾊﾟﾃｨが存在しない場合は中断
                 return;
             }
 
@@ -60,6 +75,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
             if (binding != null)
             {
+                // 指定したﾌﾟﾛﾊﾟﾃｨにﾊﾞｲﾝﾃﾞｨﾝｸﾞが設定されている場合に実行
                 binding.UpdateSource();
             }
         }
