@@ -67,6 +67,7 @@
     <Compile Include="Mvvm\Behaviors\ControlIsKeyboardFocusWithinChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDoubleClickBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\FrameworkElementMouseLeftButtonDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\PasswordBoxChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementUpdateSourceWhenEnterBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\TextBoxSelectAllWhenGotFocusBehavior.cs" />

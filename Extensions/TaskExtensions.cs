@@ -11,7 +11,7 @@ namespace WpfUtilV2.Extensions
         public static async Task Timeout(this Task task, TimeSpan timeout)
         {
             var delay = Task.Delay(timeout);
-            if (await Task.WhenAny(task, delay) == delay)
+            if (await Task.WhenAny(task, delay).ConfigureAwait(false) == delay)
             {
                 throw new TimeoutException();
             }

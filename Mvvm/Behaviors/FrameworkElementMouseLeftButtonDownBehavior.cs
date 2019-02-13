@@ -4,21 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
-    /// <summary>
-    /// ControlｸﾗｽのMouseDoubleClickｲﾍﾞﾝﾄでCommandを実行するためのﾋﾞﾍｲﾋﾞｱです。
-    /// </summary>
-    public class ControlMouseDoubleClickBehavior
+    public class FrameworkElementMouseLeftButtonDownBehavior
     {
         /// <summary>
         /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ControlMouseDoubleClickBehavior), new UIPropertyMetadata(CommandProperty_Changed));
+            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(FrameworkElementMouseLeftButtonDownBehavior), new UIPropertyMetadata(CommandProperty_Changed));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -47,11 +43,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void CommandProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            var control = target as Control;
+            var control = target as FrameworkElement;
 
             BehaviorUtil.SetEventHandler(control,
-                (fe) => fe.MouseDoubleClick += Control_MouseDoubleClick,
-                (fe) => fe.MouseDoubleClick -= Control_MouseDoubleClick
+                (fe) => fe.MouseLeftButtonDown += Control_MouseLeftButtonDown,
+                (fe) => fe.MouseLeftButtonDown -= Control_MouseLeftButtonDown
             );
         }
 
@@ -60,9 +56,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void Control_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private static void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Control control = sender as Control;
+            var control = sender as FrameworkElement;
             if (control != null)
             {
                 ICommand command = (ICommand)control.GetValue(CommandProperty);
