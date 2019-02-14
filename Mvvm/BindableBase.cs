@@ -14,9 +14,18 @@ namespace WpfUtilV2.Mvvm
     [DataContract]
     public class BindableBase : INotifyPropertyChanged, IDisposable
     {
+        protected Stopwatch Stopwatch { get; set; }
+        protected void StartStopwatch()
+        {
+            Stopwatch.Restart();
+        }
+        protected void Writeline([CallerMemberName] String methodname = null)
+        {
+            Console.WriteLine($"{Stopwatch.Elapsed.ToString(@"mm\:ss\.fffffff")} {string.Concat((GC.GetTotalMemory(false) / 1024).ToString("#,0"), " KB").PadLeft(10, ' ')} {string.Concat(GetType().Name, ".", methodname)}");
+        }
         public BindableBase()
         {
-
+            Stopwatch = new Stopwatch();
         }
 
         /// <summary>
@@ -117,8 +126,11 @@ namespace WpfUtilV2.Mvvm
 
                 if (disposing)
                 {
+                    StartStopwatch();
                     // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
                     Disposed?.Invoke(this, new EventArgs());
+                    Writeline();
+                    Stopwatch = null;
                 }
 
                 // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
