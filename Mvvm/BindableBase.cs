@@ -81,6 +81,7 @@ namespace WpfUtilV2.Mvvm
         {
             if (handler != null)
             {
+                PropertyChanged -= handler;
                 PropertyChanged += handler;
 
                 bindable.Disposed += (sender, e) =>
