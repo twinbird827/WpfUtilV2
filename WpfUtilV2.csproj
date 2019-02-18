@@ -50,6 +50,7 @@
     <Compile Include="Common\Encrypter.cs" />
     <Compile Include="Common\EqualityComparerEx.cs" />
     <Compile Include="Common\JsonConverter.cs" />
+    <Compile Include="Common\SemaphoreManager.cs" />
     <Compile Include="Common\Win32Methods.cs" />
     <Compile Include="Common\WpfUtil.cs" />
     <Compile Include="Common\WrappingStream.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Mvvm\Converters\Boolean2EnumConverter.cs" />
     <Compile Include="Mvvm\Converters\Boolean2VisibilityConverter.cs" />
     <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
+    <Compile Include="Mvvm\Converters\DateTime2StringFormatConverter.cs" />
     <Compile Include="Mvvm\Converters\Double2StringFormatConverter.cs" />
     <Compile Include="Mvvm\Converters\Enum2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Int2StringFormatConverter.cs" />
