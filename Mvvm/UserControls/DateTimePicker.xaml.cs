@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfUtilV2.Common;
 using WpfUtilV2.Mvvm.Behaviors;
 
 namespace WpfUtilV2.Mvvm.UserControls
@@ -169,6 +173,21 @@ namespace WpfUtilV2.Mvvm.UserControls
         );
 
         /// <summary>
+        /// 入力された日付の許容最大値
+        /// </summary>
+        public ImageSource Icon
+        {
+            get { return (ImageSource)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+
+        public static DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon),
+            typeof(ImageSource),
+            typeof(DateTimePicker),
+            new FrameworkPropertyMetadata(WpfUtil.ToImageSource(Properties.Resources.calendar), null)
+        );
+
+        /// <summary>
         /// 入力された日付変更時
         /// </summary>
         private static void OnSelectedDateChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
@@ -248,5 +267,6 @@ namespace WpfUtilV2.Mvvm.UserControls
                 return null;
             }
         }
+
     }
 }

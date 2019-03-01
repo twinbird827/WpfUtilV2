@@ -25,7 +25,7 @@
                             </Style>
                         </UniformGrid.Style>
 
-                        <Image Source="../../Images/Calendar.png" 
+                        <Image Source="{Binding Icon}" 
                                Margin="3" />
 
                     </UniformGrid>
