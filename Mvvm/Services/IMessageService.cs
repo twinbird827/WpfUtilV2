@@ -28,6 +28,15 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerLineNumber] int callerLineNumber = 0);
 
         /// <summary>
+        /// 確認をﾒｯｾｰｼﾞ処理します。
+        /// </summary>
+        /// <param name="message">ﾒｯｾｰｼﾞ</param>
+        bool Confirm(string message,
+                [CallerMemberName] string callerMemberName = "",
+                [CallerFilePath]   string callerFilePath = "",
+                [CallerLineNumber] int callerLineNumber = 0);
+
+        /// <summary>
         /// ﾃﾞﾊﾞｯｸﾞﾒｯｾｰｼﾞ処理します。
         /// </summary>
         /// <param name="message">ﾒｯｾｰｼﾞ</param>

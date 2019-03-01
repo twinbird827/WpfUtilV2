@@ -33,6 +33,15 @@ namespace WpfUtilV2.Mvvm.Service
             Console.WriteLine(string.Format("[DEBUG][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
         }
 
+        public virtual bool Confirm(string message,
+                [CallerMemberName] string callerMemberName = "",
+                [CallerFilePath]   string callerFilePath = "",
+                [CallerLineNumber] int callerLineNumber = 0)
+        {
+            Console.WriteLine(string.Format("[CONFIRM][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
+            return true;
+        }
+
         public virtual void Exception(Exception exception,
                 [CallerMemberName] string callerMemberName = "",
                 [CallerFilePath]   string callerFilePath = "",
