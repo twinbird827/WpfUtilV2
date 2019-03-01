@@ -10,7 +10,7 @@ using System.Windows.Data;
 
 namespace WpfUtilV2.Mvvm.Converters
 {
-    public class Boolean2VisibilityConverter : IValueConverter
+    public class Boolean2VisibilityCollapsedConverter : IValueConverter
     {
         private BooleanToVisibilityConverter Inner { get; set; } = new BooleanToVisibilityConverter();
 
@@ -20,7 +20,7 @@ namespace WpfUtilV2.Mvvm.Converters
 
             return visibility == Visibility.Visible
                 ? Visibility.Visible
-                : Visibility.Hidden;
+                : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
