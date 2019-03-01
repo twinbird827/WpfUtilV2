@@ -15,7 +15,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
     public static class FrameworkElementUpdateSourceWhenEnterBehavior
     {
         public static readonly DependencyProperty TargetProperty = DependencyProperty.RegisterAttached(
-            "Target", typeof(DependencyProperty), typeof(FrameworkElementUpdateSourceWhenEnterBehavior), new UIPropertyMetadata(TargetProperty_Changed));
+            "Target", typeof(DependencyProperty), typeof(FrameworkElementUpdateSourceWhenEnterBehavior), new UIPropertyMetadata(OnSetTargetCallback));
 
         public static void SetTarget(DependencyObject dp, DependencyProperty value)
         {
@@ -32,7 +32,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void TargetProperty_Changed(DependencyObject dp, DependencyPropertyChangedEventArgs e)
+        private static void OnSetTargetCallback(DependencyObject dp, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = dp as FrameworkElement;
             

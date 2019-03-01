@@ -13,7 +13,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// Disposableの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty DialogResultProperty =
-            DependencyProperty.RegisterAttached("DialogResult", typeof(bool?), typeof(WindowRequestCloseBehavior), new UIPropertyMetadata(OnChangeDialogResult));
+            DependencyProperty.RegisterAttached("DialogResult", typeof(bool?), typeof(WindowRequestCloseBehavior), new UIPropertyMetadata(OnSetDialogResultCallback));
 
         /// <summary>
         /// Disposableを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -40,7 +40,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnChangeDialogResult(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void OnSetDialogResultCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var win = target as Window;
 

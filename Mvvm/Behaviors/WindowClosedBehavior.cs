@@ -16,7 +16,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// Disposableの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty DisposableProperty =
-            DependencyProperty.RegisterAttached("Disposable", typeof(IDisposable), typeof(WindowClosedBehavior), new UIPropertyMetadata(OnChangeViewModel));
+            DependencyProperty.RegisterAttached("Disposable", typeof(IDisposable), typeof(WindowClosedBehavior), new UIPropertyMetadata(OnSetDisposableCallback));
 
         /// <summary>
         /// Disposableを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -43,7 +43,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void OnChangeViewModel(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void OnSetDisposableCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var win = target as Window;
 

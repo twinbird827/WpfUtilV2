@@ -21,7 +21,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
             new FrameworkPropertyMetadata(
                 default(string), 
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                PasswordProperty_Changed)
+                OnSetPasswordCallback)
         );
 
         public static string GetPassword(DependencyObject dp)
@@ -39,7 +39,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void PasswordProperty_Changed(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void OnSetPasswordCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var passwordbox = sender as PasswordBox;
 

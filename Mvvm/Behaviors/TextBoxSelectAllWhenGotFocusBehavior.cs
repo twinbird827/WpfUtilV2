@@ -15,7 +15,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// このﾋﾞﾍｲﾋﾞｱが有効かどうかの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(TextBoxSelectAllWhenGotFocusBehavior), new UIPropertyMetadata(IsEnabledPropertyProperty_Changed));
+            DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(TextBoxSelectAllWhenGotFocusBehavior), new UIPropertyMetadata(OnSetIsEnabledCallback));
 
         /// <summary>
         /// このﾋﾞﾍｲﾋﾞｱが有効かどうかを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -42,7 +42,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void IsEnabledPropertyProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void OnSetIsEnabledCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var control = target as TextBox;
 

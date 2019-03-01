@@ -18,7 +18,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ControlMouseDoubleClickBehavior), new UIPropertyMetadata(CommandProperty_Changed));
+            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ControlMouseDoubleClickBehavior), new UIPropertyMetadata(OnSetCommandCallback));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -45,7 +45,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void CommandProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void OnSetCommandCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var control = target as Control;
 
@@ -66,7 +66,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
             if (control != null)
             {
                 ICommand command = (ICommand)control.GetValue(CommandProperty);
-                if (command != null) command.Execute(e);
+                if (command != null)
+                {
+                    command.Execute(e);
+                    e.Handled = true;
+                }
             }
         }
     }
