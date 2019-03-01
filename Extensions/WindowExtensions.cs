@@ -10,16 +10,27 @@ namespace WpfUtilV2.Extensions
 {
     public static class WindowExtensions
     {
-        public static bool ShowDialog(this Window window, Point position)
+        public static bool ShowModalWindow(this Window window)
         {
-            window.Top = position.Y;
-            window.Left = position.X;
+            return window.ShowModalWindow(Mouse.PrimaryDevice.GetPosition(Application.Current.MainWindow));
+        }
+
+        public static bool ShowModalWindow(this Window window, Point position)
+        {
+            var owner = Application.Current.MainWindow;
+            var ot = owner.WindowState == WindowState.Maximized ? 0 : owner.Top;
+            var ol = owner.WindowState == WindowState.Maximized ? 0 : owner.Left;
+
+            window.Owner = owner;
+            window.Top = ot + position.Y;
+            window.Left = ol + position.X;
+
             return (bool)window.ShowDialog();
         }
 
-        public static bool ShowDialog(this Window window, MouseButtonEventArgs e)
+        public static bool ShowModalWindow(this Window window, MouseButtonEventArgs e)
         {
-            return window.ShowDialog(e.GetPosition(Window.GetWindow(e.Source as DependencyObject)));
+            return window.ShowModalWindow(e.GetPosition(Window.GetWindow(e.Source as DependencyObject)));
         }
     }
 }
