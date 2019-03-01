@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
     /// <summary>
     /// UserControlのLoadedｲﾍﾞﾝﾄで任意のｺﾏﾝﾄﾞを実行するためのﾋﾞﾍｲﾋﾞｱです。
     /// </summary>
-    public class UserControlLoadedBehavior
+    public class FrameworkElementLoadedBehavior
     {
         /// <summary>
         /// ｺﾏﾝﾄﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(UserControlLoadedBehavior), new UIPropertyMetadata(CommandProperty_Changed));
+            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(FrameworkElementLoadedBehavior), new UIPropertyMetadata(OnSetCommandCallback));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -44,7 +45,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// ｺﾏﾝﾄﾞﾌﾟﾛﾊﾟﾃｨの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandParameterProperty =
-            DependencyProperty.RegisterAttached("CommandParameter", typeof(object), typeof(UserControlLoadedBehavior), new PropertyMetadata());
+            DependencyProperty.RegisterAttached("CommandParameter", typeof(object), typeof(FrameworkElementLoadedBehavior), new PropertyMetadata());
 
         /// <summary>
         /// ｺﾏﾝﾄﾞﾌﾟﾛﾊﾟﾃｨを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -71,35 +72,43 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void CommandProperty_Changed(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        private static void OnSetCommandCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            var uc = target as UserControl;
+            var uc = target as FrameworkElement;
 
-            if (uc.IsLoaded)
+            if (uc != null)
             {
-                UserControl_Loaded(uc, new EventArgs());
+                uc.Dispatcher.BeginInvoke(
+                    new Action(() => UserControl_Loaded(uc, EventArgs.Empty)),
+                    DispatcherPriority.Loaded
+                );
             }
-            else
-            {
-                Action<object, RoutedEventArgs> unloaded = null;
-                // ﾕｰｻﾞｺﾝﾄﾛｰﾙのｱﾝﾛｰﾄﾞ処理を定義(ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄを削除する)
-                unloaded = (sender, ea) =>
-                {
-                    var inner = sender as UserControl;
 
-                    if (unloaded != null)
-                    {
-                        inner.Unloaded -= new RoutedEventHandler(unloaded);
-                        unloaded = null;
-                    }
+            //if (uc.IsLoaded)
+            //{
+            //    UserControl_Loaded(uc, new EventArgs());
+            //}
+            //else
+            //{
+            //    Action<object, RoutedEventArgs> unloaded = null;
+            //    // ﾕｰｻﾞｺﾝﾄﾛｰﾙのｱﾝﾛｰﾄﾞ処理を定義(ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄを削除する)
+            //    unloaded = (sender, ea) =>
+            //    {
+            //        var inner = sender as UserControl;
 
-                    // ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄ削除処理
-                    inner.Loaded -= UserControl_Loaded;
-                };
+            //        if (unloaded != null)
+            //        {
+            //            inner.Unloaded -= new RoutedEventHandler(unloaded);
+            //            unloaded = null;
+            //        }
 
-                uc.Loaded += UserControl_Loaded;
-                uc.Unloaded += new RoutedEventHandler(unloaded);
-            }
+            //        // ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄ削除処理
+            //        inner.Loaded -= UserControl_Loaded;
+            //    };
+
+            //    uc.Loaded += UserControl_Loaded;
+            //    uc.Unloaded += new RoutedEventHandler(unloaded);
+            //}
             //BehaviorUtil.SetEventHandler(uc,
             //    (fe) => UserControl_Loaded(fe, new EventArgs()),
             //    (fe) => { }
