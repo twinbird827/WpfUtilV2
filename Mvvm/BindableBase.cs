@@ -21,7 +21,7 @@ namespace WpfUtilV2.Mvvm
         }
         protected void Writeline([CallerMemberName] String methodname = null)
         {
-            Console.WriteLine($"{Stopwatch.Elapsed.ToString(@"mm\:ss\.fffffff")} {string.Concat((GC.GetTotalMemory(false) / 1024).ToString("#,0"), " KB").PadLeft(10, ' ')} {string.Concat(GetType().Name, ".", methodname)}");
+            Console.WriteLine($"{DateTime.Now.ToString("MMdd HHmmss")} {Stopwatch.Elapsed.ToString(@"mm\:ss\.fffffff")} {string.Concat((GC.GetTotalMemory(false) / 1024).ToString("#,0"), " KB").PadLeft(10, ' ')} {string.Concat(GetType().Name, ".", methodname)}");
         }
         public BindableBase()
         {
@@ -67,7 +67,7 @@ namespace WpfUtilV2.Mvvm
         /// <param name="propertyName">リスナーに通知するために使用するプロパティの名前。
         /// この値は省略可能で、
         /// <see cref="CallerMemberNameAttribute"/> をサポートするコンパイラから呼び出す場合に自動的に指定できます。</param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, GetPropertyChangedEventArgs(propertyName));
         }
@@ -111,7 +111,7 @@ namespace WpfUtilV2.Mvvm
             else
             {
                 // 作成していない場合は作成する
-                CreatePropertyChangedEventArgs.Add(name, new PropertyChangedEventArgs(name));
+                CreatePropertyChangedEventArgs[name] = new PropertyChangedEventArgs(name);
                 return GetPropertyChangedEventArgs(name);
             }
         }
