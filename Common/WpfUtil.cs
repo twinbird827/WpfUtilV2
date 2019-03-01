@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Runtime.InteropServices;
+using System.Windows.Media;
+using System.Drawing;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
+using System.Windows.Interop;
 
 namespace WpfUtilV2.Common
 {
@@ -51,6 +57,24 @@ namespace WpfUtilV2.Common
             }
         }
 
+        public static ImageSource ToImageSource(Bitmap bitmap)
+        {
+            using (var ms = new WrappingStream(new MemoryStream()))
+            {
+                // MemoryStreamに書き出す
+                bitmap.Save(ms, ImageFormat.Png);
+                // MemoryStreamをシーク
+                ms.Seek(0, SeekOrigin.Begin);
+                // MemoryStreamからBitmapFrameを作成
+                // (BitmapFrameはBitmapSourceを継承しているのでそのまま渡せばOK)
+                return BitmapFrame.Create(ms, BitmapCreateOptions.None, BitmapCacheOption.OnLoad).GetAsFrozen() as BitmapFrame;
+            }
+        }
+
+        public static ImageSource ToImageSource(Icon icon)
+        {
+            return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen() as BitmapSource;
+        }
     }
 
     internal sealed class DCSafeHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
@@ -81,5 +105,4 @@ namespace WpfUtilV2.Common
             return UnsafeNativeMethods.IntCreateDC(lpszDriver, null, null, IntPtr.Zero);
         }
     }
-
 }
