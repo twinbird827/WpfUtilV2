@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
@@ -86,7 +87,10 @@ namespace WpfUtilV2.Mvvm.Behaviors
             // ﾛｰﾄﾞｲﾍﾞﾝﾄ追加orﾛｰﾄﾞ済みの場合は直接実行
             if (element.IsLoaded)
             {
-                loaded(element, new RoutedEventArgs());
+                element.Dispatcher.BeginInvoke(
+                    new Action(() => loaded(element, new RoutedEventArgs())),
+                    DispatcherPriority.Loaded
+                );
             }
             else
             {
