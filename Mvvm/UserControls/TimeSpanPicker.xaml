@@ -14,12 +14,12 @@
             <ColumnDefinition Width="*"    MinWidth="45"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        
-        <local:NumericUpDown Grid.Column="0" x:Name="UdDay"    Minimum="0" Value="{Binding Day}"/>
+         
+        <local:NumericUpDown Grid.Column="0" x:Name="UdDay"    Interval="1"  Value="{Binding Day}"/>
         <TextBlock Text="日" Grid.Column="1" x:Name="TbDay"    />
-        <local:NumericUpDown Grid.Column="2" x:Name="UbHour"   Minimum="0" Value="{Binding Hour}"/>
+        <local:NumericUpDown Grid.Column="2" x:Name="UbHour"   Interval="1"  Value="{Binding Hour}"/>
         <TextBlock Text="時" Grid.Column="3" x:Name="TbHour" />
-        <local:NumericUpDown Grid.Column="4" x:Name="UbMinute" Minimum="0" Value="{Binding Minute}"/>
+        <local:NumericUpDown Grid.Column="4" x:Name="UbMinute" Interval="10" Value="{Binding Minute}"/>
         <TextBlock Text="分" Grid.Column="5" x:Name="TbMinute" />
 
     </Grid>
