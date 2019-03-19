@@ -13,11 +13,16 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Windows.Interop;
+using System.Reflection;
 
 namespace WpfUtilV2.Common
 {
     public static class WpfUtil
     {
+        /// <summary>
+        /// ﾃﾞｻﾞｲﾝﾓｰﾄﾞかどうか確認します。
+        /// </summary>
+        /// <returns></returns>
         public static bool IsDesignMode()
         {
             // Check for design mode. 
@@ -41,22 +46,11 @@ namespace WpfUtilV2.Common
             }
         }
 
-        public static T[] ThinningOut<T>(T[] data, int afterCount)
-        {
-            var lineCount = data.Length;
-            if (afterCount < lineCount)
-            {
-                return Enumerable.Range(0, afterCount)
-                    .Select(i => (int)Math.Ceiling((double)(i * lineCount / afterCount)))
-                    .Select(i => data[i])
-                    .ToArray();
-            }
-            else
-            {
-                return data;
-            }
-        }
-
+        /// <summary>
+        /// BitmapをImageSourceに変換します。
+        /// </summary>
+        /// <param name="bitmap">Bitmapｲﾒｰｼﾞ</param>
+        /// <returns></returns>
         public static ImageSource ToImageSource(Bitmap bitmap)
         {
             using (var ms = new WrappingStream(new MemoryStream()))
@@ -71,12 +65,50 @@ namespace WpfUtilV2.Common
             }
         }
 
+        /// <summary>
+        /// IconをImageSourceに変換します。
+        /// </summary>
+        /// <param name="icon">Iconｲﾒｰｼﾞ</param>
+        /// <returns></returns>
         public static ImageSource ToImageSource(Icon icon)
         {
-            return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen() as BitmapSource;
+            return Imaging.CreateBitmapSourceFromHIcon(
+                icon.Handle,
+                Int32Rect.Empty, 
+                BitmapSizeOptions.FromEmptyOptions()
+            ).GetAsFrozen() as BitmapSource;
         }
+
+        /// <summary>
+        /// 定義済色ﾘｽﾄ
+        /// </summary>
+        public static SolidColorBrush[] Brushes
+        {
+            get
+            {
+                if (_Brushes != null) return _Brushes;
+
+                //_Brushes = typeof(System.Windows.Media.Brushes).GetProperties(BindingFlags.Public | BindingFlags.Static)
+                //    .Select(info => (SolidColorBrush)info.GetValue(null, null))
+                //    .Select(brush => brush.GetAsFrozen() as SolidColorBrush)
+                //    .ToArray();
+
+                var rgb = Enumerable.Range(1, 5).Select(i => i * 50).ToArray();
+
+                _Brushes = rgb.SelectMany(r => rgb.SelectMany(g => rgb.Select(b => new { r, g, b })))
+                    .Select(row => new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)row.r, (byte)row.g, (byte)row.b)))
+                    .ToArray();
+
+                return _Brushes;
+            }
+
+        }
+        private static SolidColorBrush[] _Brushes;
     }
 
+    /// <summary>
+    /// DPI取得用ｸﾗｽ
+    /// </summary>
     internal sealed class DCSafeHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         private DCSafeHandle() : base(true) { }
@@ -87,6 +119,9 @@ namespace WpfUtilV2.Common
         }
     }
 
+    /// <summary>
+    /// DPI取得用ｸﾗｽ
+    /// </summary>
     [System.Security.SuppressUnmanagedCodeSecurity]
     internal static class UnsafeNativeMethods
     {
