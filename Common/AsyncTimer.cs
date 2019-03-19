@@ -72,7 +72,7 @@ namespace WpfUtilV2.Common
         /// </summary>
         public void Start()
         {
-            WaitCompleted();
+            WaitCompleted(false);
             NextExecuteDate = DateTime.Now + Interval;
             Timer.Start();
         }
@@ -102,9 +102,11 @@ namespace WpfUtilV2.Common
         /// <summary>
         /// 実行中のｲﾍﾞﾝﾄが完了するまで待機します。
         /// </summary>
-        private void WaitCompleted()
+        private void WaitCompleted(bool disposing)
         {
-            while (!CanExecute)
+            // 破棄中は1回分の間隔だけ待って完了にする。
+            var begin = DateTime.Now;
+            while (!CanExecute && (!disposing || DateTime.Now < begin + Interval))
             {
                 System.Threading.Thread.Sleep(16);
             }
@@ -132,7 +134,7 @@ namespace WpfUtilV2.Common
                     Timer.Stop();
 
                     // 最後の処理が完了するまで待機
-                    WaitCompleted();
+                    WaitCompleted(true);
 
                     // ﾘｿｰｽ破棄
                     Tick = null;
