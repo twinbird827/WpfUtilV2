@@ -17,15 +17,22 @@ namespace WpfUtilV2.Extensions
 
         public static bool ShowModalWindow(this Window window, Point position)
         {
-            var owner = Application.Current.MainWindow;
-            var ot = owner.WindowState == WindowState.Maximized ? 0 : owner.Top;
-            var ol = owner.WindowState == WindowState.Maximized ? 0 : owner.Left;
+            try
+            {
+                var owner = Application.Current.MainWindow;
+                var ot = owner.WindowState == WindowState.Maximized ? 0 : owner.Top;
+                var ol = owner.WindowState == WindowState.Maximized ? 0 : owner.Left;
 
-            window.Owner = owner;
-            window.Top = ot + position.Y;
-            window.Left = ol + position.X;
+                window.Owner = owner;
+                window.Top = ot + position.Y;
+                window.Left = ol + position.X;
 
-            return (bool)window.ShowDialog();
+                return (bool)window.ShowDialog();
+            }
+            finally
+            {
+                window.Close();
+            }
         }
 
         public static bool ShowModalWindow(this Window window, MouseButtonEventArgs e)
