@@ -11,6 +11,7 @@
                       DockPanel.Dock="Right"
                       Margin="0" 
                       Height="{Binding Path=ActualHeight, ElementName=CalText}"
+                      Visibility="{Binding IsShowIcon, Converter={StaticResource Boolean2VisibilityCollapsedConverter}}"
                       IsTabStop="False">
             <ToggleButton.Template>
                 <ControlTemplate>

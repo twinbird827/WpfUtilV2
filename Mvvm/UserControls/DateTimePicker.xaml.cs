@@ -69,6 +69,9 @@ namespace WpfUtilV2.Mvvm.UserControls
 
                 // 次のﾌｫｰｶｽへ移動する。
                 CalText.MoveFocus(new TraversalRequest(shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next));
+
+                // 次のﾌｫｰｶｽへENTERｷｰｲﾍﾞﾝﾄを渡さない。
+                e.Handled = true;
             };
 
             // ﾃｷｽﾄﾎﾞｯｸｽ　ﾌｫｰｶｽ取得時に全選択する。
@@ -87,7 +90,11 @@ namespace WpfUtilV2.Mvvm.UserControls
         public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(nameof(SelectedDate),
             typeof(DateTime), 
             typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(DateTime.Now, new PropertyChangedCallback(OnSelectedDateChanged))
+            new FrameworkPropertyMetadata(
+                DateTime.Now,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, 
+                new PropertyChangedCallback(OnSelectedDateChanged)
+            )
         );
 
         /// <summary>
@@ -95,11 +102,11 @@ namespace WpfUtilV2.Mvvm.UserControls
         /// </summary>
         public string[] DateFormats
         {
-            get { return (string[])GetValue(DateFormatProperty); }
-            set { SetValue(DateFormatProperty, value); }
+            get { return (string[])GetValue(DateFormatsProperty); }
+            set { SetValue(DateFormatsProperty, value); }
         }
 
-        public static readonly DependencyProperty DateFormatProperty = DependencyProperty.Register(nameof(DateFormats),
+        public static readonly DependencyProperty DateFormatsProperty = DependencyProperty.Register(nameof(DateFormats),
             typeof(string[]), 
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(DefaultDateFormats, OnDateFormatChanged),
@@ -109,12 +116,17 @@ namespace WpfUtilV2.Mvvm.UserControls
         private static string[] DefaultDateFormats => new[]
         {
             // 最終的なﾌｫｰﾏｯﾄ
-            "yyyy/MM/dd HH:mm:ss",
+            "yy/MM/dd HH:mm:ss",
             // 許容するﾌｫｰﾏｯﾄ(年月日区切り="/")
+            "yyyy/M/d H:m:s",
             "yyyy/M/d H:m:s",
             "yyyy/M/d H:m",
             "yyyy/M/d H",
             "yyyy/M/d",
+            "yy/M/d H:m:s",
+            "yy/M/d H:m:s",
+            "yy/M/d H:m",
+            "yy/M/d H",
             "yy/M/d",
             "M/d H:m:s",
             "M/d H:m",
@@ -125,6 +137,9 @@ namespace WpfUtilV2.Mvvm.UserControls
             "yyyy-M-d H:m",
             "yyyy-M-d H",
             "yyyy-M-d",
+            "yy-M-d H:m:s",
+            "yy-M-d H:m",
+            "yy-M-d H",
             "yy-M-d",
             "M-d H:m:s",
             "M-d H:m",
@@ -135,6 +150,13 @@ namespace WpfUtilV2.Mvvm.UserControls
             "yyyyMMdd HHmm",
             "yyyyMMdd HH",
             "yyyyMMdd",
+            "yyMMdd HHmmss",
+            "yyMMdd HHmm",
+            "yyMMdd HH",
+            "yyMMdd",
+            "MMdd HHmmss",
+            "MMdd HHmm",
+            "MMdd HH",
             "MMdd",
             // 許容するﾌｫｰﾏｯﾄ(時分秒のみ)
             "H:m:s",
@@ -175,6 +197,21 @@ namespace WpfUtilV2.Mvvm.UserControls
         /// <summary>
         /// 入力された日付の許容最大値
         /// </summary>
+        public bool IsShowIcon
+        {
+            get { return (bool)GetValue(IsShowIconProperty); }
+            set { SetValue(IsShowIconProperty, value); }
+        }
+
+        public static DependencyProperty IsShowIconProperty = DependencyProperty.Register(nameof(IsShowIcon),
+            typeof(bool),
+            typeof(DateTimePicker),
+            new FrameworkPropertyMetadata(true, null)
+        );
+
+        /// <summary>
+        /// 入力された日付の許容最大値
+        /// </summary>
         public ImageSource Icon
         {
             get { return (ImageSource)GetValue(IconProperty); }
@@ -210,12 +247,14 @@ namespace WpfUtilV2.Mvvm.UserControls
         /// <returns>OK: true / NG:false</returns>
         private static bool IsValidDateFormats(object value)
         {
-            if (!(value is string[]))
+            var formats = value as string[];
+
+            if (formats == null)
             {
                 return false;
             }
 
-            var formats = value as string[];
+            // 設定された日付初期全て変換できることが検証条件
             return formats.All(format => Parse(DateTime.Now.ToString(format), format).HasValue);
         }
 
