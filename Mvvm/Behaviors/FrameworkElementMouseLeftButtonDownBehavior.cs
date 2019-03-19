@@ -11,19 +11,19 @@ namespace WpfUtilV2.Mvvm.Behaviors
     public class FrameworkElementMouseLeftButtonDownBehavior
     {
         /// <summary>
-        /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
+        /// DoubleClickの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(FrameworkElementMouseLeftButtonDownBehavior), new UIPropertyMetadata(OnSetCommandCallback));
+        public static DependencyProperty DoubleClickProperty =
+            DependencyProperty.RegisterAttached("DoubleClick", typeof(ICommand), typeof(FrameworkElementMouseLeftButtonDownBehavior), new UIPropertyMetadata(OnSetCommandCallback));
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
         /// </summary>
         /// <param name="target">対象</param>
         /// <param name="value">コマンド</param>
-        public static void SetCommand(DependencyObject target, object value)
+        public static void SetDoubleClick(DependencyObject target, object value)
         {
-            target.SetValue(CommandProperty, value);
+            target.SetValue(DoubleClickProperty, value);
         }
 
         /// <summary>
@@ -31,9 +31,35 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="target">対象</param>
         /// <returns>ｺﾏﾝﾄﾞ</returns>
-        public static ICommand GetCommand(DependencyObject target)
+        public static ICommand GetDoubleClick(DependencyObject target)
         {
-            return (ICommand)target.GetValue(CommandProperty);
+            return (ICommand)target.GetValue(DoubleClickProperty);
+        }
+
+        /// <summary>
+        /// SingleClickの依存関係ﾌﾟﾛﾊﾟﾃｨ
+        /// </summary>
+        public static DependencyProperty SingleClickProperty =
+            DependencyProperty.RegisterAttached("SingleClick", typeof(ICommand), typeof(FrameworkElementMouseLeftButtonDownBehavior), new UIPropertyMetadata(OnSetCommandCallback));
+
+        /// <summary>
+        /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <param name="value">コマンド</param>
+        public static void SetSingleClick(DependencyObject target, object value)
+        {
+            target.SetValue(SingleClickProperty, value);
+        }
+
+        /// <summary>
+        /// ｺﾏﾝﾄﾞを取得します（添付ﾋﾞﾍｲﾋﾞｱ）
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <returns>ｺﾏﾝﾄﾞ</returns>
+        public static ICommand GetSingleClick(DependencyObject target)
+        {
+            return (ICommand)target.GetValue(SingleClickProperty);
         }
 
         /// <summary>
@@ -44,10 +70,10 @@ namespace WpfUtilV2.Mvvm.Behaviors
         private static void OnSetCommandCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var control = target as FrameworkElement;
-
+            
             BehaviorUtil.SetEventHandler(control,
-                (fe) => fe.MouseLeftButtonDown += Control_MouseLeftButtonDown,
-                (fe) => fe.MouseLeftButtonDown -= Control_MouseLeftButtonDown
+                (fe) => fe.MouseLeftButtonDown += FrameworkElement_MouseLeftButtonDown,
+                (fe) => fe.MouseLeftButtonDown -= FrameworkElement_MouseLeftButtonDown
             );
         }
 
@@ -56,18 +82,26 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private static void FrameworkElement_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var control = sender as FrameworkElement;
-            if (control != null)
-            {
-                ICommand command = (ICommand)control.GetValue(CommandProperty);
-                if (command != null)
-                {
-                    command.Execute(e);
-                    e.Handled = true;
-                }
-            }
+            var fe = sender as FrameworkElement;
+
+            if (fe == null) return;
+
+            // ｸﾘｯｸ数によって実行するｺﾏﾝﾄﾞを変更する。
+            var command = e.ClickCount == 1
+                ? GetSingleClick(fe)
+                : e.ClickCount == 2
+                ? GetDoubleClick(fe)
+                : null;
+
+            if (command == null) return;
+
+            // ｺﾏﾝﾄﾞ実行
+            command.Execute(e);
+
+            // 処理済にする。
+            e.Handled = true;
         }
     }
 }
