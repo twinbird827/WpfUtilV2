@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -58,6 +60,7 @@
     <Compile Include="Common\WrappingStream.cs" />
     <Compile Include="Extensions\BytesExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\LongExtensions.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="Mvvm\Behaviors\PasswordBoxChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementUpdateSourceWhenEnterBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\PasswordBoxSelectAllWhenGotFocusBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\TextBoxOfDoubleBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\TextBoxSelectAllWhenGotFocusBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementLoadedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowAdjustmentPositionWhenLoadedBehavior.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Mvvm\Converters\Boolean2EnumConverter.cs" />
     <Compile Include="Mvvm\Converters\Boolean2VisibilityCollapsedConverter.cs" />
     <Compile Include="Mvvm\Converters\Boolean2VisibilityHiddenConverter.cs" />
+    <Compile Include="Mvvm\Converters\BooleanReverseConverter.cs" />
     <Compile Include="Mvvm\Converters\Compare2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\DateTime2StringFormatConverter.cs" />
     <Compile Include="Mvvm\Converters\Double2StringFormatConverter.cs" />
@@ -111,6 +116,12 @@
     <Compile Include="Mvvm\UserControls\DateTimePicker.xaml.cs">
       <DependentUpon>DateTimePicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mvvm\UserControls\NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mvvm\UserControls\TimeSpanPicker.xaml.cs">
+      <DependentUpon>TimeSpanPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Nuget\DynamicJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -128,6 +139,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mvvm\UserControls\DateTimePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mvvm\UserControls\NumericUpDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mvvm\UserControls\TimeSpanPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
