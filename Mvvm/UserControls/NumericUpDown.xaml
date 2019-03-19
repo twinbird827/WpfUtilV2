@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="WpfUtilV2.Mvvm.UserControls.NumericUpDown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUtilV2.Mvvm.UserControls"
+             mc:Ignorable="d">
+    <DockPanel x:Name="baseContainer">
+        <ScrollBar Name="Sb"
+                   DockPanel.Dock="Right"
+                   Value="{Binding Value}"
+                   SmallChange="{Binding Interval}"
+                   LargeChange="{Binding Interval}"
+                   Height="{Binding ElementName=Tb, Path=ActualHeight}"
+                   Margin="0,6,0,0"
+                   VerticalContentAlignment="Center"
+                   IsEnabled="True"
+                   Minimum="{Binding Minimum}"
+                   Maximum="{Binding Maximum}">
+            <ScrollBar.LayoutTransform>
+                <TransformGroup>
+                    <!--<ScaleTransform ScaleX="0.82" ScaleY="0.82" />-->
+                    <RotateTransform Angle="180" />
+                </TransformGroup>
+            </ScrollBar.LayoutTransform>
+            <!--<ScrollBar.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="180" />
+                </TransformGroup>
+            </ScrollBar.RenderTransform>-->
+        </ScrollBar>
+
+        <TextBox Name="Tb" 
+                 VerticalAlignment="Center"
+                 TextAlignment="Right" />
+
+    </DockPanel>
+</UserControl>
