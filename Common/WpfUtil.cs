@@ -104,6 +104,22 @@ namespace WpfUtilV2.Common
 
         }
         private static SolidColorBrush[] _Brushes;
+
+        /// <summary>
+        /// 現在使用中のﾒﾓﾘを取得します。
+        /// </summary>
+        public static long TotalMemory
+        {
+            get { return GC.GetTotalMemory(false); }
+        }
+
+        /// <summary>
+        /// 現在使用中のﾒﾓﾘ(KB換算)を文字列表現で取得します。
+        /// </summary>
+        public static string TotalKBString
+        {
+            get { return string.Concat((TotalMemory / 1024).ToString("#,0"), " KB"); }
+        }
     }
 
     /// <summary>

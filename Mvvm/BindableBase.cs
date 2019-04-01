@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using WpfUtilV2.Common;
 
 namespace WpfUtilV2.Mvvm
 {
@@ -22,7 +23,7 @@ namespace WpfUtilV2.Mvvm
         }
         protected void Writeline([CallerMemberName] String methodname = null)
         {
-            Console.WriteLine($"{DateTime.Now.ToString("MMdd HHmmss")} {Stopwatch.Elapsed.ToString(@"mm\:ss\.fffffff")} {string.Concat((GC.GetTotalMemory(false) / 1024).ToString("#,0"), " KB").PadLeft(10, ' ')} {string.Concat(GetType().Name, ".", methodname)}");
+            Console.WriteLine($"{DateTime.Now.ToString("MMdd HHmmss")} {Stopwatch.Elapsed.ToString(@"mm\:ss\.fffffff")} {WpfUtil.TotalKBString.PadLeft(10, ' ')} {string.Concat(GetType().Name, ".", methodname)}");
         }
         public BindableBase()
         {
