@@ -16,8 +16,9 @@ namespace WpfUtilV2.Common
             {
                 try
                 {
-                    if (NextExecuteDate <= DateTime.Now)
+                    if (IsCompleted && NextExecuteDate <= DateTime.Now)
                     {
+                        IsCompleted = false;
                         Timer.Stop();
                         NextExecuteDate = NextExecuteDate + Interval;
 
@@ -52,6 +53,8 @@ namespace WpfUtilV2.Common
         /// 最後にｲﾍﾞﾝﾄを発行した日時
         /// </summary>
         private DateTime NextExecuteDate { get; set; }
+
+        private bool IsCompleted { get; set; } = true;
 
         /// <summary>
         /// ﾀｲﾏｰの起動間隔
@@ -95,6 +98,7 @@ namespace WpfUtilV2.Common
                 NextExecuteDate += Interval;
             }
 
+            IsCompleted = true;
             Timer.Start();
         }
 
@@ -105,7 +109,7 @@ namespace WpfUtilV2.Common
         {
             // 破棄中は1回分の間隔だけ待って完了にする。
             var begin = DateTime.Now;
-            while (DateTime.Now < begin + Interval)
+            while (!IsCompleted && DateTime.Now < begin + Interval)
             {
                 System.Threading.Thread.Sleep(16);
             }
