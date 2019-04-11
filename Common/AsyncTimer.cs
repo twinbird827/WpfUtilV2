@@ -16,9 +16,9 @@ namespace WpfUtilV2.Common
             {
                 try
                 {
-                    if (CanExecute && NextExecuteDate <= DateTime.Now)
+                    if (NextExecuteDate <= DateTime.Now)
                     {
-                        CanExecute = false;
+                        Timer.Stop();
                         NextExecuteDate = NextExecuteDate + Interval;
 
                         Tick.Invoke(sender, e);
@@ -39,6 +39,11 @@ namespace WpfUtilV2.Common
         }
 
         /// <summary>
+        /// GUID
+        /// </summary>
+        private string Guid { get; set; } = System.Guid.NewGuid().ToString();
+
+        /// <summary>
         /// 内部的に利用するﾀｲﾏｰ
         /// </summary>
         private Timer Timer { get; set; }
@@ -47,11 +52,6 @@ namespace WpfUtilV2.Common
         /// 最後にｲﾍﾞﾝﾄを発行した日時
         /// </summary>
         private DateTime NextExecuteDate { get; set; }
-
-        /// <summary>
-        /// 1回のｲﾍﾞﾝﾄが完了したかどうか
-        /// </summary>
-        private bool CanExecute { get; set; } = true;
 
         /// <summary>
         /// ﾀｲﾏｰの起動間隔
@@ -72,7 +72,6 @@ namespace WpfUtilV2.Common
         /// </summary>
         public void Start()
         {
-            WaitCompleted(false);
             NextExecuteDate = DateTime.Now + Interval;
             Timer.Start();
         }
@@ -96,17 +95,17 @@ namespace WpfUtilV2.Common
                 NextExecuteDate += Interval;
             }
 
-            CanExecute = true;
+            Timer.Start();
         }
 
         /// <summary>
         /// 実行中のｲﾍﾞﾝﾄが完了するまで待機します。
         /// </summary>
-        private void WaitCompleted(bool disposing)
+        private void WaitCompleted()
         {
             // 破棄中は1回分の間隔だけ待って完了にする。
             var begin = DateTime.Now;
-            while (!CanExecute && (!disposing || DateTime.Now < begin + Interval))
+            while (DateTime.Now < begin + Interval)
             {
                 System.Threading.Thread.Sleep(16);
             }
@@ -134,7 +133,7 @@ namespace WpfUtilV2.Common
                     Timer.Stop();
 
                     // 最後の処理が完了するまで待機
-                    WaitCompleted(true);
+                    WaitCompleted();
 
                     // ﾘｿｰｽ破棄
                     Tick = null;
