@@ -138,7 +138,7 @@ namespace WpfUtilV2.Mvvm.UserControls
             typeof(double),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(
-                default(double),
+                -1d,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 new PropertyChangedCallback(OnValueChanged)
             )
