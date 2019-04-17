@@ -40,7 +40,7 @@ namespace WpfUtilV2.Mvvm.UserControls
             typeof(TimeSpan),
             typeof(TimeSpanPicker),
             new FrameworkPropertyMetadata(
-                TimeSpan.Zero,
+                TimeSpan.MinValue,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 new PropertyChangedCallback(OnElapsedChanged)
             )
@@ -119,8 +119,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             else
             {
                 picker.Day = Math.Floor(newv.TotalDays);
-                picker.Hour = newv.Hours;
-                picker.Minute = newv.Minutes;
+                picker.Hour = (double)newv.Hours;
+                picker.Minute = (double)newv.Minutes;
             }
         }
 

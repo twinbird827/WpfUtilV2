@@ -100,6 +100,7 @@
     <Compile Include="Mvvm\Converters\Int2StringFormatConverter.cs" />
     <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
     <Compile Include="Mvvm\Converters\Tick2DateDisplayConverter.cs" />
+    <Compile Include="Mvvm\Converters\ValueConverterGroup.cs" />
     <Compile Include="Mvvm\CustomControls\IFocusableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />
