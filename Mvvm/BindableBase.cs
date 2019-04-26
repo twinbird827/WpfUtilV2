@@ -28,6 +28,8 @@ namespace WpfUtilV2.Mvvm
         public BindableBase()
         {
             Stopwatch = new Stopwatch();
+            StartStopwatch();
+            Writeline();
         }
 
         /// <summary>

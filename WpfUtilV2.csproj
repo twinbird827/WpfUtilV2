@@ -105,8 +105,6 @@
     <Compile Include="Mvvm\Converters\ValueConverterGroup.cs" />
     <Compile Include="Mvvm\CustomControls\IFocusableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
-    <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />
-    <Compile Include="Mvvm\CustomControls\ListViewEx.cs" />
     <Compile Include="Mvvm\CustomControls\TextBoxEx.cs" />
     <Compile Include="Mvvm\ModalWindowViewModel.cs" />
     <Compile Include="Mvvm\PushBinding\FreezableBinding.cs" />
