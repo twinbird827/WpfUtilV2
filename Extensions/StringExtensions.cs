@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WpfUtilV2.Extensions
@@ -151,5 +152,80 @@ namespace WpfUtilV2.Extensions
             return Convert.ToInt32(s, 2).ToHex(length);
         }
 
+        public static TimeSpan? ToTimeSpan(this string s)
+        {
+            const string dd = "(?<day>[\\d]+)";
+            const string hh = "(?<hour>[\\d]+)";
+            const string mm = "(?<minute>[\\d]+)";
+            const string ss = "(?<second>[\\d]+)";
+
+            string[] formats = new[]
+            {
+                $"^{dd}\\.{hh}:{mm}:{ss}$",
+                $"^{dd}\\.{hh}:{mm}$",
+                $"^{dd}\\.{hh}$",
+
+                $"^{dd}日{hh}:{mm}:{ss}$",
+                $"^{dd}日{hh}:{mm}$",
+                $"^{dd}日{hh}$",
+
+                $"^{hh}:{mm}:{ss}$",
+                $"^{hh}:{mm}$",
+                $"^{hh}$",
+            };
+
+            foreach (var expr in formats)
+            {
+                // 正規表現で検索
+                var regex = new Regex(expr, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                var match = regex.Match(s);
+
+                if (!match.Success)
+                {
+                    // 検索できない場合は次の正規表現へ
+                    continue;
+                }
+
+                // 年月日時分を入れるための変数を用意
+                var result = TimeSpan.Zero;
+
+                foreach (var groupname in regex.GetGroupNames())
+                {
+                    switch (groupname)
+                    {
+                        case "day":
+                        case "hour":
+                        case "minute":
+                        case "second":
+                            break;
+                        default:
+                            continue;
+                    }
+
+                    var value = double.Parse(match.Groups[groupname].Value);
+
+                    switch (groupname)
+                    {
+                        case "day":
+                            result += TimeSpan.FromDays(value);
+                            break;
+                        case "hour":
+                            result += TimeSpan.FromHours(value);
+                            break;
+                        case "minute":
+                            result += TimeSpan.FromMinutes(value);
+                            break;
+                        case "second":
+                            result += TimeSpan.FromSeconds(value);
+                            break;
+                    }
+                }
+
+                // 取得できたら日付に変換して返却する
+                return result;
+            }
+
+            return null;
+        }
     }
 }
