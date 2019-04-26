@@ -19,5 +19,14 @@ namespace WpfUtilV2.Extensions
                 source = source.Skip(chunkSize);
             }
         }
+
+        public static TResult MaxOrDefault<T, TResult>(this IEnumerable<T> source, Func<T, TResult> func)
+        {
+            return source.MaxOrDefault(func, default(TResult));
+        }
+        public static TResult MaxOrDefault<T, TResult>(this IEnumerable<T> source, Func<T, TResult> func, TResult def)
+        {
+            return source.Any() ? source.Max(func) : def;
+        }
     }
 }
