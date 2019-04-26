@@ -82,6 +82,7 @@
     <Compile Include="Mvvm\Behaviors\PasswordBoxChangedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementUpdateSourceWhenEnterBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\PasswordBoxSelectAllWhenGotFocusBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\ScrollViewerSyncBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\TextBoxOfDoubleBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\TextBoxSelectAllWhenGotFocusBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementLoadedBehavior.cs" />
@@ -99,11 +100,13 @@
     <Compile Include="Mvvm\Converters\Enum2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Int2StringFormatConverter.cs" />
     <Compile Include="Mvvm\Converters\Long2TimeSpanConverter.cs" />
+    <Compile Include="Mvvm\Converters\Null2BooleanConverter.cs" />
     <Compile Include="Mvvm\Converters\Tick2DateDisplayConverter.cs" />
     <Compile Include="Mvvm\Converters\ValueConverterGroup.cs" />
     <Compile Include="Mvvm\CustomControls\IFocusableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\ListBoxEx.cs" />
+    <Compile Include="Mvvm\CustomControls\ListViewEx.cs" />
     <Compile Include="Mvvm\CustomControls\TextBoxEx.cs" />
     <Compile Include="Mvvm\ModalWindowViewModel.cs" />
     <Compile Include="Mvvm\PushBinding\FreezableBinding.cs" />
@@ -122,6 +125,9 @@
     </Compile>
     <Compile Include="Mvvm\UserControls\TimeSpanPicker.xaml.cs">
       <DependentUpon>TimeSpanPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mvvm\UserControls\TimeTextPicker.xaml.cs">
+      <DependentUpon>TimeTextPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Nuget\DynamicJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -148,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mvvm\UserControls\TimeSpanPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mvvm\UserControls\TimeTextPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
