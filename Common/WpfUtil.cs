@@ -14,6 +14,7 @@ using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Windows.Interop;
 using System.Reflection;
+using WpfUtilV2.Extensions;
 
 namespace WpfUtilV2.Common
 {
@@ -61,7 +62,7 @@ namespace WpfUtilV2.Common
                 ms.Seek(0, SeekOrigin.Begin);
                 // MemoryStreamからBitmapFrameを作成
                 // (BitmapFrameはBitmapSourceを継承しているのでそのまま渡せばOK)
-                return BitmapFrame.Create(ms, BitmapCreateOptions.None, BitmapCacheOption.OnLoad).GetAsFrozen() as BitmapFrame;
+                return BitmapFrame.Create(ms, BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frozen();
             }
         }
 
@@ -76,7 +77,7 @@ namespace WpfUtilV2.Common
                 icon.Handle,
                 Int32Rect.Empty, 
                 BitmapSizeOptions.FromEmptyOptions()
-            ).GetAsFrozen() as BitmapSource;
+            ).Frozen();
         }
 
         /// <summary>
@@ -119,6 +120,19 @@ namespace WpfUtilV2.Common
         public static string TotalKBString
         {
             get { return string.Concat((TotalMemory / 1024).ToString("#,0"), " KB"); }
+        }
+
+        /// <summary>
+        /// 引数のうち、Null、または空文字ではない最初の文字列を取得します。
+        /// </summary>
+        /// <param name="values">条件ﾘｽﾄ</param>
+        /// <returns>空文字ではない文字列</returns>
+        public static string GetIsNotNull(params object[] values)
+        {
+            return values
+                .Where(value => value != null)
+                .Select(value => value is string ? (string)value : value.ToString())
+                .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
         }
     }
 

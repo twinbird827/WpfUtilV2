@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfUtilV2.Common;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
@@ -45,7 +46,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定するﾌｫｰﾏｯﾄの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty FormatProperty =
-            DependencyProperty.RegisterAttached("Format", typeof(string), typeof(TextBoxOfDoubleBehavior), new UIPropertyMetadata());
+            DependencyProperty.RegisterAttached("Format", 
+                typeof(string), 
+                typeof(TextBoxOfDoubleBehavior),
+                new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetFormatCallback)
+            );
 
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定するﾌｫｰﾏｯﾄを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -112,6 +117,19 @@ namespace WpfUtilV2.Mvvm.Behaviors
             );
 
             textbox.Dispatcher.BeginInvoke(new Action(() => SetText(textbox, (double)e.NewValue)));
+        }
+
+        /// <summary>
+        /// Valueﾌﾟﾛﾊﾟﾃｨが変更された際の処理
+        /// </summary>
+        /// <param name="target">対象</param>
+        /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
+        private static void OnSetFormatCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        {
+            var textbox = target as TextBox;
+            var value = WpfUtil.GetIsNotNull(GetValue(textbox), textbox.Text, "0");
+
+            textbox.Dispatcher.BeginInvoke(new Action(() => SetText(textbox, double.Parse(value))));
         }
 
         /// <summary>
