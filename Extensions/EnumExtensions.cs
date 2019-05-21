@@ -10,11 +10,30 @@ namespace WpfUtilV2.Extensions
 {
     public static class EnumExtensions
     {
+        /// <summary>
+        /// 列挙値の文字列表現を取得します。
+        /// </summary>
+        /// <typeparam name="T">列挙値の型</typeparam>
+        /// <param name="target">列挙値</param>
+        /// <returns></returns>
         public static string GetLabel<T>(this T target) where T : Enum
         {
             var targetString = target.ToString();
             return typeof(T).GetField(targetString).GetCustomAttribute<LabelAttribute>()?.Value
                 ?? targetString;
+        }
+
+        /// <summary>
+        /// 全列挙値を取得します。
+        /// </summary>
+        /// <typeparam name="T">取得したい列挙定義</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> GetValues<T>()
+        {
+            foreach (T value in Enum.GetValues(typeof(T)))
+            {
+                yield return value;
+            }
         }
     }
 
