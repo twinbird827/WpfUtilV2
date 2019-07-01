@@ -9,15 +9,15 @@ namespace WpfUtilV2.Common
 {
     public static class SemaphoreManager
     {
-        private const string DefaultKey = "default";
-
+        /// <summary>
+        /// ｾﾏﾌｫﾘｽﾄ
+        /// </summary>
         private static Dictionary<string, SemaphoreSlim> Semaphores { get; set; } = new Dictionary<string, SemaphoreSlim>();
 
-        public static async Task WaitAsync()
-        {
-            await WaitAsync(DefaultKey);
-        }
-
+        /// <summary>
+        /// 指定したｷｰで待機します。
+        /// </summary>
+        /// <param name="key">待機するｷｰ</param>
         public static async Task WaitAsync(string key)
         {
             if (!Semaphores.ContainsKey(key))
@@ -27,11 +27,23 @@ namespace WpfUtilV2.Common
             await Semaphores[key].WaitAsync();
         }
 
-        public static int Release()
+        /// <summary>
+        /// 指定したｷｰで待機します。
+        /// </summary>
+        /// <param name="key">待機するｷｰ</param>
+        public static void Wait(string key)
         {
-            return Release(DefaultKey);
+            if (!Semaphores.ContainsKey(key))
+            {
+                Semaphores.Add(key, new SemaphoreSlim(1, 1));
+            }
+            Semaphores[key].Wait();
         }
 
+        /// <summary>
+        /// 指定したｷｰの待機状態を解除します。
+        /// </summary>
+        /// <param name="key">解除するｷｰ</param>
         public static int Release(string key)
         {
             return Semaphores[key].Release();

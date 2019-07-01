@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Interop;
 using System.Reflection;
 using WpfUtilV2.Extensions;
+using System.Windows.Threading;
 
 namespace WpfUtilV2.Common
 {
@@ -134,6 +135,16 @@ namespace WpfUtilV2.Common
                 .Select(value => value is string ? (string)value : value.ToString())
                 .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
         }
+
+        /// <summary>
+        /// 処理を開始します。
+        /// </summary>
+        /// <param name="action">処理(非同期可)</param>
+        public static void BeginInvoke(Action action)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(action);
+        }
+
     }
 
     /// <summary>

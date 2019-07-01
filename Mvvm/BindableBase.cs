@@ -28,8 +28,8 @@ namespace WpfUtilV2.Mvvm
         public BindableBase()
         {
             Stopwatch = new Stopwatch();
-            StartStopwatch();
-            Writeline();
+            //StartStopwatch();
+            //Writeline();
         }
 
         /// <summary>
@@ -131,10 +131,10 @@ namespace WpfUtilV2.Mvvm
 
                 if (disposing)
                 {
-                    StartStopwatch();
+                    //StartStopwatch();
                     // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
                     Disposed?.Invoke(this, new EventArgs());
-                    Writeline();
+                    //Writeline();
                     Stopwatch = null;
                 }
 
@@ -166,8 +166,12 @@ namespace WpfUtilV2.Mvvm
         /// <summary>
         /// GUID
         /// </summary>
-        private string Guid { get; set; } = System.Guid.NewGuid().ToString();
+        protected string Guid { get; set; } = System.Guid.NewGuid().ToString();
 
+        public override string ToString()
+        {
+            return $"{base.ToString()} {Guid}";
+        }
         /// <summary>
         /// ｲﾝｽﾀﾝｽと指定した別のBindableBaseの値が同値か比較します。
         /// </summary>

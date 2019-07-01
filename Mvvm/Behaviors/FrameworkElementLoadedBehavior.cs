@@ -74,12 +74,12 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void OnSetCommandCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            var uc = target as FrameworkElement;
+            var obj = target as DependencyObject;
 
-            if (uc != null)
+            if (obj != null)
             {
-                uc.Dispatcher.BeginInvoke(
-                    new Action(() => UserControl_Loaded(uc, EventArgs.Empty)),
+                obj.Dispatcher.BeginInvoke(
+                    new Action(() => UserControl_Loaded(obj, EventArgs.Empty)),
                     DispatcherPriority.Loaded
                 );
             }
@@ -122,15 +122,15 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void UserControl_Loaded(object sender, EventArgs e)
         {
-            var uc = sender as UserControl;
+            var obj = sender as DependencyObject;
 
-            if (uc == null)
+            if (obj == null)
             {
                 return;
             }
 
-            var command = GetCommand(uc);
-            var commandparameter = GetCommandParameter(uc);
+            var command = GetCommand(obj);
+            var commandparameter = GetCommandParameter(obj);
 
             if (command != null && command.CanExecute(commandparameter))
             {

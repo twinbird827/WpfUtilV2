@@ -19,7 +19,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
             DependencyProperty.RegisterAttached("Value",
                 typeof(double),
                 typeof(TextBoxOfDoubleBehavior), 
-                new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetValueCallback)
+                new FrameworkPropertyMetadata((double)float.MinValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetValueCallback)
             );
 
         /// <summary>
