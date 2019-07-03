@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using WpfUtilV2.Common;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
@@ -31,13 +32,16 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
         private static void OnSetIsEnabledCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var window = sender as Window;
+            if (!WpfUtil.IsDesignMode())
+            {
+                var window = sender as Window;
 
-            // 初期表示時にSizeChangedｲﾍﾞﾝﾄが発生しなかったのでｺﾝﾄﾛｰﾙ読込後に1回だけ手動で実行する。
-            window.Dispatcher.BeginInvoke(
-                new Action(() => Window_Loaded(window)),
-                DispatcherPriority.Loaded
-            );
+                // 初期表示時にSizeChangedｲﾍﾞﾝﾄが発生しなかったのでｺﾝﾄﾛｰﾙ読込後に1回だけ手動で実行する。
+                window.Dispatcher.BeginInvoke(
+                    new Action(() => Window_Loaded(window)),
+                    DispatcherPriority.Loaded
+                );
+            }
         }
 
         /// <summary>
