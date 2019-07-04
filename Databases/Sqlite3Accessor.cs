@@ -17,10 +17,13 @@ namespace WpfUtilV2.Databases
         protected Sqlite3Accessor(string path, bool isReadOnly)
         {
             var work = System.AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
+            var full = Path.Combine(work, path);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(full));
 
             var connectionString = new SQLiteConnectionStringBuilder()
             {
-                DataSource = Path.Combine(work, path),
+                DataSource = full,
                 DefaultIsolationLevel = System.Data.IsolationLevel.ReadCommitted,
                 SyncMode = SynchronizationModes.Off,
                 JournalMode = SQLiteJournalModeEnum.Wal,
