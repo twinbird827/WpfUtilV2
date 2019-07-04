@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -14,7 +15,7 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
         {
-            Console.WriteLine(string.Format("[ERROR][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
+            Console.WriteLine(GetString(EventLogEntryType.Error, message, callerMemberName, callerFilePath, callerLineNumber));
         }
 
         public virtual void Info(string message,
@@ -22,7 +23,7 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
         {
-            Console.WriteLine(string.Format("[INFO][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
+            Console.WriteLine(GetString(EventLogEntryType.Information, message, callerMemberName, callerFilePath, callerLineNumber));
         }
 
         public virtual void Debug(string message,
@@ -30,7 +31,7 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
         {
-            Console.WriteLine(string.Format("[DEBUG][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
+            Console.WriteLine(GetString(EventLogEntryType.Information, message, callerMemberName, callerFilePath, callerLineNumber));
         }
 
         public virtual bool Confirm(string message,
@@ -38,7 +39,7 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
         {
-            Console.WriteLine(string.Format("[CONFIRM][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, message));
+            Console.WriteLine(GetString(EventLogEntryType.Information, message, callerMemberName, callerFilePath, callerLineNumber));
             return true;
         }
 
@@ -47,7 +48,27 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0)
         {
-            Console.WriteLine(string.Format("[EXCEPTION][{0:yy/MM/dd HH:mm:ss}][{1}][{2}][{3}]\n{4}", DateTime.Now, callerFilePath, callerMemberName, callerLineNumber, exception.ToString()));
+            Console.WriteLine(GetString(EventLogEntryType.Error, exception.ToString(), callerMemberName, callerFilePath, callerLineNumber));
+        }
+
+        private string GetString(EventLogEntryType type, 
+                string message,
+                string callerMemberName,
+                string callerFilePath,
+                int callerLineNumber)
+        {
+            var txt = $"[{type}][{DateTime.Now.ToString("")}][{callerFilePath}][{callerMemberName}][{callerLineNumber}]\n{message}";
+
+            if (type == EventLogEntryType.Error)
+            {
+                using (var log = new EventLog())
+                {
+                    log.Source = callerFilePath;
+                    log.WriteEntry(txt, type);
+                }
+            }
+
+            return txt;
         }
     }
 }

@@ -145,6 +145,17 @@ namespace WpfUtilV2.Common
             Dispatcher.CurrentDispatcher.BeginInvoke(action);
         }
 
+        /// <summary>
+        /// Enum値へ変換します。
+        /// </summary>
+        /// <typeparam name="T">変換後のEnum型</typeparam>
+        /// <param name="value">Enum型の文字列表現</param>
+        /// <returns></returns>
+        public static T ToEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value);
+        }
+
     }
 
     /// <summary>

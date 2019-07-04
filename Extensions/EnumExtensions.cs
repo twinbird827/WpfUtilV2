@@ -35,6 +35,7 @@ namespace WpfUtilV2.Extensions
                 yield return value;
             }
         }
+
     }
 
     [AttributeUsage(AttributeTargets.Field)]
