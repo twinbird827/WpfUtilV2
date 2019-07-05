@@ -95,6 +95,7 @@
     <Compile Include="Mvvm\Behaviors\FrameworkElementUpdateSourceWhenEnterBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\PasswordBoxSelectAllWhenGotFocusBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ScrollViewerSyncBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\TextBlockWrappingBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\TextBoxOfDoubleBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\TextBoxSelectAllWhenGotFocusBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementLoadedBehavior.cs" />
