@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -226,6 +227,20 @@ namespace WpfUtilV2.Extensions
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// ﾐﾘ秒以下を切り捨てた現在日付を取得します。
+        /// </summary>
+        public static TextInfo TextInfo
+        {
+            get { return _TextInfo = _TextInfo ?? CultureInfo.CurrentCulture.TextInfo; }
+        }
+        private static TextInfo _TextInfo;
+
+        public static string ToTitleCase(this string s)
+        {
+            return TextInfo.ToTitleCase(s);
         }
     }
 }

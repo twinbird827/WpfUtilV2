@@ -64,6 +64,26 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 textblock.TextTrimming = TextTrimming.CharacterEllipsis;
             }
 
+            BehaviorUtil.SetEventHandler(textblock,
+                (block) => block.Loaded += TextBlock_Loaded,
+                (block) => block.Loaded -= TextBlock_Loaded
+            );
+
+            BehaviorUtil.SetEventHandler(textblock,
+                (block) => block.TargetUpdated += TextBlock_TargetUpdated,
+                (block) => block.TargetUpdated -= TextBlock_TargetUpdated
+            );
+        }
+
+        private static void TextBlock_Loaded(object sender, EventArgs e)
+        {
+            var textblock = sender as TextBlock;
+
+            if (textblock == null)
+            {
+                return;
+            }
+
             var binding = BindingOperations.GetBinding(textblock, TextBlock.TextProperty);
 
             if (binding == null)
@@ -79,11 +99,6 @@ namespace WpfUtilV2.Mvvm.Behaviors
                     NotifyOnTargetUpdated = true
                 });
             }
-
-            BehaviorUtil.SetEventHandler(textblock,
-                (block) => block.TargetUpdated += TextBlock_TargetUpdated,
-                (block) => block.TargetUpdated -= TextBlock_TargetUpdated
-            );
         }
 
         /// <summary>

@@ -59,14 +59,21 @@ namespace WpfUtilV2.Mvvm.Service
         {
             var txt = $"[{type}][{DateTime.Now.ToString("")}][{callerFilePath}][{callerMemberName}][{callerLineNumber}]\n{message}";
 
-            //if (type == EventLogEntryType.Error)
-            //{
-            //    using (var log = new EventLog())
-            //    {
-            //        log.Source = callerFilePath;
-            //        log.WriteEntry(txt, type);
-            //    }
-            //}
+            if (type == EventLogEntryType.Error)
+            {
+                try
+                {
+                    using (var log = new EventLog())
+                    {
+                        log.Source = callerFilePath;
+                        log.WriteEntry(txt, type);
+                    }
+                }
+                catch
+                {
+
+                }
+            }
 
             return txt;
         }

@@ -156,6 +156,10 @@ namespace WpfUtilV2.Common
             return (T)Enum.Parse(typeof(T), value);
         }
 
+        public static string Nvl(params string[] args)
+        {
+            return args.FirstOrDefault(s => !string.IsNullOrEmpty(s));
+        }
     }
 
     /// <summary>
