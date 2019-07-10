@@ -156,6 +156,17 @@ namespace WpfUtilV2.Common
             return (T)Enum.Parse(typeof(T), value);
         }
 
+        /// <summary>
+        /// Enum値へ変換します。
+        /// </summary>
+        /// <typeparam name="T">変換後のEnum型</typeparam>
+        /// <param name="value">Enum型の文字列表現</param>
+        /// <returns></returns>
+        public static T ToEnum<T>(int value)
+        {
+            return ToEnum<T>(value.ToString());
+        }
+
         public static string Nvl(params string[] args)
         {
             return args.FirstOrDefault(s => !string.IsNullOrEmpty(s));
