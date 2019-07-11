@@ -59,9 +59,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
             );
 
             // 初期表示時にSizeChangedｲﾍﾞﾝﾄが発生しなかったのでｺﾝﾄﾛｰﾙ読込後に1回だけ手動で実行する。
-            element.Dispatcher.BeginInvoke(
-                new Action(() => ListView_SizeChanged(element, null)),
-                DispatcherPriority.Loaded
+            BehaviorUtil.Loaded(element,
+                (listview, tmp) => ListView_SizeChanged(listview, null)
             );
         }
 

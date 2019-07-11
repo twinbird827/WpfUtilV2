@@ -34,21 +34,17 @@ namespace WpfUtilV2.Mvvm.Behaviors
         {
             if (!WpfUtil.IsDesignMode())
             {
-                var window = sender as Window;
-
-                // 初期表示時にSizeChangedｲﾍﾞﾝﾄが発生しなかったのでｺﾝﾄﾛｰﾙ読込後に1回だけ手動で実行する。
-                window.Dispatcher.BeginInvoke(
-                    new Action(() => Window_Loaded(window)),
-                    DispatcherPriority.Loaded
-                );
+                // Window読込時ｲﾍﾞﾝﾄ
+                BehaviorUtil.Loaded(sender as Window, Window_Loaded);
             }
         }
 
         /// <summary>
         /// Window読込時ｲﾍﾞﾝﾄ
         /// </summary>
-        private static void Window_Loaded(Window window)
+        private static void Window_Loaded(object sender, EventArgs e)
         {
+            var window = sender as Window;
             var owner = window.Owner;
 
             if (owner == null) return;

@@ -116,7 +116,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 (fe) => fe.LostFocus -= TextBox_LostFocus
             );
 
-            textbox.Dispatcher.BeginInvoke(new Action(() => SetText(textbox, (double)e.NewValue)));
+            BehaviorUtil.Loaded(textbox, 
+                (sender, tmp) => SetText(textbox, (double)e.NewValue)
+            );
         }
 
         /// <summary>
@@ -129,7 +131,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
             var textbox = target as TextBox;
             var value = WpfUtil.GetIsNotNull(GetValue(textbox), textbox.Text, "0");
 
-            textbox.Dispatcher.BeginInvoke(new Action(() => SetText(textbox, double.Parse(value))));
+            BehaviorUtil.Loaded(textbox, 
+                (sender, tmp) => SetText(textbox, double.Parse(value))
+            );
         }
 
         /// <summary>
@@ -170,6 +174,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
             }
         }
 
+        /// <summary>
+        /// 予め設定されたﾌｫｰﾏｯﾄで数値をﾃｷｽﾄに変換してｵﾌﾞｼﾞｪｸﾄに設定します。
+        /// </summary>
+        /// <param name="textbox">ｵﾌﾞｼﾞｪｸﾄ</param>
+        /// <param name="value">数値</param>
         private static void SetText(TextBox textbox, double value)
         {
             textbox.Text = string.Format(GetFormat(textbox), value);

@@ -78,10 +78,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
             if (obj != null)
             {
-                obj.Dispatcher.BeginInvoke(
-                    new Action(() => UserControl_Loaded(obj, EventArgs.Empty)),
-                    DispatcherPriority.Loaded
-                );
+                BehaviorUtil.Loaded(target as UserControl, UserControl_Loaded);
             }
 
             //if (uc.IsLoaded)
