@@ -24,7 +24,14 @@ namespace WpfUtilV2.Mvvm.Behaviors
             dp.SetValue(IsAttachedProperty, value);
         }
 
-        public static void SetEventHandler<T>(T element, Action<T> add, Action<T> remove) where T: FrameworkElement
+        /// <summary>
+        /// 指定したｵﾌﾞｼﾞｪｸﾄにｲﾍﾞﾝﾄを追加します。
+        /// </summary>
+        /// <typeparam name="T">ｵﾌﾞｼﾞｪｸﾄの型</typeparam>
+        /// <param name="element">ｵﾌﾞｼﾞｪｸﾄ</param>
+        /// <param name="add">ｲﾍﾞﾝﾄを追加するためのｱｸｼｮﾝ</param>
+        /// <param name="del">ｲﾍﾞﾝﾄを削除するためのｱｸｼｮﾝ</param>
+        public static void SetEventHandler<T>(T element, Action<T> add, Action<T> del) where T: FrameworkElement
         {
             if (element == null)
             {
@@ -41,7 +48,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
             SetIsAttached(element, true);
 
             // 既存のｲﾍﾞﾝﾄを削除(ｲﾍﾞﾝﾄ登録されていない場合でも例外は発生しないのでとりあえず呼び出す)
-            remove?.Invoke(element);
+            del?.Invoke(element);
 
             Action<object, RoutedEventArgs> loaded = null;
             Action<object, RoutedEventArgs> unloaded = null;
@@ -77,24 +84,35 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 }
 
                 // ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄ削除処理
-                remove?.Invoke((T)fe);
+                del?.Invoke((T)fe);
 
                 // ｱﾀｯﾁ削除を保存
                 SetIsAttached(element, false);
 
             };
 
+            // 読込時処理の実行
+            Loaded(element, new RoutedEventHandler(loaded));
+        }
+
+        /// <summary>
+        /// ｵﾌﾞｼﾞｪｸﾄ読込時の処理を実行します。
+        /// </summary>
+        /// <param name="element">対象ｵﾌﾞｼﾞｪｸﾄ</param>
+        /// <param name="handler">読込時処理</param>
+        public static void Loaded(FrameworkElement element, RoutedEventHandler handler)
+        {
             // ﾛｰﾄﾞｲﾍﾞﾝﾄ追加orﾛｰﾄﾞ済みの場合は直接実行
             if (element.IsLoaded)
             {
                 element.Dispatcher.BeginInvoke(
-                    new Action(() => loaded(element, new RoutedEventArgs())),
+                    new Action(() => handler(element, new RoutedEventArgs())),
                     DispatcherPriority.Loaded
                 );
             }
             else
             {
-                element.Loaded += new RoutedEventHandler(loaded);
+                element.Loaded += handler;
             }
         }
     }

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
@@ -65,16 +66,16 @@ namespace WpfUtilV2.Mvvm.Behaviors
             }
 
             BehaviorUtil.SetEventHandler(textblock,
-                (block) => block.Loaded += TextBlock_Loaded,
-                (block) => block.Loaded -= TextBlock_Loaded
-            );
-
-            BehaviorUtil.SetEventHandler(textblock,
                 (block) => block.TargetUpdated += TextBlock_TargetUpdated,
                 (block) => block.TargetUpdated -= TextBlock_TargetUpdated
             );
+
+            BehaviorUtil.Loaded(textblock, TextBlock_Loaded);
         }
 
+        /// <summary>
+        /// TextBlockのLoadedｲﾍﾞﾝﾄ
+        /// </summary>
         private static void TextBlock_Loaded(object sender, EventArgs e)
         {
             var textblock = sender as TextBlock;
@@ -90,15 +91,13 @@ namespace WpfUtilV2.Mvvm.Behaviors
             {
                 return;
             }
-            if (!binding.NotifyOnTargetUpdated)
+
+            // Textﾌﾟﾛﾊﾟﾃｨ変更時に通知されるようにする
+            BindingOperations.SetBinding(textblock, TextBlock.TextProperty, new Binding()
             {
-                // Textﾌﾟﾛﾊﾟﾃｨ変更時に通知されるようにする
-                BindingOperations.SetBinding(textblock, TextBlock.TextProperty, new Binding()
-                {
-                    Path = binding.Path,
-                    NotifyOnTargetUpdated = true
-                });
-            }
+                Path = binding.Path,
+                NotifyOnTargetUpdated = true
+            });
         }
 
         /// <summary>
