@@ -78,7 +78,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
             if (obj != null)
             {
-                BehaviorUtil.Loaded(target as UserControl, UserControl_Loaded);
+                BehaviorUtil.Loaded(target as FrameworkElement, UserControl_Loaded);
             }
 
             //if (uc.IsLoaded)
