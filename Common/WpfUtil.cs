@@ -167,6 +167,10 @@ namespace WpfUtilV2.Common
             return ToEnum<T>(value.ToString());
         }
 
+        /// <summary>
+        /// 対象文字配列のうち最初の空文字以外の文字を取得します。
+        /// </summary>
+        /// <param name="args">対象文字配列</param>
         public static string Nvl(params string[] args)
         {
             return args.FirstOrDefault(s => !string.IsNullOrEmpty(s));
