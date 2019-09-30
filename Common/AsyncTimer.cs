@@ -19,14 +19,16 @@ namespace WpfUtilV2.Common
                     if (IsCompleted && NextExecuteDate <= DateTime.Now)
                     {
                         IsCompleted = false;
-                        Timer.Stop();
-                        NextExecuteDate = NextExecuteDate + Interval;
+                        Timer?.Stop();
+                        SetNextExecuteDate(NextExecuteDate);
 
                         Tick.Invoke(sender, e);
                     }
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.ToString());
+
                     if (UnhandledException != null)
                     {
                         UnhandledException.Invoke(this, new UnhandledExceptionEventArgs(ex, false));
@@ -65,18 +67,30 @@ namespace WpfUtilV2.Common
             set
             {
                 _Interval = value;
-                NextExecuteDate = DateTime.Now + value;
+                SetNextExecuteDate(DateTime.Now);
             }
         }
         private TimeSpan _Interval = TimeSpan.FromMilliseconds(1);
+
+        private void SetNextExecuteDate(DateTime date)
+        {
+            if ((DateTime.MaxValue - date) < Interval)
+            {
+                NextExecuteDate = DateTime.MaxValue;
+            }
+            else
+            {
+                NextExecuteDate = date + Interval;
+            }
+        }
 
         /// <summary>
         /// ﾀｲﾏｰを起動します。
         /// </summary>
         public void Start()
         {
-            NextExecuteDate = DateTime.Now + Interval;
-            Timer.Start();
+            SetNextExecuteDate(DateTime.Now);
+            Timer?.Start();
         }
 
         /// <summary>
@@ -84,7 +98,7 @@ namespace WpfUtilV2.Common
         /// </summary>
         public void Stop()
         {
-            Timer.Stop();
+            Timer?.Stop();
         }
 
         /// <summary>
@@ -92,14 +106,14 @@ namespace WpfUtilV2.Common
         /// </summary>
         public void Completed()
         {
-            while (NextExecuteDate + Interval < DateTime.Now)
+            while (NextExecuteDate <= DateTime.Now)
             {
                 // 長い処理を考慮してNextExecuteDateが直前になるように調整
-                NextExecuteDate += Interval;
+                SetNextExecuteDate(NextExecuteDate);
             }
 
             IsCompleted = true;
-            Timer.Start();
+            Timer?.Start();
         }
 
         /// <summary>
@@ -134,7 +148,7 @@ namespace WpfUtilV2.Common
                     // TODO: マネージド状態を破棄します (マネージド オブジェクト)。
 
                     // ﾀｲﾏｰ停止
-                    Timer.Stop();
+                    Timer?.Stop();
 
                     // 最後の処理が完了するまで待機
                     WaitCompleted();
