@@ -99,6 +99,7 @@ namespace WpfUtilV2.Common
 
                 _Brushes = rgb.SelectMany(r => rgb.SelectMany(g => rgb.Select(b => new { r, g, b })))
                     .Select(row => new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)row.r, (byte)row.g, (byte)row.b)))
+                    .OrderBy(brush => brush.Color.ToString())
                     .ToArray();
 
                 return _Brushes;
@@ -173,7 +174,7 @@ namespace WpfUtilV2.Common
         /// <param name="args">対象文字配列</param>
         public static string Nvl(params string[] args)
         {
-            return args.FirstOrDefault(s => !string.IsNullOrEmpty(s));
+            return args.FirstOrDefault(s => !string.IsNullOrEmpty(s)) ?? string.Empty;
         }
     }
 
