@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfUtilV2.Mvvm.UserControls"
              mc:Ignorable="d">
-    <DockPanel x:Name="baseContainer">
+    <DockPanel x:Name="baseContainer" Margin="0">
 
         <ToggleButton x:Name="CalButton"
                       DockPanel.Dock="Right"
@@ -44,6 +44,10 @@
                       DisplayDateEnd="{Binding Maximum}" />
         </Popup>
         
-        <TextBox x:Name="CalText"/>
+        <TextBox x:Name="CalText" 
+                 Margin="0"
+                 VerticalAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 TextAlignment="Right" />
     </DockPanel>
 </UserControl>

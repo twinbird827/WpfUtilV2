@@ -11,15 +11,12 @@
                    Value="{Binding Value}"
                    SmallChange="{Binding Interval}"
                    LargeChange="{Binding Interval}"
-                   Height="{Binding ElementName=Tb, Path=ActualHeight}"
-                   Margin="0,6,0,0"
-                   VerticalContentAlignment="Center"
+                   Orientation="Vertical"
                    IsEnabled="True"
                    Minimum="{Binding Minimum}"
                    Maximum="{Binding Maximum}">
             <ScrollBar.LayoutTransform>
                 <TransformGroup>
-                    <!--<ScaleTransform ScaleX="0.82" ScaleY="0.82" />-->
                     <RotateTransform Angle="180" />
                 </TransformGroup>
             </ScrollBar.LayoutTransform>
@@ -30,8 +27,10 @@
             </ScrollBar.RenderTransform>-->
         </ScrollBar>
 
-        <TextBox Name="Tb" 
+        <TextBox Name="Tb"
+                 Margin="0"
                  VerticalAlignment="Center"
+                 VerticalContentAlignment="Center"
                  TextAlignment="Right" />
 
     </DockPanel>
