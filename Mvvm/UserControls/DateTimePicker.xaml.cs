@@ -88,13 +88,28 @@ namespace WpfUtilV2.Mvvm.UserControls
         }
 
         public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(nameof(SelectedDate),
-            typeof(DateTime), 
+            typeof(DateTime),
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(
                 DateTime.Now,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, 
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 new PropertyChangedCallback(OnSelectedDateChanged)
             )
+        );
+
+        /// <summary>
+        /// 入力された日付
+        /// </summary>
+        public string DisplayFormat
+        {
+            get { return (string)GetValue(DisplayFormatProperty); }
+            set { SetValue(DisplayFormatProperty, value); }
+        }
+
+        public static readonly DependencyProperty DisplayFormatProperty = DependencyProperty.Register(nameof(DisplayFormat),
+            typeof(string),
+            typeof(DateTimePicker),
+            new FrameworkPropertyMetadata(DefaultDateFormats.First(), OnDateFormatChanged)
         );
 
         /// <summary>
@@ -285,7 +300,7 @@ namespace WpfUtilV2.Mvvm.UserControls
         /// <param name="target">表示する日付</param>
         private static void SetText(DateTimePicker picker, DateTime target)
         {
-            picker.CalText.Text = target.ToString(picker.DateFormats.First());
+            picker.CalText.Text = target.ToString(picker.DisplayFormat);
         }
 
         /// <summary>
