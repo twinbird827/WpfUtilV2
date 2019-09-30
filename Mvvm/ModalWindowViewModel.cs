@@ -27,13 +27,8 @@ namespace WpfUtilV2.Mvvm
             get
             {
                 return _OnClickOK = _OnClickOK ?? new RelayCommand(
-                    parameter =>
-                    {
-                        if (CanClickOK(parameter))
-                        {
-                            DialogResult = true;
-                        }
-                    }
+                    _ => DialogResult = true,
+                    e => CanClickOK(e)
                 );
             }
         }
@@ -47,13 +42,8 @@ namespace WpfUtilV2.Mvvm
             get
             {
                 return _OnClickCancel = _OnClickCancel ?? new RelayCommand(
-                    parameter =>
-                    {
-                        if (CanClickCancel(parameter))
-                        {
-                            DialogResult = false;
-                        }
-                    }
+                    _ => DialogResult = false,
+                    e => CanClickCancel(e)
                 );
             }
         }
