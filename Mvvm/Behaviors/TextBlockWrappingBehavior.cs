@@ -114,6 +114,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
 
             // 最大高さ設定
             block.MaxHeight = line * GetMaxLines(block);
+            block.Height = block.MaxHeight;
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <param name="block">ｵﾌﾞｼﾞｪｸﾄ</param>
         private static double GetFormattedTextHeight(TextBlock block)
         {
-            var formatted = new FormattedText(block.Text ?? string.Empty,
+            var formatted = new FormattedText("1",
                 new CultureInfo("ja-jp"),
                 FlowDirection.LeftToRight,
                 new Typeface(block.FontFamily, block.FontStyle, block.FontWeight, block.FontStretch),
