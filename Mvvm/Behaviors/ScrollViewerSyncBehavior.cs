@@ -80,7 +80,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
             DependencyProperty.RegisterAttached("ColumnFooter",
                 typeof(FrameworkElement),
                 typeof(ScrollViewerSyncBehavior),
-                new UIPropertyMetadata()
+                new UIPropertyMetadata(OnHeaderCallback)
             );
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
             DependencyProperty.RegisterAttached("RowFooter",
                 typeof(FrameworkElement),
                 typeof(ScrollViewerSyncBehavior),
-                new UIPropertyMetadata()
+                new UIPropertyMetadata(OnHeaderCallback)
             );
 
         /// <summary>
@@ -153,9 +153,26 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 (sv) => sv.PreviewMouseWheel += FrameworkElement_MouseWheel,
                 (sv) => sv.PreviewMouseWheel -= FrameworkElement_MouseWheel
             );
+
+            BehaviorUtil.Loaded(viewer, ScrollViewer_Loaded);
         }
 
         private static void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            Refresh(sender);
+        }
+
+        private static void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            Refresh(sender);
+        }
+
+        private static void FrameworkElement_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private static void Refresh(object sender)
         {
             var sv = sender as ScrollViewer;
             var hfe = GetColumnHeader(sv);
@@ -165,22 +182,24 @@ namespace WpfUtilV2.Mvvm.Behaviors
             var hfo = GetColumnFooter(sv);
             var rfo = GetRowFooter(sv);
 
-            hsv.ScrollToHorizontalOffset(sv.HorizontalOffset);
-            rsv.ScrollToVerticalOffset(sv.VerticalOffset);
+            if (hsv != null) hsv.ScrollToHorizontalOffset(sv.HorizontalOffset);
+            if (rsv != null) rsv.ScrollToVerticalOffset(sv.VerticalOffset);
             if (hfo != null) hfo.Width = GetScrollWidth(sv);
             if (rfo != null) rfo.Height = GetScrollHeight(sv);
         }
 
-        private static void FrameworkElement_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            e.Handled = true;
-        }
-
         private static ScrollViewer ScrollViewerFromFrameworkElement(FrameworkElement frameworkElement)
         {
-            if (VisualTreeHelper.GetChildrenCount(frameworkElement) == 0) return null;
+            if (frameworkElement == null)
+            {
+                return null;
+            }
+            else if (VisualTreeHelper.GetChildrenCount(frameworkElement) == 0)
+            {
+                return null;
+            }
 
-            FrameworkElement child = VisualTreeHelper.GetChild(frameworkElement, 0) as FrameworkElement;
+            var child = VisualTreeHelper.GetChild(frameworkElement, 0) as FrameworkElement;
 
             if (child == null) return null;
 
