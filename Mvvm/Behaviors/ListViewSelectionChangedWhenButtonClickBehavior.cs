@@ -10,11 +10,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
 {
     public static class ListViewSelectionChangedWhenButtonClickBehavior
     {
-        public static readonly DependencyProperty ListViewProperty =
-            DependencyProperty.RegisterAttached("ListView",
-            typeof(ListView),
-            typeof(ListViewSelectionChangedWhenButtonClickBehavior),
-            new PropertyMetadata(OnSetListViewCallback)
+        public static readonly DependencyProperty ListViewProperty = BehaviorUtil.RegisterAttached(
+            "ListView", typeof(ListViewSelectionChangedWhenButtonClickBehavior), default(ListView), OnSetListViewCallback
         );
 
         public static ListView GetListView(DependencyObject obj)

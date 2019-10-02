@@ -87,14 +87,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(SelectedDateProperty, value); }
         }
 
-        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(nameof(SelectedDate),
-            typeof(DateTime),
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(
-                DateTime.Now,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnSelectedDateChanged)
-            )
+        public static readonly DependencyProperty SelectedDateProperty = BehaviorUtil.Register(
+            nameof(SelectedDate), typeof(DateTimePicker), DateTime.Now, OnSelectedDateChanged
         );
 
         /// <summary>
@@ -106,10 +100,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(DisplayFormatProperty, value); }
         }
 
-        public static readonly DependencyProperty DisplayFormatProperty = DependencyProperty.Register(nameof(DisplayFormat),
-            typeof(string),
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(DefaultDateFormats.First(), OnDateFormatChanged)
+        public static readonly DependencyProperty DisplayFormatProperty = BehaviorUtil.Register(
+            nameof(DisplayFormat), typeof(DateTimePicker), DefaultDateFormats.First(), OnDateFormatChanged
         );
 
         /// <summary>
@@ -121,11 +113,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(DateFormatsProperty, value); }
         }
 
-        public static readonly DependencyProperty DateFormatsProperty = DependencyProperty.Register(nameof(DateFormats),
-            typeof(string[]), 
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(DefaultDateFormats, OnDateFormatChanged),
-            IsValidDateFormats
+        public static readonly DependencyProperty DateFormatsProperty = BehaviorUtil.Register(
+            nameof(DateFormats), typeof(DateTimePicker), DefaultDateFormats, OnDateFormatChanged, IsValidDateFormats
         );
 
         private static string[] DefaultDateFormats => new[]
@@ -188,10 +177,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MinimumProperty, value); }
         }
 
-        public static DependencyProperty MinimumProperty = DependencyProperty.Register(nameof(Minimum),
-            typeof(DateTime),
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(DateTime.Now.AddYears(-1), null)
+        public static DependencyProperty MinimumProperty = BehaviorUtil.Register(
+            nameof(Minimum), typeof(DateTimePicker), DateTime.Now.AddYears(-1), null
         );
 
         /// <summary>
@@ -203,10 +190,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MaximumProperty, value); }
         }
 
-        public static DependencyProperty MaximumProperty = DependencyProperty.Register(nameof(Maximum),
-            typeof(DateTime),
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(DateTime.Now.AddYears(+1), null)
+        public static DependencyProperty MaximumProperty = BehaviorUtil.Register(
+            nameof(Maximum), typeof(DateTimePicker), DateTime.Now.AddYears(+1), null
         );
 
         /// <summary>
@@ -218,10 +203,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(IsShowIconProperty, value); }
         }
 
-        public static DependencyProperty IsShowIconProperty = DependencyProperty.Register(nameof(IsShowIcon),
-            typeof(bool),
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(true, null)
+        public static DependencyProperty IsShowIconProperty = BehaviorUtil.Register(
+            nameof(IsShowIcon), typeof(DateTimePicker), true, null
         );
 
         /// <summary>
@@ -233,10 +216,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(IconProperty, value); }
         }
 
-        public static DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon),
-            typeof(ImageSource),
-            typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(WpfUtil.ToImageSource(Properties.Resources.calendar), null)
+        public static DependencyProperty IconProperty = BehaviorUtil.Register(
+            nameof(Icon), typeof(DateTimePicker), WpfUtil.ToImageSource(Properties.Resources.calendar), null
         );
 
         /// <summary>

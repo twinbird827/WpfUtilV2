@@ -14,8 +14,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
     /// </summary>
     public static class FrameworkElementUpdateSourceWhenEnterBehavior
     {
-        public static readonly DependencyProperty TargetProperty = DependencyProperty.RegisterAttached(
-            "Target", typeof(DependencyProperty), typeof(FrameworkElementUpdateSourceWhenEnterBehavior), new UIPropertyMetadata(OnSetTargetCallback));
+        public static readonly DependencyProperty TargetProperty = BehaviorUtil.RegisterAttached(
+            "Target", typeof(FrameworkElementUpdateSourceWhenEnterBehavior), default(DependencyProperty), OnSetTargetCallback
+        );
 
         public static void SetTarget(DependencyObject dp, DependencyProperty value)
         {

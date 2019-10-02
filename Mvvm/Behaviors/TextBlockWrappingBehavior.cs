@@ -17,12 +17,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ﾃｷｽﾄﾌﾞﾛｯｸに表示可能な最大行数の依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty MaxLinesProperty =
-            DependencyProperty.RegisterAttached("MaxLines",
-                typeof(int),
-                typeof(TextBlockWrappingBehavior),
-                new FrameworkPropertyMetadata(int.MinValue, OnSetMaxLinesCallback)
-            );
+        public static DependencyProperty MaxLinesProperty = BehaviorUtil.RegisterAttached(
+            "MaxLines", typeof(TextBlockWrappingBehavior), int.MinValue, OnSetMaxLinesCallback
+        );
 
         /// <summary>
         /// ﾃｷｽﾄﾌﾞﾛｯｸに表示可能な最大行数を設定します（添付ﾋﾞﾍｲﾋﾞｱ）

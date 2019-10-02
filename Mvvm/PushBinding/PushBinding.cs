@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using WpfUtilV2.Mvvm.Behaviors;
 
 namespace WpfUtilV2.Mvvm.PushBinding
 {
@@ -13,15 +14,12 @@ namespace WpfUtilV2.Mvvm.PushBinding
     {
         #region Dependency Properties
 
-        public static DependencyProperty TargetPropertyMirrorProperty =
-            DependencyProperty.Register("TargetPropertyMirror",
-                                        typeof(object),
-                                        typeof(PushBinding));
-        public static DependencyProperty TargetPropertyListenerProperty =
-            DependencyProperty.Register("TargetPropertyListener",
-                                        typeof(object),
-                                        typeof(PushBinding),
-                                        new UIPropertyMetadata(null, OnTargetPropertyListenerChanged));
+        public static DependencyProperty TargetPropertyMirrorProperty = BehaviorUtil.Register(
+            "TargetPropertyMirror", typeof(PushBinding), default(object)
+        );
+        public static DependencyProperty TargetPropertyListenerProperty = BehaviorUtil.Register(
+            "TargetPropertyListener", typeof(PushBinding), default(object), OnTargetPropertyListenerChanged
+        );
 
         private static void OnTargetPropertyListenerChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

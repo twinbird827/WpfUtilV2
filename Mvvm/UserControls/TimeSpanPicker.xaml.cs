@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfUtilV2.Mvvm.Behaviors;
 
 namespace WpfUtilV2.Mvvm.UserControls
 {
@@ -36,14 +37,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(ElapsedProperty, value); }
         }
 
-        public static DependencyProperty ElapsedProperty = DependencyProperty.Register(nameof(Elapsed),
-            typeof(TimeSpan),
-            typeof(TimeSpanPicker),
-            new FrameworkPropertyMetadata(
-                TimeSpan.MinValue,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnElapsedChanged)
-            )
+        public static DependencyProperty ElapsedProperty = BehaviorUtil.Register(
+            nameof(Elapsed), typeof(TimeSpanPicker), TimeSpan.MinValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnElapsedChanged
         );
 
         /// <summary>
@@ -55,14 +50,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(DayProperty, value); }
         }
 
-        public static DependencyProperty DayProperty = DependencyProperty.Register(nameof(Day),
-            typeof(double),
-            typeof(TimeSpanPicker),
-            new FrameworkPropertyMetadata(
-                -1d,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnDayChanged)
-            )
+        public static DependencyProperty DayProperty = BehaviorUtil.Register(
+            nameof(Day), typeof(TimeSpanPicker), -1d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDayChanged
         );
 
         /// <summary>
@@ -74,14 +63,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(HourProperty, value); }
         }
 
-        public static DependencyProperty HourProperty = DependencyProperty.Register(nameof(Hour),
-            typeof(double),
-            typeof(TimeSpanPicker),
-            new FrameworkPropertyMetadata(
-                -1d,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnHourChanged)
-            )
+        public static DependencyProperty HourProperty = BehaviorUtil.Register(
+            nameof(Hour), typeof(TimeSpanPicker), -1d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHourChanged
         );
 
         /// <summary>
@@ -93,14 +76,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MinuteProperty, value); }
         }
 
-        public static DependencyProperty MinuteProperty = DependencyProperty.Register(nameof(Minute),
-            typeof(double),
-            typeof(TimeSpanPicker),
-            new FrameworkPropertyMetadata(
-                -1d,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnMinuteChanged)
-            )
+        public static DependencyProperty MinuteProperty = BehaviorUtil.Register(
+            nameof(Minute), typeof(TimeSpanPicker), -1d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMinuteChanged
         );
 
         /// <summary>

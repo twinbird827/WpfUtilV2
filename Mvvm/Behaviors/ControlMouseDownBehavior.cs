@@ -14,8 +14,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ControlMouseDownBehavior), new UIPropertyMetadata(OnSetCommandCallback));
+        public static DependencyProperty CommandProperty = BehaviorUtil.RegisterAttached(
+            "Command", typeof(ControlMouseDownBehavior), default(ICommand), OnSetCommandCallback
+        );
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

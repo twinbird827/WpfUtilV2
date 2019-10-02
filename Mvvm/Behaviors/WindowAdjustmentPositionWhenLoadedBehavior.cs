@@ -13,11 +13,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
     {
         private const int Margin = 20;
 
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled",
-                typeof(bool),
-                typeof(WindowAdjustmentPositionWhenLoadedBehavior),
-                new PropertyMetadata(OnSetIsEnabledCallback)
+        public static readonly DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(WindowAdjustmentPositionWhenLoadedBehavior), false, OnSetIsEnabledCallback
         );
 
         public static bool GetIsEnabled(DependencyObject obj)

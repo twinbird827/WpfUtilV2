@@ -94,11 +94,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(IntervalProperty, value); }
         }
 
-        public static DependencyProperty IntervalProperty = DependencyProperty.Register(nameof(Interval),
-            typeof(double),
-            typeof(TimeTextPicker),
-            new FrameworkPropertyMetadata(1d, null)
-        );
+        public static DependencyProperty IntervalProperty =
+            BehaviorUtil.Register(nameof(Interval), typeof(TimeTextPicker), 1d, null);
 
         /// <summary>
         /// 入力できる数値の許容最小値
@@ -109,11 +106,9 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MinimumProperty, value); }
         }
 
-        public static DependencyProperty MinimumProperty = DependencyProperty.Register(nameof(Minimum),
-            typeof(double),
-            typeof(TimeTextPicker),
-            new FrameworkPropertyMetadata(0d, null)
-        );
+        public static DependencyProperty MinimumProperty =
+            BehaviorUtil.Register(nameof(Minimum), typeof(TimeTextPicker), 0d, null);
+
 
         /// <summary>
         /// 入力できる数値の許容最大値
@@ -124,11 +119,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MaximumProperty, value); }
         }
 
-        public static DependencyProperty MaximumProperty = DependencyProperty.Register(nameof(Maximum),
-            typeof(double),
-            typeof(TimeTextPicker),
-            new FrameworkPropertyMetadata(63072000d, null)
-        );
+        public static DependencyProperty MaximumProperty =
+            BehaviorUtil.Register(nameof(Maximum), typeof(TimeTextPicker), 63072000d, null);
 
         /// <summary>
         /// ﾊﾞｲﾝﾃﾞｨﾝｸﾞﾊﾟﾗﾒｰﾀ
@@ -139,15 +131,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(ValueProperty, value); }
         }
 
-        public static DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value),
-            typeof(double),
-            typeof(TimeTextPicker),
-            new FrameworkPropertyMetadata(
-                default(double),
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnValueChanged)
-            )
-        );
+        public static DependencyProperty ValueProperty =
+            BehaviorUtil.Register(nameof(Value), typeof(TimeTextPicker), default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged);
 
         /// <summary>
         /// ﾊﾞｲﾝﾃﾞｨﾝｸﾞﾊﾟﾗﾒｰﾀ
@@ -158,15 +143,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(ElapsedProperty, value); }
         }
 
-        public static DependencyProperty ElapsedProperty = DependencyProperty.Register(nameof(Elapsed),
-            typeof(TimeSpan),
-            typeof(TimeTextPicker),
-            new FrameworkPropertyMetadata(
-                TimeSpan.MinValue,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnElapsedChanged)
-            )
-        );
+        public static DependencyProperty ElapsedProperty =
+            BehaviorUtil.Register(nameof(Elapsed), typeof(TimeTextPicker), TimeSpan.MinValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnElapsedChanged);
 
         /// <summary>
         /// 数値の表示形式
@@ -177,12 +155,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(FormatProperty, value); }
         }
 
-        public static DependencyProperty FormatProperty = DependencyProperty.Register(nameof(Format),
-            typeof(string),
-            typeof(TimeTextPicker),
-            new FrameworkPropertyMetadata("{0:d'日'hh':'mm':'ss}", OnFormatChanged),
-            IsValidFormat
-        );
+        public static DependencyProperty FormatProperty =
+            BehaviorUtil.Register(nameof(Format), typeof(TimeTextPicker), "{0:d'日'hh':'mm':'ss}", OnFormatChanged, IsValidFormat);
 
         private string Previous { get; set; }
 

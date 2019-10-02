@@ -15,8 +15,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// Disposableの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty DisposableProperty =
-            DependencyProperty.RegisterAttached("Disposable", typeof(IDisposable), typeof(WindowClosedBehavior), new UIPropertyMetadata(OnSetDisposableCallback));
+        public static DependencyProperty DisposableProperty = BehaviorUtil.RegisterAttached(
+            "Disposable", typeof(WindowClosedBehavior), default(IDisposable), OnSetDisposableCallback
+        );
 
         /// <summary>
         /// Disposableを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

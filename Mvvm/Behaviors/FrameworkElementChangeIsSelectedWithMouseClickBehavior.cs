@@ -11,11 +11,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
 {
     public static class FrameworkElementChangeIsSelectedWithMouseClickBehavior
     {
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled",
-                typeof(bool),
-                typeof(FrameworkElementChangeIsSelectedWithMouseClickBehavior),
-                new PropertyMetadata(OnSetIsEnabledCallback)
+        public static readonly DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(FrameworkElementChangeIsSelectedWithMouseClickBehavior), false, OnSetIsEnabledCallback
         );
 
         public static bool GetIsEnabled(DependencyObject obj)

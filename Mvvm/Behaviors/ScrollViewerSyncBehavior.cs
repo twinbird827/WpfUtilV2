@@ -16,12 +16,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// 列ﾍｯﾀﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty ColumnHeaderProperty =
-            DependencyProperty.RegisterAttached("ColumnHeader",
-                typeof(FrameworkElement),
-                typeof(ScrollViewerSyncBehavior),
-                new UIPropertyMetadata(OnHeaderCallback)
-            );
+        public static DependencyProperty ColumnHeaderProperty = BehaviorUtil.RegisterAttached(
+            "ColumnHeader", typeof(ScrollViewerSyncBehavior), default(FrameworkElement), OnHeaderCallback
+        );
 
         /// <summary>
         /// 列ﾍｯﾀﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -46,12 +43,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// 行ﾍｯﾀﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty RowHeaderProperty =
-            DependencyProperty.RegisterAttached("RowHeader",
-                typeof(FrameworkElement),
-                typeof(ScrollViewerSyncBehavior),
-                new UIPropertyMetadata(OnHeaderCallback)
-            );
+        public static DependencyProperty RowHeaderProperty = BehaviorUtil.RegisterAttached(
+            "RowHeader", typeof(ScrollViewerSyncBehavior), default(FrameworkElement), OnHeaderCallback
+        );
 
         /// <summary>
         /// 行ﾍｯﾀﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -76,12 +70,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// 列ﾍｯﾀﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty ColumnFooterProperty =
-            DependencyProperty.RegisterAttached("ColumnFooter",
-                typeof(FrameworkElement),
-                typeof(ScrollViewerSyncBehavior),
-                new UIPropertyMetadata(OnHeaderCallback)
-            );
+        public static DependencyProperty ColumnFooterProperty = BehaviorUtil.RegisterAttached(
+            "ColumnFooter", typeof(ScrollViewerSyncBehavior), default(FrameworkElement), OnHeaderCallback
+        );
 
         /// <summary>
         /// 列ﾍｯﾀﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -106,12 +97,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// 行ﾍｯﾀﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty RowFooterProperty =
-            DependencyProperty.RegisterAttached("RowFooter",
-                typeof(FrameworkElement),
-                typeof(ScrollViewerSyncBehavior),
-                new UIPropertyMetadata(OnHeaderCallback)
-            );
+        public static DependencyProperty RowFooterProperty = BehaviorUtil.RegisterAttached(
+            "RowFooter", typeof(ScrollViewerSyncBehavior), default(FrameworkElement), OnHeaderCallback
+        );
 
         /// <summary>
         /// 行ﾍｯﾀﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

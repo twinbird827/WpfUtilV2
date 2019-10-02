@@ -13,8 +13,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// DoubleClickの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty DoubleClickProperty =
-            DependencyProperty.RegisterAttached("DoubleClick", typeof(ICommand), typeof(FrameworkElementMouseLeftButtonDownBehavior), new UIPropertyMetadata(OnSetCommandCallback));
+        public static DependencyProperty DoubleClickProperty = BehaviorUtil.RegisterAttached(
+            "DoubleClick", typeof(FrameworkElementMouseLeftButtonDownBehavior), default(ICommand), OnSetCommandCallback
+        );
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -39,8 +40,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// SingleClickの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty SingleClickProperty =
-            DependencyProperty.RegisterAttached("SingleClick", typeof(ICommand), typeof(FrameworkElementMouseLeftButtonDownBehavior), new UIPropertyMetadata(OnSetCommandCallback));
+        public static DependencyProperty SingleClickProperty = BehaviorUtil.RegisterAttached(
+            "SingleClick", typeof(FrameworkElementMouseLeftButtonDownBehavior), default(ICommand), OnSetCommandCallback
+        );
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

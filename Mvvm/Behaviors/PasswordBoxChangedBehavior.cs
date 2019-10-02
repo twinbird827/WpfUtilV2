@@ -14,14 +14,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
     /// </summary>
     public class PasswordBoxChangedBehavior
     {
-        public static readonly DependencyProperty PasswordProperty = DependencyProperty.RegisterAttached(
-            "Password",
-            typeof(string),
-            typeof(PasswordBoxChangedBehavior),
-            new FrameworkPropertyMetadata(
-                default(string), 
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                OnSetPasswordCallback)
+        public static readonly DependencyProperty PasswordProperty = BehaviorUtil.RegisterAttached(
+            "Password", typeof(PasswordBoxChangedBehavior), default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetPasswordCallback
         );
 
         public static string GetPassword(DependencyObject dp)

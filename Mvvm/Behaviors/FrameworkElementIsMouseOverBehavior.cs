@@ -11,11 +11,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
 {
     public static class FrameworkElementIsMouseOverBehavior
     {
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled",
-                typeof(bool),
-                typeof(FrameworkElementIsMouseOverBehavior),
-                new PropertyMetadata(OnSetIsEnabledCallback)
+        public static readonly DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(FrameworkElementIsMouseOverBehavior), false, OnSetIsEnabledCallback
         );
 
         public static bool GetIsEnabled(DependencyObject obj)

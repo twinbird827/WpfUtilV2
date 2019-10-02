@@ -14,8 +14,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// このﾋﾞﾍｲﾋﾞｱが有効かどうかの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(FrameworkElementLostFocusWhenEnterBehavior), new UIPropertyMetadata(OnSetIsEnableCallback));
+        public static DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(FrameworkElementLostFocusWhenEnterBehavior), false, OnSetIsEnableCallback
+        );
 
         /// <summary>
         /// このﾋﾞﾍｲﾋﾞｱが有効かどうかを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -40,8 +41,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ﾛｽﾄﾌｫｰｶｽ時の挙動を表す依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty FocusableProperty =
-            DependencyProperty.RegisterAttached("Focusable", typeof(FrameworkElement), typeof(FrameworkElementLostFocusWhenEnterBehavior), new UIPropertyMetadata(null));
+        public static DependencyProperty FocusableProperty = BehaviorUtil.RegisterAttached(
+            "Focusable", typeof(FrameworkElementLostFocusWhenEnterBehavior), default(FrameworkElement), null
+        );
 
         /// <summary>
         /// ﾛｽﾄﾌｫｰｶｽ時の挙動を設定します（添付ﾋﾞﾍｲﾋﾞｱ）

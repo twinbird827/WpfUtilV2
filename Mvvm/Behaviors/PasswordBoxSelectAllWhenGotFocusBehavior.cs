@@ -14,8 +14,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// このﾋﾞﾍｲﾋﾞｱが有効かどうかの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(PasswordBoxSelectAllWhenGotFocusBehavior), new UIPropertyMetadata(OnSetIsEnabledCallback));
+        public static DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(PasswordBoxSelectAllWhenGotFocusBehavior), false, OnSetIsEnabledCallback
+        );
 
         /// <summary>
         /// このﾋﾞﾍｲﾋﾞｱが有効かどうかを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

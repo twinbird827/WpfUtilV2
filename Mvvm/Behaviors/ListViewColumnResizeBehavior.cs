@@ -14,18 +14,12 @@ namespace WpfUtilV2.Mvvm.Behaviors
 {
     public static class ListViewColumnResizeBehavior
     {
-        public static readonly DependencyProperty WidthProperty =
-            DependencyProperty.RegisterAttached("Width", 
-                typeof(string), 
-                typeof(ListViewColumnResizeBehavior),
-                new PropertyMetadata()
+        public static readonly DependencyProperty WidthProperty = BehaviorUtil.RegisterAttached(
+            "Width", typeof(ListViewColumnResizeBehavior), default(string), null
         );
 
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled",
-                typeof(bool), 
-                typeof(ListViewColumnResizeBehavior),
-                new PropertyMetadata(OnSetIsEnabledCallback)
+        public static readonly DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(ListViewColumnResizeBehavior), false, OnSetIsEnabledCallback
         );
 
         public static string GetWidth(DependencyObject obj)

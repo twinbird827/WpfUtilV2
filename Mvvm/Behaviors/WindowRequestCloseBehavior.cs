@@ -10,10 +10,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
     public class WindowRequestCloseBehavior
     {
         /// <summary>
-        /// Disposableの依存関係ﾌﾟﾛﾊﾟﾃｨ
+        /// DialogResultの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty DialogResultProperty =
-            DependencyProperty.RegisterAttached("DialogResult", typeof(bool?), typeof(WindowRequestCloseBehavior), new UIPropertyMetadata(OnSetDialogResultCallback));
+        public static DependencyProperty DialogResultProperty = BehaviorUtil.RegisterAttached(
+            "DialogResult", typeof(WindowRequestCloseBehavior), default(bool?), OnSetDialogResultCallback
+        );
 
         /// <summary>
         /// Disposableを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

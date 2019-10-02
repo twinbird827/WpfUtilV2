@@ -89,10 +89,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(IntervalProperty, value); }
         }
 
-        public static DependencyProperty IntervalProperty = DependencyProperty.Register(nameof(Interval),
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(1d, null)
+        public static DependencyProperty IntervalProperty = BehaviorUtil.Register(
+            nameof(Interval), typeof(NumericUpDown), 1d, null
         );
 
         /// <summary>
@@ -104,10 +102,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MinimumProperty, value); }
         }
 
-        public static DependencyProperty MinimumProperty = DependencyProperty.Register(nameof(Minimum),
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(double.MinValue, null)
+        public static DependencyProperty MinimumProperty = BehaviorUtil.Register(
+            nameof(Minimum), typeof(NumericUpDown), double.MinValue, null
         );
 
         /// <summary>
@@ -119,10 +115,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(MaximumProperty, value); }
         }
 
-        public static DependencyProperty MaximumProperty = DependencyProperty.Register(nameof(Maximum),
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(double.MaxValue, null)
+        public static DependencyProperty MaximumProperty = BehaviorUtil.Register(
+            nameof(Maximum), typeof(NumericUpDown), double.MaxValue, null
         );
 
         /// <summary>
@@ -134,14 +128,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(ValueProperty, value); }
         }
 
-        public static DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value),
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(
-                -1d,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnValueChanged)
-            )
+        public static DependencyProperty ValueProperty = BehaviorUtil.Register(
+            nameof(Value), typeof(NumericUpDown), -1d, OnValueChanged
         );
 
         /// <summary>
@@ -153,11 +141,8 @@ namespace WpfUtilV2.Mvvm.UserControls
             set { SetValue(FormatProperty, value); }
         }
 
-        public static DependencyProperty FormatProperty = DependencyProperty.Register(nameof(Format),
-            typeof(string),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata("F0", OnFormatChanged),
-            IsValidFormat
+        public static DependencyProperty FormatProperty = BehaviorUtil.Register(
+            nameof(Format), typeof(NumericUpDown), "F0", OnFormatChanged, IsValidFormat
         );
 
         /// <summary>

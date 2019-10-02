@@ -18,8 +18,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ﾌｫｰｶｽを判別できるﾋﾞｭｰﾓﾃﾞﾙの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty FocusableProperty =
-            DependencyProperty.RegisterAttached("Focusable", typeof(IFocusableItem), typeof(ControlIsKeyboardFocusWithinChangedBehavior), new UIPropertyMetadata(OnSetFocusableCallback));
+        public static DependencyProperty FocusableProperty = BehaviorUtil.RegisterAttached(
+            "Focusable", typeof(ControlIsKeyboardFocusWithinChangedBehavior), default(IFocusableItem), OnSetFocusableCallback
+        );
 
         /// <summary>
         /// ﾌｫｰｶｽを判別できるﾋﾞｭｰﾓﾃﾞﾙを設定します（添付ﾋﾞﾍｲﾋﾞｱ）

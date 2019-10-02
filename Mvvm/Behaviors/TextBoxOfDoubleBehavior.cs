@@ -15,12 +15,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定する数値の依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty ValueProperty =
-            DependencyProperty.RegisterAttached("Value",
-                typeof(double),
-                typeof(TextBoxOfDoubleBehavior), 
-                new FrameworkPropertyMetadata((double)float.MinValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetValueCallback)
-            );
+        public static DependencyProperty ValueProperty = BehaviorUtil.RegisterAttached(
+            "Value", typeof(TextBoxOfDoubleBehavior), (double)float.MinValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetValueCallback
+        );
 
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定する数値を設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -45,12 +42,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定するﾌｫｰﾏｯﾄの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty FormatProperty =
-            DependencyProperty.RegisterAttached("Format", 
-                typeof(string), 
-                typeof(TextBoxOfDoubleBehavior),
-                new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetFormatCallback)
-            );
+        public static DependencyProperty FormatProperty = BehaviorUtil.RegisterAttached(
+            "Format", typeof(TextBoxOfDoubleBehavior), default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSetFormatCallback
+        );
 
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定するﾌｫｰﾏｯﾄを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -75,8 +69,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定する数値の依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        private static DependencyProperty PreviousProperty =
-            DependencyProperty.RegisterAttached("Previous", typeof(double), typeof(TextBoxOfDoubleBehavior), new UIPropertyMetadata());
+        private static DependencyProperty PreviousProperty = BehaviorUtil.RegisterAttached(
+            "Previous", typeof(TextBoxOfDoubleBehavior), typeof(double), null
+        );
 
         /// <summary>
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定する数値を設定します（添付ﾋﾞﾍｲﾋﾞｱ）

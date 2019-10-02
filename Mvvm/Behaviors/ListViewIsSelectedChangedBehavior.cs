@@ -11,11 +11,8 @@ namespace WpfUtilV2.Mvvm.Behaviors
 {
     public static class ListViewIsSelectedChangedBehavior
     {
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached("IsEnabled",
-                typeof(bool),
-                typeof(ListViewIsSelectedChangedBehavior),
-                new PropertyMetadata(OnSetIsEnabledCallback)
+        public static readonly DependencyProperty IsEnabledProperty = BehaviorUtil.RegisterAttached(
+            "IsEnabled", typeof(ListViewIsSelectedChangedBehavior), false, OnSetIsEnabledCallback
         );
 
         public static bool GetIsEnabled(DependencyObject obj)

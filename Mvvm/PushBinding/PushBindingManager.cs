@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfUtilV2.Mvvm.Behaviors;
 
 namespace WpfUtilV2.Mvvm.PushBinding
 {
     public class PushBindingManager
     {
-        public static DependencyProperty PushBindingsProperty =
-            DependencyProperty.RegisterAttached("PushBindingsInternal",
-                                                typeof(PushBindingCollection),
-                                                typeof(PushBindingManager),
-                                                new UIPropertyMetadata(null));
+        public static DependencyProperty PushBindingsProperty = BehaviorUtil.RegisterAttached(
+            "PushBindingsInternal", typeof(PushBindingManager), default(PushBindingCollection)
+        );
 
         public static PushBindingCollection GetPushBindings(DependencyObject obj)
         {
@@ -29,11 +28,9 @@ namespace WpfUtilV2.Mvvm.PushBinding
         }
 
 
-        public static DependencyProperty StylePushBindingsProperty =
-            DependencyProperty.RegisterAttached("StylePushBindings",
-                                                typeof(PushBindingCollection),
-                                                typeof(PushBindingManager),
-                                                new UIPropertyMetadata(null, StylePushBindingsChanged));
+        public static DependencyProperty StylePushBindingsProperty = BehaviorUtil.RegisterAttached(
+            "StylePushBindings", typeof(PushBindingManager), default(PushBindingCollection), StylePushBindingsChanged
+        );
 
         public static PushBindingCollection GetStylePushBindings(DependencyObject obj)
         {

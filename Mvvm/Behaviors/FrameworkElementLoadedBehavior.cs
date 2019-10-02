@@ -18,8 +18,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ｺﾏﾝﾄﾞの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(FrameworkElementLoadedBehavior), new UIPropertyMetadata(OnSetCommandCallback));
+        public static DependencyProperty CommandProperty = BehaviorUtil.RegisterAttached(
+            "Command", typeof(FrameworkElementLoadedBehavior), default(ICommand),  OnSetCommandCallback
+        );
 
         /// <summary>
         /// ｺﾏﾝﾄﾞを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
@@ -44,8 +45,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <summary>
         /// ｺﾏﾝﾄﾞﾌﾟﾛﾊﾟﾃｨの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
-        public static DependencyProperty CommandParameterProperty =
-            DependencyProperty.RegisterAttached("CommandParameter", typeof(object), typeof(FrameworkElementLoadedBehavior), new PropertyMetadata());
+        public static DependencyProperty CommandParameterProperty = BehaviorUtil.RegisterAttached(
+            "CommandParameter", typeof(FrameworkElementLoadedBehavior), default(object), null
+        );
 
         /// <summary>
         /// ｺﾏﾝﾄﾞﾌﾟﾛﾊﾟﾃｨを設定します（添付ﾋﾞﾍｲﾋﾞｱ）
