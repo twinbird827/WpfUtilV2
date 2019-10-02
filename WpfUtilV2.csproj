@@ -88,6 +88,7 @@
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDoubleClickBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\FrameworkElementChangeIsSelectedWithMouseClickBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementIsMouseOverBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementLostFocusWhenEnterBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementMouseLeftButtonDownBehavior.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Mvvm\CustomControls\IFocusableItem.cs" />
     <Compile Include="Mvvm\CustomControls\IIsMouseOverItem.cs" />
     <Compile Include="Mvvm\CustomControls\ISelectableItem.cs" />
+    <Compile Include="Mvvm\CustomControls\ISingleSelectableItem.cs" />
     <Compile Include="Mvvm\CustomControls\TextBoxEx.cs" />
     <Compile Include="Mvvm\ModalWindowViewModel.cs" />
     <Compile Include="Mvvm\PushBinding\FreezableBinding.cs" />
