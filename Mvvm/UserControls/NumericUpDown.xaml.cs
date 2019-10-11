@@ -129,7 +129,7 @@ namespace WpfUtilV2.Mvvm.UserControls
         }
 
         public static DependencyProperty ValueProperty = BehaviorUtil.Register(
-            nameof(Value), typeof(NumericUpDown), -1d, OnValueChanged
+            nameof(Value), typeof(NumericUpDown), -1d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged
         );
 
         /// <summary>

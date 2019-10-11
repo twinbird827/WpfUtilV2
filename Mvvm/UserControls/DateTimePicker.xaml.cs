@@ -88,7 +88,7 @@ namespace WpfUtilV2.Mvvm.UserControls
         }
 
         public static readonly DependencyProperty SelectedDateProperty = BehaviorUtil.Register(
-            nameof(SelectedDate), typeof(DateTimePicker), DateTime.Now, OnSelectedDateChanged
+            nameof(SelectedDate), typeof(DateTimePicker), DateTime.Now, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged
         );
 
         /// <summary>

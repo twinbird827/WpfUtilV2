@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AsyncTimer.cs" />
+    <Compile Include="Common\EditableStopwatch.cs" />
     <Compile Include="Common\Encrypter.cs" />
     <Compile Include="Common\EqualityComparerEx.cs" />
     <Compile Include="Common\JsonConverter.cs" />
