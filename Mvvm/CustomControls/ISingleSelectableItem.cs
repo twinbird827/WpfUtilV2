@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfUtilV2.Mvvm.CustomControls
 {
-    interface ISingleSelectableItem : ISelectableItem
+    public interface ISingleSelectableItem : ISelectableItem
     {
         IEnumerable<ISelectableItem> SelectableItems { get; }
     }
