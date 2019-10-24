@@ -11,7 +11,7 @@ namespace WpfUtilV2.Common
     {
         public AsyncTimer()
         {
-            Timer = new Timer(1);
+            Timer = new Timer(16);
             Timer.Elapsed += (sender, e) =>
             {
                 try
