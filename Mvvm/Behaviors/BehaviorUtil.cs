@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace WpfUtilV2.Mvvm.Behaviors
@@ -188,6 +190,38 @@ namespace WpfUtilV2.Mvvm.Behaviors
             {
                 element.Loaded += handler;
             }
+        }
+
+        public static FormattedText GetFormattedText(TextBlock block, string text)
+        {
+            return new FormattedText(text,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(block.FontFamily, block.FontStyle, block.FontWeight, block.FontStretch),
+                block.FontSize,
+                block.Foreground
+            );
+        }
+
+        public static FormattedText GetFormattedText(Label label, string text)
+        {
+            return new FormattedText(text,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(label.FontFamily, label.FontStyle, label.FontWeight, label.FontStretch),
+                label.FontSize,
+                label.Foreground
+            );
+        }
+
+        public static FormattedText GetFormattedText(TextBlock block)
+        {
+            return GetFormattedText(block, block.Text);
+        }
+
+        public static FormattedText GetFormattedText(Label label)
+        {
+            return GetFormattedText(label, (string)label.Content);
         }
     }
 }

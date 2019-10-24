@@ -120,13 +120,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <param name="block">ｵﾌﾞｼﾞｪｸﾄ</param>
         private static double GetFormattedTextHeight(TextBlock block)
         {
-            var formatted = new FormattedText("1",
-                new CultureInfo("ja-jp"),
-                FlowDirection.LeftToRight,
-                new Typeface(block.FontFamily, block.FontStyle, block.FontWeight, block.FontStretch),
-                block.FontSize,
-                block.Foreground
-            );
+            var formatted = BehaviorUtil.GetFormattedText(block, "1");
             return formatted.Height;
         }
     }
