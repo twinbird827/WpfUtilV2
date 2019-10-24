@@ -93,6 +93,7 @@
     <Compile Include="Mvvm\Behaviors\FrameworkElementIsMouseOverBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementLostFocusWhenEnterBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementMouseLeftButtonDownBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\LabelToolTipBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ListBoxMustSelectedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ListViewColumnResizeBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ListViewIsSelectedChangedBehavior.cs" />
