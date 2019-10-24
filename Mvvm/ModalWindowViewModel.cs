@@ -22,32 +22,18 @@ namespace WpfUtilV2.Mvvm
         /// <summary>
         /// OKﾎﾞﾀﾝ押下時処理
         /// </summary>
-        public ICommand OnClickOK
-        {
-            get
-            {
-                return _OnClickOK = _OnClickOK ?? new RelayCommand(
-                    _ => DialogResult = true,
-                    e => CanClickOK(e)
-                );
-            }
-        }
-        private ICommand _OnClickOK;
+        public ICommand OnClickOK => new RelayCommand(
+            _ => DialogResult = true,
+            e => CanClickOK(e)
+        );
 
         /// <summary>
         /// ｷｬﾝｾﾙﾎﾞﾀﾝ押下時処理
         /// </summary>
-        public ICommand OnClickCancel
-        {
-            get
-            {
-                return _OnClickCancel = _OnClickCancel ?? new RelayCommand(
-                    _ => DialogResult = false,
-                    e => CanClickCancel(e)
-                );
-            }
-        }
-        private ICommand _OnClickCancel;
+        public ICommand OnClickCancel => new RelayCommand(
+            _ => DialogResult = false,
+            e => CanClickCancel(e)
+        );
 
         /// <summary>
         /// OKﾎﾞﾀﾝ押下時処理が実行可能か確認します。

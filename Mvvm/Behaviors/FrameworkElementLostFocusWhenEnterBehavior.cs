@@ -73,7 +73,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         private static void OnSetIsEnableCallback(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = target as FrameworkElement;
-
+            
             BehaviorUtil.SetEventHandler(element,
                 (fe) => fe.PreviewKeyDown += FrameworkElement_PreviewKeyDown,
                 (fe) => fe.PreviewKeyDown -= FrameworkElement_PreviewKeyDown
