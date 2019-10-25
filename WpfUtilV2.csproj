@@ -137,6 +137,7 @@
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Mvvm\Services\ConsoleMessageService.cs" />
     <Compile Include="Mvvm\Services\IMessageService.cs" />
+    <Compile Include="Mvvm\Services\ResourceService.cs" />
     <Compile Include="Mvvm\Services\ServiceFactory.cs" />
     <Compile Include="Mvvm\UserControls\DateTimePicker.xaml.cs">
       <DependentUpon>DateTimePicker.xaml</DependentUpon>

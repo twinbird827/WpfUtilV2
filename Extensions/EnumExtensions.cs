@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using WpfUtilV2.Mvvm.Service;
 
 namespace WpfUtilV2.Extensions
 {
@@ -19,7 +20,9 @@ namespace WpfUtilV2.Extensions
         public static string GetLabel<T>(this T target) where T : Enum
         {
             var targetString = target.ToString();
-            return typeof(T).GetField(targetString).GetCustomAttribute<LabelAttribute>()?.Value
+
+            return ServiceFactory.ResourceService.ResourceManager.GetString($"E_{typeof(T).Name}_{targetString}") 
+                ?? typeof(T).GetField(targetString).GetCustomAttribute<LabelAttribute>()?.Value
                 ?? targetString;
         }
 
