@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
-using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
@@ -16,6 +15,7 @@ using System.Windows.Interop;
 using System.Reflection;
 using WpfUtilV2.Extensions;
 using System.Windows.Threading;
+using System.Drawing;
 
 namespace WpfUtilV2.Common
 {
@@ -166,6 +166,16 @@ namespace WpfUtilV2.Common
         public static T ToEnum<T>(int value)
         {
             return ToEnum<T>(value.ToString());
+        }
+
+        public static System.Windows.Media.Color ToColor(string color)
+        {
+            return (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(color);
+        }
+
+        public static SolidColorBrush ToBrush(string color)
+        {
+            return new SolidColorBrush(ToColor(color)).Frozen();
         }
 
         /// <summary>
