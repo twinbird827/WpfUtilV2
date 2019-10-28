@@ -128,13 +128,13 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
         private static void OnHeaderCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var viewer = sender as ScrollViewer ?? ScrollViewerFromFrameworkElement(sender as FrameworkElement);
+            var viewer = BehaviorUtil.GetScrollViewer(sender as FrameworkElement);
 
             BehaviorUtil.SetEventHandler(viewer,
                 (sv) => sv.ScrollChanged += ScrollViewer_ScrollChanged,
                 (sv) => sv.ScrollChanged -= ScrollViewer_ScrollChanged
             );
-
+            
             var target = e.NewValue as FrameworkElement;
 
             BehaviorUtil.SetEventHandler(target,
@@ -164,9 +164,9 @@ namespace WpfUtilV2.Mvvm.Behaviors
         {
             var sv = sender as ScrollViewer;
             var hfe = GetColumnHeader(sv);
-            var hsv = hfe as ScrollViewer ?? ScrollViewerFromFrameworkElement(hfe);
+            var hsv = BehaviorUtil.GetScrollViewer(hfe);
             var rfe = GetRowHeader(sv);
-            var rsv = rfe as ScrollViewer ?? ScrollViewerFromFrameworkElement(rfe);
+            var rsv = BehaviorUtil.GetScrollViewer(rfe);
             var hfo = GetColumnFooter(sv);
             var rfo = GetRowFooter(sv);
 
@@ -174,29 +174,6 @@ namespace WpfUtilV2.Mvvm.Behaviors
             if (rsv != null) rsv.ScrollToVerticalOffset(sv.VerticalOffset);
             if (hfo != null) hfo.Width = GetScrollWidth(sv);
             if (rfo != null) rfo.Height = GetScrollHeight(sv);
-        }
-
-        private static ScrollViewer ScrollViewerFromFrameworkElement(FrameworkElement frameworkElement)
-        {
-            if (frameworkElement == null)
-            {
-                return null;
-            }
-            else if (VisualTreeHelper.GetChildrenCount(frameworkElement) == 0)
-            {
-                return null;
-            }
-
-            var child = VisualTreeHelper.GetChild(frameworkElement, 0) as FrameworkElement;
-
-            if (child == null) return null;
-
-            if (child is ScrollViewer)
-            {
-                return (ScrollViewer)child;
-            }
-
-            return ScrollViewerFromFrameworkElement(child);
         }
 
         /// <summary>

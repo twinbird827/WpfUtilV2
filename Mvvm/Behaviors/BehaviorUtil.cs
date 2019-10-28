@@ -223,5 +223,32 @@ namespace WpfUtilV2.Mvvm.Behaviors
         {
             return GetFormattedText(label, (string)label.Content);
         }
+
+        public static ScrollViewer GetScrollViewer(DependencyObject target)
+        {
+            if (target == null)
+            {
+                return null;
+            }
+            else if (target is ScrollViewer)
+            {
+                return (ScrollViewer)target;
+            }
+            else if (VisualTreeHelper.GetChildrenCount(target) == 0)
+            {
+                return null;
+            }
+
+            var child = VisualTreeHelper.GetChild(target, 0) as DependencyObject;
+
+            if (child == null) return null;
+
+            if (child is ScrollViewer)
+            {
+                return (ScrollViewer)child;
+            }
+
+            return GetScrollViewer(child);
+        }
     }
 }

@@ -89,6 +89,7 @@
     <Compile Include="Mvvm\Behaviors\ControlKeyDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDownBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\ControlMouseDoubleClickBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\ControlScrollBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementChangeIsSelectedWithMouseClickBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementIsMouseOverBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\FrameworkElementLostFocusWhenEnterBehavior.cs" />
