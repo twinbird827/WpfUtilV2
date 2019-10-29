@@ -54,5 +54,15 @@ namespace WpfUtilV2.Mvvm.Service
                 [CallerFilePath]   string callerFilePath = "",
                 [CallerLineNumber] int callerLineNumber = 0);
 
+        /// <summary>
+        /// 保存ﾌｧｲﾙを選択します。
+        /// </summary>
+        /// <param name="initializePath">初期ﾊﾟｽ</param>
+        string SelectedSaveFile(string initializePath,
+                string filter,
+                [CallerMemberName] string callerMemberName = "",
+                [CallerFilePath]   string callerFilePath = "",
+                [CallerLineNumber] int callerLineNumber = 0);
+
     }
 }

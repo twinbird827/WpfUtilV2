@@ -51,6 +51,15 @@ namespace WpfUtilV2.Mvvm.Service
             Console.WriteLine(GetString(EventLogEntryType.Error, exception.ToString(), callerMemberName, callerFilePath, callerLineNumber));
         }
 
+        public virtual string SelectedSaveFile(string initializePath,
+                string filter,
+                [CallerMemberName] string callerMemberName = "",
+                [CallerFilePath]   string callerFilePath = "",
+                [CallerLineNumber] int callerLineNumber = 0)
+        {
+            return Console.ReadLine();
+        }
+
         private string GetString(EventLogEntryType type, 
                 string message,
                 string callerMemberName,
