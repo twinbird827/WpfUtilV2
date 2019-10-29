@@ -16,6 +16,7 @@ using System.Reflection;
 using WpfUtilV2.Extensions;
 using System.Windows.Threading;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace WpfUtilV2.Common
 {
@@ -168,11 +169,21 @@ namespace WpfUtilV2.Common
             return ToEnum<T>(value.ToString());
         }
 
+        /// <summary>
+        /// Color値へ変換します。
+        /// </summary>
+        /// <param name="color">色を示す文字列</param>
+        /// <returns></returns>
         public static System.Windows.Media.Color ToColor(string color)
         {
             return (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(color);
         }
 
+        /// <summary>
+        /// 単色Brushへ変換します。
+        /// </summary>
+        /// <param name="color">色を示す文字列</param>
+        /// <returns></returns>
         public static SolidColorBrush ToBrush(string color)
         {
             return new SolidColorBrush(ToColor(color)).Frozen();
@@ -185,6 +196,51 @@ namespace WpfUtilV2.Common
         public static string Nvl(params string[] args)
         {
             return args.FirstOrDefault(s => !string.IsNullOrEmpty(s)) ?? string.Empty;
+        }
+
+        /// <summary>
+        /// 対象のパス名に使用できない文字が含まれていないか確認します。
+        /// </summary>
+        /// <param name="file">ファイル名</param>
+        /// <returns></returns>
+        public static bool IsSalePathInvalidChars(string path)
+        {
+            return !Path.GetInvalidPathChars().Any(c => path.Contains(c));
+        }
+
+        /// <summary>
+        /// 対象のファイル名に使用できない文字が含まれていないか確認します。
+        /// </summary>
+        /// <param name="file">ファイル名</param>
+        /// <returns></returns>
+        public static bool IsSaleFileInvalidChars(string file)
+        {
+            return !Path.GetInvalidFileNameChars().Any(c => file.Contains(c));
+        }
+
+        /// <summary>
+        /// 対象のファイル名に不正な文字が含まれていないか確認します。
+        /// </summary>
+        /// <param name="file">ファイル名</param>
+        /// <returns></returns>
+        public static bool IsSaleFileRegex(string file)
+        {
+            var regex = new Regex("[\\x00-\\x1f<>:\"/\\\\|?*]|^(CON|PRN|AUX|NUL|COM[0-9]|LPT[0-9]|CLOCK\\$)(\\.|$)|[\\. ]$", RegexOptions.IgnoreCase);
+
+            return !regex.IsMatch(file);
+        }
+
+        public static string GetDelimiter(string file)
+        {
+            switch (Path.GetExtension(file).ToLower())
+            {
+                case ".tsv":
+                    return "\t";
+                case ".csv":
+                    return ",";
+                default:
+                    return ",";
+            }
         }
     }
 

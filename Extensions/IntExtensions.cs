@@ -18,5 +18,16 @@ namespace WpfUtilV2.Extensions
         {
             return Convert.ToString(i, 16).Right(length, '0');
         }
+
+        /// <summary>
+        /// 数値を指定した文字数までゼロ埋めした文字に変換します。
+        /// </summary>
+        /// <param name="i">対象数値</param>
+        /// <param name="length">文字列の長さ</param>
+        /// <returns></returns>
+        public static string Padding(this int i, int length)
+        {
+            return i.ToString().Right(length, '0');
+        }
     }
 }
