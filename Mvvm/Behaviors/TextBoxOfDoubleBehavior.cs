@@ -70,7 +70,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
         /// ﾃｷｽﾄﾎﾞｯｸｽに設定する数値の依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         private static DependencyProperty PreviousProperty = BehaviorUtil.RegisterAttached(
-            "Previous", typeof(TextBoxOfDoubleBehavior), typeof(double), null
+            "Previous", typeof(TextBoxOfDoubleBehavior), (double)float.MinValue, null
         );
 
         /// <summary>
