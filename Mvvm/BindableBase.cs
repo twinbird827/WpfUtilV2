@@ -107,18 +107,17 @@ namespace WpfUtilV2.Mvvm
         /// <returns></returns>
         private PropertyChangedEventArgs GetPropertyChangedEventArgs(string name)
         {
-            if (CreatePropertyChangedEventArgs.ContainsKey(name))
+            lock (LockObject)
             {
-                // 既に作成済なら使いまわす
-                return CreatePropertyChangedEventArgs[name];
+                if (!CreatePropertyChangedEventArgs.ContainsKey(name))
+                {
+                    // 作成していない場合は作成する
+                    CreatePropertyChangedEventArgs[name] = new PropertyChangedEventArgs(name);
+                }
             }
-            else
-            {
-                // 作成していない場合は作成する
-                CreatePropertyChangedEventArgs[name] = new PropertyChangedEventArgs(name);
-                return GetPropertyChangedEventArgs(name);
-            }
+            return CreatePropertyChangedEventArgs[name];
         }
+        private static object LockObject { get; } = new object();
 
         #region IDisposable Support
         private bool disposedValue = false; // 重複する呼び出しを検出するには
