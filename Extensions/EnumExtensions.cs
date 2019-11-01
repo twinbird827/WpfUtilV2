@@ -21,7 +21,7 @@ namespace WpfUtilV2.Extensions
         {
             var targetString = target.ToString();
 
-            return ServiceFactory.ResourceService.ResourceManager.GetString($"E_{typeof(T).Name}_{targetString}") 
+            return ServiceFactory.ResourceService?.ResourceManager.GetString($"E_{typeof(T).Name}_{targetString}") 
                 ?? typeof(T).GetField(targetString).GetCustomAttribute<LabelAttribute>()?.Value
                 ?? targetString;
         }
