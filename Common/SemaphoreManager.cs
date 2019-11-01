@@ -15,14 +15,28 @@ namespace WpfUtilV2.Common
         private static Dictionary<string, SemaphoreSlim> Semaphores { get; set; } = new Dictionary<string, SemaphoreSlim>();
 
         /// <summary>
+        /// 内部用ﾛｯｸｲﾝｽﾀﾝｽ
+        /// </summary>
+        private static SemaphoreSlim Lock { get; } = new SemaphoreSlim(1, 1);
+
+        /// <summary>
         /// 指定したｷｰで待機します。
         /// </summary>
         /// <param name="key">待機するｷｰ</param>
         public static async Task WaitAsync(string key)
         {
-            if (!Semaphores.ContainsKey(key))
+            await Lock.WaitAsync();
+
+            try
             {
-                Semaphores.Add(key, new SemaphoreSlim(1, 1));
+                if (!Semaphores.ContainsKey(key))
+                {
+                    Semaphores.Add(key, new SemaphoreSlim(1, 1));
+                }
+            }
+            finally
+            {
+                Lock.Release();
             }
             await Semaphores[key].WaitAsync();
         }
