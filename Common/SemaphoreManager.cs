@@ -17,7 +17,9 @@ namespace WpfUtilV2.Common
         /// <summary>
         /// 内部用ﾛｯｸｲﾝｽﾀﾝｽ
         /// </summary>
-        private static SemaphoreSlim Lock { get; } = new SemaphoreSlim(1, 1);
+        private static SemaphoreSlim LockSemaphore { get; } = new SemaphoreSlim(1, 1);
+
+        private static object LockObject { get; } = new object();
 
         /// <summary>
         /// 指定したｷｰで待機します。
@@ -25,7 +27,7 @@ namespace WpfUtilV2.Common
         /// <param name="key">待機するｷｰ</param>
         public static async Task WaitAsync(string key)
         {
-            await Lock.WaitAsync();
+            await LockSemaphore.WaitAsync();
 
             try
             {
@@ -36,7 +38,7 @@ namespace WpfUtilV2.Common
             }
             finally
             {
-                Lock.Release();
+                LockSemaphore.Release();
             }
             await Semaphores[key].WaitAsync();
         }
@@ -47,9 +49,12 @@ namespace WpfUtilV2.Common
         /// <param name="key">待機するｷｰ</param>
         public static void Wait(string key)
         {
-            if (!Semaphores.ContainsKey(key))
+            lock (LockObject)
             {
-                Semaphores.Add(key, new SemaphoreSlim(1, 1));
+                if (!Semaphores.ContainsKey(key))
+                {
+                    Semaphores.Add(key, new SemaphoreSlim(1, 1));
+                }
             }
             Semaphores[key].Wait();
         }
