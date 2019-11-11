@@ -8,6 +8,11 @@ namespace WpfUtilV2.Extensions
 {
     public static class ObjectExtensions
     {
+        /// <summary>
+        /// ｵﾌﾞｼﾞｪｸﾄを倍精度浮動小数点数に変換し、変換できたかどうかを取得します。
+        /// </summary>
+        /// <param name="value">対象ｵﾌﾞｼﾞｪｸﾄ</param>
+        /// <param name="result">変換できた場合は変換値を格納する参照変数</param>
         public static bool TryDouble(this object value, out double result)
         {
             if (value is double)
@@ -45,6 +50,11 @@ namespace WpfUtilV2.Extensions
             }
         }
 
+        /// <summary>
+        /// ｵﾌﾞｼﾞｪｸﾄを文字列型に変換します。nullの場合は空文字に変換します。
+        /// </summary>
+        /// <param name="value">文字列に変換するｵﾌﾞｼﾞｪｸﾄ</param>
+        /// <returns></returns>
         public static string TryString(this object value)
         {
             if (value is string)
@@ -57,7 +67,7 @@ namespace WpfUtilV2.Extensions
             }
             else
             {
-                return null;
+                return string.Empty;
             }
         }
     }

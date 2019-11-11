@@ -230,7 +230,7 @@ namespace WpfUtilV2.Extensions
         }
 
         /// <summary>
-        /// ﾐﾘ秒以下を切り捨てた現在日付を取得します。
+        /// ｶﾙﾁｬに関連付けられている初期体系を表すｵﾌﾞｼﾞｪｸﾄを取得します。
         /// </summary>
         public static TextInfo TextInfo
         {
@@ -238,6 +238,11 @@ namespace WpfUtilV2.Extensions
         }
         private static TextInfo _TextInfo;
 
+        /// <summary>
+        /// 指定された文字を英語見出しと同じ大文字/小文字の組み合わせに変換します。
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string ToTitleCase(this string s)
         {
             return TextInfo.ToTitleCase(s);

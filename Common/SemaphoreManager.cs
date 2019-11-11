@@ -19,6 +19,9 @@ namespace WpfUtilV2.Common
         /// </summary>
         private static SemaphoreSlim LockSemaphore { get; } = new SemaphoreSlim(1, 1);
 
+        /// <summary>
+        /// 内部用ﾛｯｸｲﾝｽﾀﾝｽ
+        /// </summary>
         private static object LockObject { get; } = new object();
 
         /// <summary>
