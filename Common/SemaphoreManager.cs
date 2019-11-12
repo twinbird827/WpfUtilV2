@@ -59,7 +59,7 @@ namespace WpfUtilV2.Common
                     Semaphores.Add(key, new SemaphoreSlim(1, 1));
                 }
             }
-            Semaphores[key].Wait();
+            Semaphores[key].Wait(3000);
         }
 
         /// <summary>
