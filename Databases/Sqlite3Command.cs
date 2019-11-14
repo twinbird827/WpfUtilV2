@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfUtilV2.Common;
 using WpfUtilV2.Extensions;
+using WpfUtilV2.Mvvm.Service;
 
 namespace WpfUtilV2.Databases
 {
@@ -158,9 +159,11 @@ namespace WpfUtilV2.Databases
             catch
             {
                 // ｴﾗｰが発生したらｺﾝｿｰﾙに表示
-                Console.WriteLine($"{sp.Elapsed} ******************************************************************");
-                Console.WriteLine(sql.ToString());
-                Console.WriteLine(parameters.Select(p => p.Value.ToString()).GetString(","));
+                var sb = new StringBuilder();
+                sb.AppendLine($"{sp.Elapsed} ******************************************************************");
+                sb.AppendLine(sql.ToString());
+                sb.AppendLine(parameters.Select(p => p.Value.ToString()).GetString(","));
+                ServiceFactory.MessageService.Debug(sb.ToString());
                 throw;
             }
             finally
@@ -168,9 +171,11 @@ namespace WpfUtilV2.Databases
                 if (1000 < sp.ElapsedMilliseconds)
                 {
                     // 1秒超えたらｺﾝｿｰﾙに表示
-                    Console.WriteLine($"{sp.Elapsed} ******************************************************************");
-                    Console.WriteLine(sql.ToString());
-                    Console.WriteLine(parameters.Select(p => p.Value.ToString()).GetString(","));
+                    var sb = new StringBuilder();
+                    sb.AppendLine($"{sp.Elapsed} ******************************************************************");
+                    sb.AppendLine(sql.ToString());
+                    sb.AppendLine(parameters.Select(p => p.Value.ToString()).GetString(","));
+                    ServiceFactory.MessageService.Debug(sb.ToString());
                 }
                 SemaphoreManager.Release(GetLockKey());
             }

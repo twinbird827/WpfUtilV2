@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using WpfUtilV2.Mvvm.Service;
 
 namespace WpfUtilV2.Common
 {
@@ -27,7 +28,7 @@ namespace WpfUtilV2.Common
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    ServiceFactory.MessageService.Exception(ex);
 
                     if (UnhandledException != null)
                     {
