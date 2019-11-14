@@ -66,7 +66,7 @@ namespace WpfUtilV2.Mvvm.Service
                 string callerFilePath,
                 int callerLineNumber)
         {
-            var txt = $"[{type}][{DateTime.Now.ToString("")}][{callerFilePath}][{callerMemberName}][{callerLineNumber}]\n{message}";
+            var txt = $"[{type}][{DateTime.Now.ToString("yy/MM/dd HH:mm:ss.fff")}][{callerFilePath}][{callerMemberName}][{callerLineNumber}]\n{message}";
 
             if (type == EventLogEntryType.Error)
             {
