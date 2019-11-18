@@ -16,6 +16,8 @@ namespace WpfUtilV2.Extensions
         /// <param name="array">ﾘｽﾄに追加する配列</param>
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> array)
         {
+            if (array == null) return;
+
             foreach (var tmp in array)
             {
                 collection.Add(tmp);
