@@ -242,6 +242,17 @@ namespace WpfUtilV2.Common
                     return ",";
             }
         }
+
+        /// <summary>
+        /// 相対ﾊﾟｽを絶対ﾊﾟｽに変換します。
+        /// </summary>
+        /// <param name="relative"></param>
+        /// <returns></returns>
+        public static string RelativePathToAbsolutePath(string relative)
+        {
+            var work = System.AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
+            return Path.Combine(work, relative);
+        }
     }
 
     /// <summary>

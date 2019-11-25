@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WpfUtilV2.Common;
 
 namespace WpfUtilV2.Mvvm.Service
 {
@@ -70,18 +72,13 @@ namespace WpfUtilV2.Mvvm.Service
 
             if (type == EventLogEntryType.Error)
             {
-                try
-                {
-                    using (var log = new EventLog())
-                    {
-                        log.Source = callerFilePath;
-                        log.WriteEntry(txt, type);
-                    }
-                }
-                catch
-                {
+                var dir = WpfUtil.RelativePathToAbsolutePath("log");
+                var tmp = Path.Combine(dir, $"{DateTime.Now.ToString("yyyy-mm-dd")}.log");
 
-                }
+                // ﾃﾞｨﾚｸﾄﾘを作成
+                Directory.CreateDirectory(dir);
+
+                File.AppendAllText(tmp, txt);
             }
 
             return txt;
