@@ -62,6 +62,8 @@ namespace WpfUtilV2.Mvvm.Service
             return Console.ReadLine();
         }
 
+        private static object LockObject = new object();
+
         private string GetString(EventLogEntryType type, 
                 string message,
                 string callerMemberName,
@@ -72,13 +74,16 @@ namespace WpfUtilV2.Mvvm.Service
 
             if (type == EventLogEntryType.Error)
             {
-                var dir = WpfUtil.RelativePathToAbsolutePath("log");
-                var tmp = Path.Combine(dir, $"{DateTime.Now.ToString("yyyy-mm-dd")}.log");
+                lock (LockObject)
+                {
+                    var dir = WpfUtil.RelativePathToAbsolutePath("log");
+                    var tmp = Path.Combine(dir, $"{DateTime.Now.ToString("yyyy-MM-dd")}.log");
 
-                // ﾃﾞｨﾚｸﾄﾘを作成
-                Directory.CreateDirectory(dir);
+                    // ﾃﾞｨﾚｸﾄﾘを作成
+                    Directory.CreateDirectory(dir);
 
-                File.AppendAllText(tmp, txt);
+                    File.AppendAllText(tmp, txt);
+                }
             }
 
             return txt;
