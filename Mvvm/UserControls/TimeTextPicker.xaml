@@ -20,11 +20,6 @@
                     <RotateTransform Angle="180" />
                 </TransformGroup>
             </ScrollBar.LayoutTransform>
-            <!--<ScrollBar.RenderTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="180" />
-                </TransformGroup>
-            </ScrollBar.RenderTransform>-->
         </ScrollBar>
 
         <TextBox Name="Tb"
