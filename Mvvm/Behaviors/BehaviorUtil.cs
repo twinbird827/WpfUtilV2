@@ -203,7 +203,7 @@ namespace WpfUtilV2.Mvvm.Behaviors
             );
         }
 
-        public static FormattedText GetFormattedText(Label label, string text)
+        public static FormattedText GetFormattedText(Control label, string text)
         {
             return new FormattedText(text,
                 CultureInfo.CurrentCulture,
@@ -214,14 +214,53 @@ namespace WpfUtilV2.Mvvm.Behaviors
             );
         }
 
-        public static FormattedText GetFormattedText(TextBlock block)
+        private static FormattedText GetFormattedText(TextBlock block)
         {
             return GetFormattedText(block, block.Text);
         }
 
-        public static FormattedText GetFormattedText(Label label)
+        private static FormattedText GetFormattedText(ContentControl cc)
         {
-            return GetFormattedText(label, (string)label.Content);
+            if (cc.Content is string)
+            {
+                return GetFormattedText(cc, (string)cc.Content);
+            }
+            else
+            {
+                return GetFormattedText(cc.Content as FrameworkElement);
+            }
+        }
+
+        private static FormattedText GetFormattedText(Panel panel)
+        {
+            var child = panel.Children.OfType<TextBlock>().FirstOrDefault()
+                ?? panel.Children.OfType<ContentControl>().FirstOrDefault() as FrameworkElement;
+
+            return GetFormattedText(child);
+        }
+
+        public static FormattedText GetFormattedText(FrameworkElement cc)
+        {
+            if (cc is TextBlock)
+            {
+                return GetFormattedText((TextBlock)cc);
+            }
+            else if (cc is Panel)
+            {
+                return GetFormattedText((Panel)cc);
+            }
+            else if (cc is ContentControl)
+            {
+                return GetFormattedText((ContentControl)cc);
+            }
+            else if (cc is Control)
+            {
+                return GetFormattedText((Control)cc, "");
+            }
+            else
+            {
+                return GetFormattedText(new TextBlock(), "");
+            }
         }
 
         public static ScrollViewer GetScrollViewer(DependencyObject target)
