@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,11 @@ namespace WpfUtilV2.Mvvm
 {
     public class ModalWindowViewModel : BindableBase
     {
+        /// <summary>
+        /// 画面終了時のﾁｪｯｸを実行するかどうか
+        /// </summary>
+        private bool IsClosingCheck { get; set; } = true;
+
         /// <summary>
         /// ﾀﾞｲｱﾛｸﾞ結果
         /// </summary>
@@ -64,6 +70,7 @@ namespace WpfUtilV2.Mvvm
         /// <param name="parameter">ﾊﾟﾗﾒｰﾀ</param>
         protected virtual bool BeforeClickOK<T>(T parameter)
         {
+            IsClosingCheck = false;
             return true;
         }
 
@@ -74,8 +81,41 @@ namespace WpfUtilV2.Mvvm
         /// <param name="parameter">ﾊﾟﾗﾒｰﾀ</param>
         protected virtual bool BeforeClickCancel<T>(T parameter)
         {
-            return true;
+            if (CheckClosing())
+            {
+                IsClosingCheck = false;
+                return true;
+            }
+            else
+            {
+                IsClosingCheck = true;
+                return false;
+            }
         }
 
+        /// <summary>
+        /// 画面終了前処理
+        /// </summary>
+        public ICommand OnClosing =>
+            _OnClosing = _OnClosing ?? new RelayCommand<CancelEventArgs>(e =>
+            {
+                if (!IsClosingCheck)
+                {
+                    return;
+                }
+                else if (!CheckClosing())
+                {
+                    e.Cancel = true;
+                }
+            });
+        private ICommand _OnClosing;
+
+        /// <summary>
+        /// 画面を終了してもよいかどうか確認します。
+        /// </summary>
+        protected virtual bool CheckClosing()
+        {
+            return true;
+        }
     }
 }
