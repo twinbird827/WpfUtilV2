@@ -12,6 +12,8 @@ namespace WpfUtilV2.Common
     {
         public AsyncTimer()
         {
+            Tick += (sender, e) => ServiceFactory.MessageService.Debug($"AsyncTimer.Tick {Guid}");
+
             Timer = new Timer(16);
             Timer.Elapsed += (sender, e) =>
             {
@@ -62,7 +64,7 @@ namespace WpfUtilV2.Common
         /// <summary>
         /// ﾀｲﾏｰの起動間隔
         /// </summary>
-        public TimeSpan Interval //{ get; set; } = TimeSpan.FromMilliseconds(1);
+        public TimeSpan Interval
         {
             get { return _Interval; }
             set

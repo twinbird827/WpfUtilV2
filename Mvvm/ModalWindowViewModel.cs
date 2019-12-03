@@ -23,7 +23,7 @@ namespace WpfUtilV2.Mvvm
         /// OKﾎﾞﾀﾝ押下時処理
         /// </summary>
         public ICommand OnClickOK => new RelayCommand(
-            _ => DialogResult = true,
+            _ => { if (BeforeClickOK(_)) DialogResult = true; },
             e => CanClickOK(e)
         );
 
@@ -31,7 +31,7 @@ namespace WpfUtilV2.Mvvm
         /// ｷｬﾝｾﾙﾎﾞﾀﾝ押下時処理
         /// </summary>
         public ICommand OnClickCancel => new RelayCommand(
-            _ => DialogResult = false,
+            _ => { if (BeforeClickCancel(_)) DialogResult = false; },
             e => CanClickCancel(e)
         );
 
@@ -56,5 +56,26 @@ namespace WpfUtilV2.Mvvm
         {
             return true;
         }
+
+        /// <summary>
+        /// OKﾎﾞﾀﾝの前処理を実行します。
+        /// </summary>
+        /// <typeparam name="T">ﾊﾟﾗﾒｰﾀの型</typeparam>
+        /// <param name="parameter">ﾊﾟﾗﾒｰﾀ</param>
+        protected virtual bool BeforeClickOK<T>(T parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// ｷｬﾝｾﾙﾎﾞﾀﾝの前処理を実行します。
+        /// </summary>
+        /// <typeparam name="T">ﾊﾟﾗﾒｰﾀの型</typeparam>
+        /// <param name="parameter">ﾊﾟﾗﾒｰﾀ</param>
+        protected virtual bool BeforeClickCancel<T>(T parameter)
+        {
+            return true;
+        }
+
     }
 }

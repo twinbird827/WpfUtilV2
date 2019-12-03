@@ -82,36 +82,6 @@ namespace WpfUtilV2.Mvvm.Behaviors
             {
                 BehaviorUtil.Loaded(target as FrameworkElement, UserControl_Loaded);
             }
-
-            //if (uc.IsLoaded)
-            //{
-            //    UserControl_Loaded(uc, new EventArgs());
-            //}
-            //else
-            //{
-            //    Action<object, RoutedEventArgs> unloaded = null;
-            //    // ﾕｰｻﾞｺﾝﾄﾛｰﾙのｱﾝﾛｰﾄﾞ処理を定義(ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄを削除する)
-            //    unloaded = (sender, ea) =>
-            //    {
-            //        var inner = sender as UserControl;
-
-            //        if (unloaded != null)
-            //        {
-            //            inner.Unloaded -= new RoutedEventHandler(unloaded);
-            //            unloaded = null;
-            //        }
-
-            //        // ｱﾝﾛｰﾄﾞ時にｲﾍﾞﾝﾄ削除処理
-            //        inner.Loaded -= UserControl_Loaded;
-            //    };
-
-            //    uc.Loaded += UserControl_Loaded;
-            //    uc.Unloaded += new RoutedEventHandler(unloaded);
-            //}
-            //BehaviorUtil.SetEventHandler(uc,
-            //    (fe) => UserControl_Loaded(fe, new EventArgs()),
-            //    (fe) => { }
-            //);
         }
 
         /// <summary>

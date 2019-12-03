@@ -91,11 +91,6 @@ namespace WpfUtilV2.Common
             {
                 if (_Brushes != null) return _Brushes;
 
-                //_Brushes = typeof(System.Windows.Media.Brushes).GetProperties(BindingFlags.Public | BindingFlags.Static)
-                //    .Select(info => (SolidColorBrush)info.GetValue(null, null))
-                //    .Select(brush => brush.GetAsFrozen() as SolidColorBrush)
-                //    .ToArray();
-
                 var rgb = Enumerable.Range(1, 5).Select(i => i * 50).ToArray();
 
                 _Brushes = rgb.SelectMany(r => rgb.SelectMany(g => rgb.Select(b => new { r, g, b })))

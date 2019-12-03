@@ -192,6 +192,11 @@ namespace WpfUtilV2.Mvvm.Behaviors
             }
         }
 
+        /// <summary>
+        /// 指定したTextBlockと文字からFormattedTextを作成します。
+        /// </summary>
+        /// <param name="block">TextBlockｲﾝｽﾀﾝｽ</param>
+        /// <param name="text">文字</param>
         public static FormattedText GetFormattedText(TextBlock block, string text)
         {
             return new FormattedText(text,
@@ -203,22 +208,35 @@ namespace WpfUtilV2.Mvvm.Behaviors
             );
         }
 
-        public static FormattedText GetFormattedText(Control label, string text)
+        /// <summary>
+        /// 指定したControlと文字からFormattedTextを作成します。
+        /// </summary>
+        /// <param name="control">Controlｲﾝｽﾀﾝｽ</param>
+        /// <param name="text">文字</param>
+        public static FormattedText GetFormattedText(Control control, string text)
         {
             return new FormattedText(text,
                 CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
-                new Typeface(label.FontFamily, label.FontStyle, label.FontWeight, label.FontStretch),
-                label.FontSize,
-                label.Foreground
+                new Typeface(control.FontFamily, control.FontStyle, control.FontWeight, control.FontStretch),
+                control.FontSize,
+                control.Foreground
             );
         }
 
+        /// <summary>
+        /// 指定したTextBlockと、それに設定された文字からFormattedTextを作成します。
+        /// </summary>
+        /// <param name="block">TextBlock</param>
         private static FormattedText GetFormattedText(TextBlock block)
         {
             return GetFormattedText(block, block.Text);
         }
 
+        /// <summary>
+        /// 指定したContentControlと、それに設定された文字からFormattedTextを作成します。
+        /// </summary>
+        /// <param name="cc">ContentControl</param>
         private static FormattedText GetFormattedText(ContentControl cc)
         {
             if (cc.Content is string)
@@ -231,6 +249,10 @@ namespace WpfUtilV2.Mvvm.Behaviors
             }
         }
 
+        /// <summary>
+        /// 指定したPanelと、それに設定された文字からFormattedTextを作成します。
+        /// </summary>
+        /// <param name="panel">Panel</param>
         private static FormattedText GetFormattedText(Panel panel)
         {
             var child = panel.Children.OfType<TextBlock>().FirstOrDefault()
@@ -239,23 +261,27 @@ namespace WpfUtilV2.Mvvm.Behaviors
             return GetFormattedText(child);
         }
 
-        public static FormattedText GetFormattedText(FrameworkElement cc)
+        /// <summary>
+        /// 指定したFrameworkElementと、それに設定された文字からFormattedTextを作成します。
+        /// </summary>
+        /// <param name="panel">fe</param>
+        public static FormattedText GetFormattedText(FrameworkElement fe)
         {
-            if (cc is TextBlock)
+            if (fe is TextBlock)
             {
-                return GetFormattedText((TextBlock)cc);
+                return GetFormattedText((TextBlock)fe);
             }
-            else if (cc is Panel)
+            else if (fe is Panel)
             {
-                return GetFormattedText((Panel)cc);
+                return GetFormattedText((Panel)fe);
             }
-            else if (cc is ContentControl)
+            else if (fe is ContentControl)
             {
-                return GetFormattedText((ContentControl)cc);
+                return GetFormattedText((ContentControl)fe);
             }
-            else if (cc is Control)
+            else if (fe is Control)
             {
-                return GetFormattedText((Control)cc, "");
+                return GetFormattedText((Control)fe, "");
             }
             else
             {
@@ -263,6 +289,10 @@ namespace WpfUtilV2.Mvvm.Behaviors
             }
         }
 
+        /// <summary>
+        /// ScrollViewerを取得します。
+        /// </summary>
+        /// <param name="target">取得元のｲﾝｽﾀﾝｽ</param>
         public static ScrollViewer GetScrollViewer(DependencyObject target)
         {
             if (target == null)
