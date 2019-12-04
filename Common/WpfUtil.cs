@@ -17,6 +17,7 @@ using WpfUtilV2.Extensions;
 using System.Windows.Threading;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace WpfUtilV2.Common
 {
@@ -241,12 +242,30 @@ namespace WpfUtilV2.Common
         /// <summary>
         /// 相対ﾊﾟｽを絶対ﾊﾟｽに変換します。
         /// </summary>
-        /// <param name="relative"></param>
+        /// <param name="relative">相対ﾊﾟｽ</param>
         /// <returns></returns>
         public static string RelativePathToAbsolutePath(string relative)
         {
             var work = System.AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
             return Path.Combine(work, relative);
+        }
+
+        /// <summary>
+        /// 非同期でｷｬﾝｾﾙ可能な待機処理を行います。
+        /// </summary>
+        /// <param name="delay">待機時間(ﾐﾘ秒)</param>
+        /// <param name="token">ｷｬﾝｾﾙﾄｰｸﾝ</param>
+        public static async Task<bool> Delay(int delay, CancellationToken token)
+        {
+            try
+            {
+                await Task.Delay(delay, token);
+                return true;
+            }
+            catch (TaskCanceledException)
+            {
+                return false;
+            }
         }
     }
 
