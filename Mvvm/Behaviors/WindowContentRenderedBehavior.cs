@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +8,13 @@ using System.Windows.Input;
 
 namespace WpfUtilV2.Mvvm.Behaviors
 {
-    public class WindowClosingBehavior
+    public class WindowContentRenderedBehavior
     {
         /// <summary>
         /// Commandの依存関係ﾌﾟﾛﾊﾟﾃｨ
         /// </summary>
         public static DependencyProperty CommandProperty = BehaviorUtil.RegisterAttached(
-            "Command", typeof(WindowClosingBehavior), default(ICommand), OnSetCommandCallback
+            "Command", typeof(WindowContentRenderedBehavior), default(ICommand), OnSetCommandCallback
         );
 
         /// <summary>
@@ -48,17 +47,17 @@ namespace WpfUtilV2.Mvvm.Behaviors
             var win = target as Window;
 
             BehaviorUtil.SetEventHandler(win,
-                (fe) => fe.Closing += Window_Closing,
-                (fe) => fe.Closing -= Window_Closing
+                (fe) => fe.ContentRendered += Window_ContentRendered,
+                (fe) => fe.ContentRendered -= Window_ContentRendered
             );
         }
 
         /// <summary>
-        /// ｳｨﾝﾄﾞｳを閉じる時の処理
+        /// ｳｨﾝﾄﾞｳが起動して初めて表示された際の処理
         /// </summary>
         /// <param name="sender">送り先</param>
         /// <param name="e">ｲﾍﾞﾝﾄ情報</param>
-        private static void Window_Closing(object sender, CancelEventArgs e)
+        private static void Window_ContentRendered(object sender, EventArgs e)
         {
             var win = sender as Window;
 
@@ -74,6 +73,5 @@ namespace WpfUtilV2.Mvvm.Behaviors
                 command.Execute(e);
             }
         }
-
     }
 }

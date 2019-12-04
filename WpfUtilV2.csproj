@@ -111,6 +111,7 @@
     <Compile Include="Mvvm\Behaviors\WindowAdjustmentPositionWhenLoadedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowClosedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowClosingBehavior.cs" />
+    <Compile Include="Mvvm\Behaviors\WindowContentRenderedBehavior.cs" />
     <Compile Include="Mvvm\Behaviors\WindowRequestCloseBehavior.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\Converters\Boolean2EnumConverter.cs" />
