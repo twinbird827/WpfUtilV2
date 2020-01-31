@@ -14,7 +14,7 @@ using WpfUtilV2.Common;
 namespace WpfUtilV2.Mvvm
 {
     [DataContract]
-    public class BindableBase : INotifyPropertyChanged, IDisposable
+    public class BindableBase : IBindable
     {
         public BindableBase()
         {
